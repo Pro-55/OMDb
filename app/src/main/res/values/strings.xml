@@ -1,0 +1,8 @@
+<resources>
+	<string name="app_name">OMDb</string>
+	<string name="string_search">Search</string>
+	<string name="transition_string">activity_transition</string>
+	<string name="string_search_something">Search a Movie!</string>
+	<string name="string_loading_more">Loading more movies…</string>
+	<string name="string_fetching_movie">Fetching movie…</string>
+</resources>
