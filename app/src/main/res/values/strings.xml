@@ -5,4 +5,5 @@
 	<string name="string_search_something">Search a Movie!</string>
 	<string name="string_loading_more">Loading more movies…</string>
 	<string name="string_fetching_movie">Fetching movie…</string>
+	<string name="string_searching_movies">Searching movies…</string>
 </resources>

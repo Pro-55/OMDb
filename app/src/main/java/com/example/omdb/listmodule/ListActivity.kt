@@ -30,6 +30,7 @@ class ListActivity : AppCompatActivity(), IMovieList, IListPresenter {
     private var layoutManager: LinearLayoutManager? = null
     private var searchText = ""
     private var loader: Dialog? = null
+    private var totalCount: String? = "1"
 
     //val
     private val TAG = "ListActivity"
@@ -51,9 +52,9 @@ class ListActivity : AppCompatActivity(), IMovieList, IListPresenter {
                 super.onScrolled(recyclerView, dx, dy)
                 val adapterSize = listAdapter!!.itemCount
                 val lastItemIndex = layoutManager!!.findLastCompletelyVisibleItemPosition()
-                if (adapterSize == lastItemIndex + 1) {
+                if (adapterSize == lastItemIndex + 1 && totalCount!!.toInt() > adapterSize) {
                     showLoader(getString(R.string.string_loading_more))
-                    listPresenter!!.getMoreResults(searchText, listAdapter!!.itemCount)
+                    listPresenter!!.getMoreResults(searchText)
                 }
             }
         })
@@ -72,14 +73,18 @@ class ListActivity : AppCompatActivity(), IMovieList, IListPresenter {
                 }
 
                 override fun onNext(searchBoxText: CharSequence) {
-                    searchText = searchBoxText.toString()
-                    listPresenter!!.getSearchResult(searchText, listAdapter!!.itemCount)
+                    searchText = searchBoxText.toString().trim()
+                    if (searchText.isNotBlank() && searchText.isNotEmpty()) {
+                        showLoader(getString(R.string.string_searching_movies))
+                        listPresenter!!.getSearchResult(searchText)
+                    }
                     listAdapter!!.clearSearchList()
                 }
             })
     }
 
-    override fun successSearch(searchData: List<SearchData>?) {
+    override fun successSearch(searchData: List<SearchData>?, totalResults: String?) {
+        totalCount = totalResults
         hideLoader()
         if (searchData != null) {
             idTvError.visibility = View.GONE
@@ -118,8 +123,7 @@ class ListActivity : AppCompatActivity(), IMovieList, IListPresenter {
     }
 
     private fun showLoader(message: String) {
-        loader =
-            ProgressDialog.show(this, "", message, true, false)
+        loader = ProgressDialog.show(this, "", message, true, false)
     }
 
     private fun hideLoader() {

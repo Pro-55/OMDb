@@ -15,22 +15,25 @@ class ListPresenter(iListPresenter: IListPresenter) : IListPresenterImpl {
         listPresenterImpl = ListPresenterImpl(this)
     }
 
-    fun getSearchResult(searchBoxText: String, itemCount: Int) {
+    fun getSearchResult(searchBoxText: String) {
         page = 1
-        listPresenterImpl!!.callSearchApi(searchBoxText, page, itemCount)
+        listPresenterImpl!!.callSearchApi(searchBoxText, page)
     }
 
-    fun getMoreResults(searchBoxText: String, itemCount: Int) {
-        listPresenterImpl!!.callSearchApi(searchBoxText, page, itemCount)
+    fun getMoreResults(searchBoxText: String) {
+        listPresenterImpl!!.callSearchApi(searchBoxText, page)
     }
 
     fun getMovieDetails(imdbID: String?, targetView: AppCompatImageView) {
         listPresenterImpl!!.callMovieDetailsApi(imdbID, targetView)
     }
 
-    override fun successSearchResult(searchData: List<SearchData>?) {
+    override fun successSearchResult(
+        searchData: List<SearchData>?,
+        totalResults: String?
+    ) {
         page += 1
-        listPresenterInterface!!.successSearch(searchData)
+        listPresenterInterface!!.successSearch(searchData, totalResults)
     }
 
     override fun failSearchResult(error: String?) {

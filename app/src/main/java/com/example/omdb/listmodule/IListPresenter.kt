@@ -5,7 +5,10 @@ import com.example.omdb.network.responce.Movie
 import com.example.omdb.network.responce.SearchData
 
 interface IListPresenter {
-    fun successSearch(searchData: List<SearchData>?)
+    fun successSearch(
+        searchData: List<SearchData>?,
+        totalResults: String?
+    )
 
     fun successGetDetails(movie: Movie, targetView: AppCompatImageView)
 
