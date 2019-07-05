@@ -52,7 +52,7 @@ class ListActivity : AppCompatActivity(), IMovieList, IListPresenter {
                 super.onScrolled(recyclerView, dx, dy)
                 val adapterSize = listAdapter!!.itemCount
                 val lastItemIndex = layoutManager!!.findLastCompletelyVisibleItemPosition()
-                if (adapterSize == lastItemIndex + 1 && totalCount!!.toInt() > adapterSize) {
+                if (lastItemIndex > 0 && adapterSize == lastItemIndex + 1 && totalCount!!.toInt() > adapterSize) {
                     showLoader(getString(R.string.string_loading_more))
                     listPresenter!!.getMoreResults(searchText)
                 }
