@@ -1,6 +1,5 @@
 package com.example.omdb.listmodule
 
-import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
@@ -29,7 +28,6 @@ class ListActivity : AppCompatActivity(), IMovieList, IListPresenter {
     private var listAdapter: SearchListAdapter? = null
     private var layoutManager: LinearLayoutManager? = null
     private var searchText = ""
-    private var loader: Dialog? = null
     private var totalCount: String? = "1"
 
     //val
@@ -53,8 +51,10 @@ class ListActivity : AppCompatActivity(), IMovieList, IListPresenter {
                 val adapterSize = listAdapter!!.itemCount
                 val lastItemIndex = layoutManager!!.findLastCompletelyVisibleItemPosition()
                 if (lastItemIndex > 0 && adapterSize == lastItemIndex + 1 && totalCount!!.toInt() > adapterSize) {
-                    showLoader(getString(R.string.string_loading_more))
-                    listPresenter!!.getMoreResults(searchText)
+                    listPresenter!!.getMoreResults(
+                        searchText,
+                        showLoader(getString(R.string.string_loading_more))
+                    )
                 }
             }
         })
@@ -75,25 +75,31 @@ class ListActivity : AppCompatActivity(), IMovieList, IListPresenter {
                 override fun onNext(searchBoxText: CharSequence) {
                     searchText = searchBoxText.toString().trim()
                     if (searchText.isNotBlank() && searchText.isNotEmpty()) {
-                        showLoader(getString(R.string.string_searching_movies))
-                        listPresenter!!.getSearchResult(searchText)
+                        listPresenter!!.getSearchResult(
+                            searchText,
+                            showLoader(getString(R.string.string_searching_movies))
+                        )
                     }
                     listAdapter!!.clearSearchList()
                 }
             })
     }
 
-    override fun successSearch(searchData: List<SearchData>?, totalResults: String?) {
+    override fun successSearch(
+        searchData: List<SearchData>?,
+        totalResults: String?,
+        loader: ProgressDialog
+    ) {
         totalCount = totalResults
-        hideLoader()
+        hideLoader(loader)
         if (searchData != null) {
             idTvError.visibility = View.GONE
             listAdapter!!.updateSearchList(ArrayList(searchData))
         }
     }
 
-    override fun failSearch(error: String?) {
-        hideLoader()
+    override fun failSearch(error: String?, loader: ProgressDialog) {
+        hideLoader(loader)
         listAdapter!!.clearSearchList()
         if (searchText.trim().isNotBlank()) {
             idTvError.text = error
@@ -104,12 +110,19 @@ class ListActivity : AppCompatActivity(), IMovieList, IListPresenter {
     }
 
     override fun showMovieDetails(searchData: SearchData, targetView: AppCompatImageView) {
-        showLoader(getString(R.string.string_fetching_movie))
-        listPresenter!!.getMovieDetails(searchData.imdbID, targetView)
+        listPresenter!!.getMovieDetails(
+            searchData.imdbID,
+            targetView,
+            showLoader(getString(R.string.string_fetching_movie))
+        )
     }
 
-    override fun successGetDetails(movie: Movie, targetView: AppCompatImageView) {
-        hideLoader()
+    override fun successGetDetails(
+        movie: Movie,
+        targetView: AppCompatImageView,
+        loader: ProgressDialog
+    ) {
+        hideLoader(loader)
         val activityTransitionBundle =
             makeSceneTransitionAnimation(this, targetView, targetView.transitionName).toBundle()
         val movieDetailsIntent = Intent(this, DetailsActivity::class.java)
@@ -117,18 +130,16 @@ class ListActivity : AppCompatActivity(), IMovieList, IListPresenter {
         startActivity(movieDetailsIntent, activityTransitionBundle)
     }
 
-    override fun failGetDetails(error: String?) {
-        hideLoader()
+    override fun failGetDetails(error: String?, loader: ProgressDialog) {
+        hideLoader(loader)
         Toast.makeText(applicationContext, error, Toast.LENGTH_SHORT).show()
     }
 
-    private fun showLoader(message: String) {
-        loader = ProgressDialog.show(this, "", message, true, false)
+    private fun showLoader(message: String): ProgressDialog {
+        return ProgressDialog.show(this, "", message, true, false)
     }
 
-    private fun hideLoader() {
-        if (loader != null) {
-            loader!!.dismiss()
-        }
+    private fun hideLoader(loader: ProgressDialog) {
+        loader.dismiss()
     }
 }

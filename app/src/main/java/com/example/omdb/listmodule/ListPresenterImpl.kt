@@ -1,5 +1,6 @@
 package com.example.omdb.listmodule
 
+import android.app.ProgressDialog
 import androidx.appcompat.widget.AppCompatImageView
 import com.example.omdb.network.ApiFunctions.ApiFail
 import com.example.omdb.network.ApiFunctions.ApiSuccess
@@ -23,7 +24,11 @@ class ListPresenterImpl(iListPresenterImpl: IListPresenterImpl) {
         listPresenterImplInterface = iListPresenterImpl
     }
 
-    fun callSearchApi(searchBoxText: String, page: Int) {
+    fun callSearchApi(
+        searchBoxText: String,
+        page: Int,
+        loader: ProgressDialog
+    ) {
         Api.OMDbApi().searchMovies(apiKey, searchBoxText, page)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
@@ -32,50 +37,64 @@ class ListPresenterImpl(iListPresenterImpl: IListPresenterImpl) {
                     if (searchResult.response == "True") {
                         listPresenterImplInterface!!.successSearchResult(
                             searchResult.searchData,
-                            searchResult.totalResults
+                            searchResult.totalResults,
+                            loader
                         )
                     } else if (searchResult.response == "False") {
-                        listPresenterImplInterface!!.failSearchResult(searchResult.error)
+                        listPresenterImplInterface!!.failSearchResult(searchResult.error, loader)
                     }
                 }
             }, object : ApiFail() {
                 override fun httpStatus(response: HttpErrorResponse) {
-                    listPresenterImplInterface!!.failSearchResult(response.error)
+                    listPresenterImplInterface!!.failSearchResult(response.error, loader)
                 }
 
                 override fun noNetworkError() {
-                    listPresenterImplInterface!!.failSearchResult("Please Check Your Internet")
+                    listPresenterImplInterface!!.failSearchResult(
+                        "Please Check Your Internet",
+                        loader
+                    )
                 }
 
                 override fun unknownError(throwable: Throwable) {
-                    listPresenterImplInterface!!.failSearchResult(throwable.message)
+                    listPresenterImplInterface!!.failSearchResult(throwable.message, loader)
                 }
             })
     }
 
-    fun callMovieDetailsApi(imdbID: String?, targetView: AppCompatImageView) {
+    fun callMovieDetailsApi(
+        imdbID: String?,
+        targetView: AppCompatImageView,
+        loader: ProgressDialog
+    ) {
         Api.OMDbApi().getMovieDetails(apiKey, imdbID)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe(object : ApiSuccess<Movie>() {
                 override fun call(movie: Movie) {
                     if (movie.response == "True") {
-                        listPresenterImplInterface!!.successMovieDetails(movie, targetView)
+                        listPresenterImplInterface!!.successMovieDetails(movie, targetView, loader)
                     } else if (movie.response == "False") {
-                        listPresenterImplInterface!!.failMovieDetails("Something Went Wrong!!")
+                        listPresenterImplInterface!!.failMovieDetails(
+                            "Something Went Wrong!!",
+                            loader
+                        )
                     }
                 }
             }, object : ApiFail() {
                 override fun httpStatus(response: HttpErrorResponse) {
-                    listPresenterImplInterface!!.failMovieDetails(response.error)
+                    listPresenterImplInterface!!.failMovieDetails(response.error, loader)
                 }
 
                 override fun noNetworkError() {
-                    listPresenterImplInterface!!.failMovieDetails("Please Check Your Internet")
+                    listPresenterImplInterface!!.failMovieDetails(
+                        "Please Check Your Internet",
+                        loader
+                    )
                 }
 
                 override fun unknownError(throwable: Throwable) {
-                    listPresenterImplInterface!!.failMovieDetails(throwable.message)
+                    listPresenterImplInterface!!.failMovieDetails(throwable.message, loader)
                 }
             })
     }
