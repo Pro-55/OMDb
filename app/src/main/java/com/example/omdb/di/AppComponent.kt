@@ -15,6 +15,7 @@ import javax.inject.Singleton
         ActivityBuilderModule::class,
         ViewModelBuilder::class,
         AppModule::class,
+        OkHttpModule::class,
         RetrofitModule::class
     ]
 )

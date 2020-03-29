@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/navigation_graph"
+	app:startDestination="@id/splashFragment">
+	<fragment
+		android:id="@+id/splashFragment"
+		android:name="com.example.omdb.view.splash.SplashFragment"
+		android:label="fragment_splash"
+		tools:layout="@layout/fragment_splash">
+		<action
+			android:id="@+id/navigateSplashToHome"
+			app:destination="@id/homeFragment"
+			app:popUpTo="@id/splashFragment"
+			app:popUpToInclusive="true" />
+	</fragment>
+	<fragment
+		android:id="@+id/detailsFragment"
+		android:name="com.example.omdb.view.details.DetailsFragment"
+		android:label="fragment_details"
+		tools:layout="@layout/fragment_details" />
+	<fragment
+		android:id="@+id/homeFragment"
+		android:name="com.example.omdb.view.home.HomeFragment"
+		android:label="fragment_home"
+		tools:layout="@layout/fragment_home">
+		<action
+			android:id="@+id/navigateHomeToDetails"
+			app:destination="@id/detailsFragment" />
+	</fragment>
+</navigation>

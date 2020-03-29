@@ -17,8 +17,9 @@
 
 		<activity
 			android:name=".ui.HomeActivity"
+			android:screenOrientation="portrait"
 			android:windowSoftInputMode="adjustPan"
-			android:screenOrientation="portrait" >
+			tools:ignore="LockedOrientationActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 

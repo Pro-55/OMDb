@@ -3,6 +3,7 @@ package com.example.omdb
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
+import androidx.navigation.fragment.findNavController
 import dagger.android.support.DaggerFragment
 
 open class BaseFragment : DaggerFragment() {
@@ -20,7 +21,7 @@ open class BaseFragment : DaggerFragment() {
     }
 
     open fun onBackPressed() {
-        parentFragmentManager.popBackStack()
+        if (!findNavController().popBackStack()) requireActivity().finish()
     }
 
 }

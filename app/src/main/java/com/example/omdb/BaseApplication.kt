@@ -12,8 +12,6 @@ class BaseApplication : DaggerApplication(), Configuration.Provider {
         DaggerAppComponent.builder().application(this).build()
 
     override fun getWorkManagerConfiguration(): Configuration =
-        Configuration.Builder()
-            .setMinimumLoggingLevel(Log.INFO)
-            .build()
+        Configuration.Builder().setMinimumLoggingLevel(Log.INFO).build()
 
 }
