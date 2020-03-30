@@ -1,7 +1,6 @@
 package com.example.omdb.di
 
 import com.example.omdb.BuildConfig.BaseUrl
-import com.example.omdb.data.network.calladapter.LiveDataCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -19,7 +18,6 @@ object RetrofitModule {
             .baseUrl(BaseUrl)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(LiveDataCallAdapterFactory())
             .build()
     }
 
