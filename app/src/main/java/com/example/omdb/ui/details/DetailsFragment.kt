@@ -1,4 +1,4 @@
-package com.example.omdb.view.details
+package com.example.omdb.ui.details
 
 import android.os.Bundle
 import android.view.LayoutInflater

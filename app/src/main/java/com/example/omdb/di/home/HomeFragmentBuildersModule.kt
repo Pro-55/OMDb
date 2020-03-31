@@ -1,7 +1,7 @@
 package com.example.omdb.di.home
 
-import com.example.omdb.view.details.DetailsFragment
-import com.example.omdb.view.home.HomeFragment
+import com.example.omdb.ui.details.DetailsFragment
+import com.example.omdb.ui.home.HomeFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

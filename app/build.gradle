@@ -106,6 +106,9 @@ dependencies {
     implementation 'com.google.dagger:dagger-android-support:2.26'
     kapt 'com.google.dagger:dagger-android-processor:2.26'
 
+    // DiscreteScrollView
+    implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
+
     // Test
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'

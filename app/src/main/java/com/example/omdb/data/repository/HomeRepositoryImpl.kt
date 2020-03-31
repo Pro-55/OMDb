@@ -1,6 +1,5 @@
 package com.example.omdb.data.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.omdb.BuildConfig.ApiKey
@@ -26,11 +25,12 @@ class HomeRepositoryImpl @Inject constructor(
         val liveData = MutableLiveData<Resource<SearchResult>>()
         api.searchMovies(ApiKey, searchString, page).enqueue(object : Callback<SearchResult> {
             override fun onResponse(call: Call<SearchResult>, response: Response<SearchResult>) {
-                Log.d(TAG, "TestLog: r:${response.body()}")
+                liveData.postValue(Resource.success(response.body()))
             }
 
             override fun onFailure(call: Call<SearchResult>, t: Throwable) {
                 t.printStackTrace()
+                liveData.postValue(Resource.error(t.message ?: ""))
             }
         })
 
@@ -41,11 +41,12 @@ class HomeRepositoryImpl @Inject constructor(
         val liveData = MutableLiveData<Resource<FullData>>()
         api.getMovieDetails(ApiKey, id).enqueue(object : Callback<FullData> {
             override fun onResponse(call: Call<FullData>, response: Response<FullData>) {
-                Log.d(TAG, "TestLog: r:${response.body()}")
+                liveData.postValue(Resource.success(response.body()))
             }
 
             override fun onFailure(call: Call<FullData>, t: Throwable) {
                 t.printStackTrace()
+                liveData.postValue(Resource.error(t.message ?: ""))
             }
         })
 

@@ -1,5 +1,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto">
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tool="http://schemas.android.com/tools">
 
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
@@ -8,15 +9,20 @@
 		android:clickable="true"
 		android:focusable="true">
 
-		<ImageView
-			android:id="@+id/img_logo"
-			android:layout_width="match_parent"
+		<com.yarolegovich.discretescrollview.DiscreteScrollView
+			android:id="@+id/recycler_categories"
+			android:layout_width="0dp"
 			android:layout_height="0dp"
-			android:src="@drawable/logo_omdb"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintDimensionRatio="H,1:1"
+			android:layout_marginTop="@dimen/activity_default_margin"
+			android:clipToPadding="false"
+			android:overScrollMode="never"
+			android:padding="@dimen/activity_default_margin"
+			android:splitMotionEvents="false"
+			app:layout_constraintDimensionRatio="H,1.5:1"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintVertical_bias="1" />
+			tool:listitem="@layout/layout_category_item" />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

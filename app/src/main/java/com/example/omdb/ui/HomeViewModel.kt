@@ -27,7 +27,7 @@ class HomeViewModel @Inject constructor(
 
     private fun getData() {
         viewModelScope.launch {
-            repository.searchMovies("Bat", 10).asFlow().collect { _data.postValue(it) }
+            repository.searchMovies("bat", 1).asFlow().collect { _data.postValue(it) }
         }
     }
 
