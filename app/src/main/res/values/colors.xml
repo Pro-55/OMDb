@@ -6,6 +6,12 @@
 	<color name="colorWhite">#ffffff</color>
 	<color name="colorLightGray">#d4d4d4</color>
 	<color name="colorDarkGray">#a1a1a1</color>
-	<color name="colorRed">#c60000</color>
 	<color name="colorYellow">#e8c309</color>
+
+	<color name="color_category_movie">#C60000</color>
+
+	<color name="color_category_series">#3B5998</color>
+
+	<color name="color_category_episodes">#5BA525</color>
+
 </resources>

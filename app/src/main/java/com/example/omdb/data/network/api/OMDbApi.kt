@@ -9,12 +9,17 @@ import retrofit2.http.Query
 interface OMDbApi {
 
     @GET("/")
-    fun searchMovies(@Query("apikey") apiKey: String,
-                     @Query("s") movieTitle: String,
-                     @Query("page") page: Int): Call<SearchResult>
+    fun searchContent(
+        @Query("apikey") apiKey: String,
+        @Query("s") title: String,
+        @Query("type") type: String,
+        @Query("page") page: Int
+    ): Call<SearchResult>
 
     @GET("/")
-    fun getMovieDetails(@Query("apikey") apiKey: String,
-                        @Query("i") movieID: String?): Call<FullData>
+    fun getMovieDetails(
+        @Query("apikey") apiKey: String,
+        @Query("i") id: String
+    ): Call<FullData>
 
 }

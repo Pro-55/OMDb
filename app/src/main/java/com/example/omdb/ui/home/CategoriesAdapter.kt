@@ -6,13 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.RequestManager
 import com.example.omdb.R
-import com.example.omdb.models.ShortData
+import com.example.omdb.models.Category
 import kotlinx.android.synthetic.main.layout_category_item.view.*
 
-class CategoriesAdapter(private val glide: RequestManager) :
-    ListAdapter<ShortData, CategoriesAdapter.ViewHolder>(ShortDataDC()) {
+class CategoriesAdapter : ListAdapter<Category, CategoriesAdapter.ViewHolder>(CategoryDC()) {
 
     var listener: Listener? = null
 
@@ -24,31 +22,36 @@ class CategoriesAdapter(private val glide: RequestManager) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
         holder.bind(getItem(position))
 
-    fun swapData(data: List<ShortData>) = submitList(data.toMutableList())
+    fun swapData(data: List<Category>) = submitList(data.toMutableList())
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(data: ShortData) = with(itemView) {
-            glide.load(data.poster)
-                .into(img_poster)
+        fun bind(category: Category) = with(itemView) {
 
-            setOnClickListener { listener?.onClick(data) }
+            view_background.setBackgroundResource(category.background)
+
+            img_icon.setImageDrawable(resources.getDrawable(category.icon))
+
+            txt_title.text = category.title
+
+            setOnClickListener { listener?.onClick(category, this.img_icon) }
+
         }
     }
 
 
-    private class ShortDataDC : DiffUtil.ItemCallback<ShortData>() {
+    private class CategoryDC : DiffUtil.ItemCallback<Category>() {
         override fun areItemsTheSame(
-            oldItem: ShortData,
-            newItem: ShortData
+            oldItem: Category,
+            newItem: Category
         ): Boolean = oldItem._id == newItem._id
 
         override fun areContentsTheSame(
-            oldItem: ShortData,
-            newItem: ShortData
+            oldItem: Category,
+            newItem: Category
         ): Boolean = oldItem == newItem
     }
 
     interface Listener {
-        fun onClick(data: ShortData)
+        fun onClick(category: Category, sharedView: View)
     }
 }

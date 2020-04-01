@@ -10,7 +10,18 @@
 		android:label="fragment_home"
 		tools:layout="@layout/fragment_home">
 		<action
-			android:id="@+id/navigateHomeToDetails"
+			android:id="@+id/navigateHomeToSearch"
+			app:destination="@id/searchFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/searchFragment"
+		android:name="com.example.omdb.ui.search.SearchFragment"
+		android:label="SearchFragment">
+		<argument
+			android:name="category"
+			app:argType="com.example.omdb.models.Type" />
+		<action
+			android:id="@+id/navigateSearchToDetails"
 			app:destination="@id/detailsFragment" />
 	</fragment>
 	<fragment

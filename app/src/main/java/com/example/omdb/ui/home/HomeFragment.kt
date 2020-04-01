@@ -1,26 +1,17 @@
 package com.example.omdb.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
+import androidx.navigation.fragment.findNavController
 import com.example.omdb.BaseFragment
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentHomeBinding
-import com.example.omdb.models.Resource
-import com.example.omdb.models.SearchResult
-import com.example.omdb.models.ShortData
-import com.example.omdb.models.Status
-import com.example.omdb.ui.HomeViewModel
-import com.example.omdb.util.extensions.getViewModel
-import com.yarolegovich.discretescrollview.transform.Pivot
-import com.yarolegovich.discretescrollview.transform.ScaleTransformer
-import javax.inject.Inject
+import com.example.omdb.models.Category
+import com.example.omdb.models.Type
+import com.example.omdb.util.transformers.ScaleTransformer
 
 class HomeFragment : BaseFragment() {
 
@@ -29,10 +20,7 @@ class HomeFragment : BaseFragment() {
     }
 
     //Global
-    @Inject lateinit var factory: ViewModelProvider.Factory
     private lateinit var binding: FragmentHomeBinding
-    private val viewModel by lazy { requireActivity().getViewModel<HomeViewModel>(factory) }
-    private var adapter: CategoriesAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,40 +36,41 @@ class HomeFragment : BaseFragment() {
 
         setupRecyclerView()
 
-        viewModel.data.observe(viewLifecycleOwner, Observer { bindData(it) })
-
     }
 
     private fun setupRecyclerView() {
-        adapter = CategoriesAdapter(Glide.with(this))
-        adapter?.listener = object : CategoriesAdapter.Listener {
-            override fun onClick(data: ShortData) {
-                Log.d(TAG, "TestLog: d:$data")
+        val adapter = CategoriesAdapter()
+        adapter.listener = object : CategoriesAdapter.Listener {
+            override fun onClick(category: Category, sharedView: View) {
+                val action = HomeFragmentDirections.navigateHomeToSearch(category._id)
+                findNavController().navigate(action)
             }
         }
 
         binding.recyclerCategories.adapter = adapter
-
-        binding.recyclerCategories.setItemTransformer(
-            ScaleTransformer.Builder()
-                .setMaxScale(1F)
-                .setMinScale(0.5F)
-                .setPivotX(Pivot.X.CENTER) // CENTER is a default one
-                .setPivotY(Pivot.Y.BOTTOM) // CENTER is a default one
-                .build()
+        binding.recyclerCategories.setItemTransformer(ScaleTransformer())
+        val categories = listOf(
+            Category(
+                _id = Type.MOVIES,
+                icon = R.drawable.ic_movies,
+                background = R.color.color_category_movie,
+                title = Type.MOVIES.toString()
+            ),
+            Category(
+                _id = Type.SERIES,
+                icon = R.drawable.ic_series,
+                background = R.color.color_category_series,
+                title = Type.SERIES.toString()
+            ),
+            Category(
+                _id = Type.EPISODES,
+                icon = R.drawable.ic_episodes,
+                background = R.color.color_category_episodes,
+                title = Type.EPISODES.toString()
+            )
         )
-    }
+        adapter.swapData(categories)
 
-    private fun bindData(resource: Resource<SearchResult>) {
-        when (resource.status) {
-            Status.LOADING -> Unit
-            Status.SUCCESS -> {
-                val data = resource.data?.search ?: listOf()
-                adapter?.swapData(data)
-            }
-            Status.ERROR -> Log.d(TAG, "TestLog: e:${resource.message}")
-        }
     }
-
 
 }

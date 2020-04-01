@@ -23,16 +23,60 @@ class HomeRepositoryImpl @Inject constructor(
 
     override fun searchMovies(searchString: String, page: Int): LiveData<Resource<SearchResult>> {
         val liveData = MutableLiveData<Resource<SearchResult>>()
-        api.searchMovies(ApiKey, searchString, page).enqueue(object : Callback<SearchResult> {
-            override fun onResponse(call: Call<SearchResult>, response: Response<SearchResult>) {
-                liveData.postValue(Resource.success(response.body()))
-            }
+        api.searchContent(apiKey = ApiKey, title = searchString, type = "movie", page = page)
+            .enqueue(object : Callback<SearchResult> {
+                override fun onResponse(
+                    call: Call<SearchResult>,
+                    response: Response<SearchResult>
+                ) {
+                    liveData.postValue(Resource.success(response.body()))
+                }
 
-            override fun onFailure(call: Call<SearchResult>, t: Throwable) {
-                t.printStackTrace()
-                liveData.postValue(Resource.error(t.message ?: ""))
-            }
-        })
+                override fun onFailure(call: Call<SearchResult>, t: Throwable) {
+                    t.printStackTrace()
+                    liveData.postValue(Resource.error(t.message ?: ""))
+                }
+            })
+
+        return liveData
+    }
+
+    override fun searchSeries(searchString: String, page: Int): LiveData<Resource<SearchResult>> {
+        val liveData = MutableLiveData<Resource<SearchResult>>()
+        api.searchContent(apiKey = ApiKey, title = searchString, type = "series", page = page)
+            .enqueue(object : Callback<SearchResult> {
+                override fun onResponse(
+                    call: Call<SearchResult>,
+                    response: Response<SearchResult>
+                ) {
+                    liveData.postValue(Resource.success(response.body()))
+                }
+
+                override fun onFailure(call: Call<SearchResult>, t: Throwable) {
+                    t.printStackTrace()
+                    liveData.postValue(Resource.error(t.message ?: ""))
+                }
+            })
+
+        return liveData
+    }
+
+    override fun searchEpisodes(searchString: String, page: Int): LiveData<Resource<SearchResult>> {
+        val liveData = MutableLiveData<Resource<SearchResult>>()
+        api.searchContent(apiKey = ApiKey, title = searchString, type = "episode", page = page)
+            .enqueue(object : Callback<SearchResult> {
+                override fun onResponse(
+                    call: Call<SearchResult>,
+                    response: Response<SearchResult>
+                ) {
+                    liveData.postValue(Resource.success(response.body()))
+                }
+
+                override fun onFailure(call: Call<SearchResult>, t: Throwable) {
+                    t.printStackTrace()
+                    liveData.postValue(Resource.error(t.message ?: ""))
+                }
+            })
 
         return liveData
     }
