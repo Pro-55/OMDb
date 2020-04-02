@@ -5,13 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.omdb.BaseFragment
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentHomeBinding
-import com.example.omdb.models.Category
 import com.example.omdb.models.Type
-import com.example.omdb.util.transformers.ScaleTransformer
 
 class HomeFragment : BaseFragment() {
 
@@ -34,43 +33,39 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupRecyclerView()
+        setupView()
 
     }
 
-    private fun setupRecyclerView() {
-        val adapter = CategoriesAdapter()
-        adapter.listener = object : CategoriesAdapter.Listener {
-            override fun onClick(category: Category, sharedView: View) {
-                val action = HomeFragmentDirections.navigateHomeToSearch(category._id)
-                findNavController().navigate(action)
-            }
+    private fun setupView() {
+
+        binding.cardMovies.setOnClickListener {
+            openSearch(
+                Type.MOVIES,
+                binding.layoutMovies,
+                binding.imgIconMovies,
+                binding.txtTitleMovies
+            )
         }
 
-        binding.recyclerCategories.adapter = adapter
-        binding.recyclerCategories.setItemTransformer(ScaleTransformer())
-        val categories = listOf(
-            Category(
-                _id = Type.MOVIES,
-                icon = R.drawable.ic_movies,
-                background = R.color.color_category_movie,
-                title = Type.MOVIES.toString()
-            ),
-            Category(
-                _id = Type.SERIES,
-                icon = R.drawable.ic_series,
-                background = R.color.color_category_series,
-                title = Type.SERIES.toString()
-            ),
-            Category(
-                _id = Type.EPISODES,
-                icon = R.drawable.ic_episodes,
-                background = R.color.color_category_episodes,
-                title = Type.EPISODES.toString()
+        binding.cardSeries.setOnClickListener {
+            openSearch(
+                Type.SERIES,
+                binding.layoutSeries,
+                binding.imgIconSeries,
+                binding.txtTitleSeries
             )
-        )
-        adapter.swapData(categories)
+        }
+    }
 
+    private fun openSearch(type: Type, sharedContainer: View, sharedIcon: View, sharedTitle: View) {
+        val action = HomeFragmentDirections.navigateHomeToSearch(type)
+        val extras = FragmentNavigatorExtras(
+            sharedContainer to sharedContainer.transitionName,
+            sharedIcon to sharedIcon.transitionName,
+            sharedTitle to sharedTitle.transitionName
+        )
+        findNavController().navigate(action, extras)
     }
 
 }

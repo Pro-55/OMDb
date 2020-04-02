@@ -2,4 +2,19 @@
 	<string name="app_name">OMDb</string>
 
 	<string name="hint_search">Search</string>
+	<string name="label_movies">Movies</string>
+	<string name="label_series">Series</string>
+	<string name="label_episodes">Episodes</string>
+
+	<string name="shared_container_movies">shared_container_movies</string>
+	<string name="shared_icon_movies">shared_icon_movies</string>
+	<string name="shared_title_movies">shared_title_movies</string>
+
+	<string name="shared_container_series">shared_container_series</string>
+	<string name="shared_icon_series">shared_icon_series</string>
+	<string name="shared_title_series">shared_title_series</string>
+
+	<string name="shared_container_episodes">shared_container_episodes</string>
+	<string name="shared_icon_episodes">shared_icon_episodes</string>
+	<string name="shared_title_episodes">shared_title_episodes</string>
 </resources>
