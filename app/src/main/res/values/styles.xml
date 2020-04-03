@@ -1,22 +1,18 @@
 <resources>
 
 	<!-- Base application theme. -->
-	<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+	<style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 		<!-- Customize your theme here. -->
 		<item name="colorPrimary">@color/colorPrimary</item>
 		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 		<item name="colorAccent">@color/colorAccent</item>
+		<item name="android:statusBarColor">?attr/backgroundColor</item>
 		<item name="android:fontFamily">@font/product_sans_regular</item>
 	</style>
 
 	<style name="SplashTheme" parent="AppTheme">
-		<item name="colorPrimaryDark">@android:color/white</item>
+		<item name="colorPrimaryDark">?attr/backgroundColor</item>
 		<item name="android:windowBackground">@drawable/splash</item>
-	</style>
-
-	<style name="RatingBarTheme" parent="Theme.AppCompat">
-		<item name="colorControlNormal">@color/colorLightGray</item>
-		<item name="colorControlActivated">@color/colorAccent</item>
 	</style>
 
 </resources>

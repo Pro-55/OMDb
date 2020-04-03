@@ -8,6 +8,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.SharedElementCallback
+import androidx.core.view.doOnPreDraw
 import androidx.databinding.DataBindingUtil
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.Observer
@@ -66,7 +68,6 @@ class SearchFragment : BaseFragment() {
 
         val hint: Int
         val icon: Int
-        val color: Int
         val sharedContainer: Int
         val sharedIcon: Int
         val sharedTitle: Int
@@ -74,7 +75,6 @@ class SearchFragment : BaseFragment() {
             Type.MOVIES -> {
                 hint = R.string.label_movies
                 icon = R.drawable.ic_movies
-                color = R.color.color_category_movie
                 sharedContainer = R.string.shared_container_movies
                 sharedIcon = R.string.shared_icon_movies
                 sharedTitle = R.string.shared_title_movies
@@ -82,7 +82,6 @@ class SearchFragment : BaseFragment() {
             Type.SERIES -> {
                 hint = R.string.label_series
                 icon = R.drawable.ic_series
-                color = R.color.color_category_series
                 sharedContainer = R.string.shared_container_series
                 sharedIcon = R.string.shared_icon_series
                 sharedTitle = R.string.shared_title_series
@@ -90,7 +89,6 @@ class SearchFragment : BaseFragment() {
             Type.EPISODES -> {
                 hint = R.string.label_episodes
                 icon = R.drawable.ic_episodes
-                color = R.color.color_category_episodes
                 sharedContainer = R.string.shared_container_episodes
                 sharedIcon = R.string.shared_icon_episodes
                 sharedTitle = R.string.shared_title_episodes
@@ -112,7 +110,6 @@ class SearchFragment : BaseFragment() {
         binding.txtTitle.apply {
             transitionName = resources.getString(sharedTitle)
             text = title
-            setTextColor(resources.getColor(color))
         }
 
         return binding.root
@@ -121,11 +118,16 @@ class SearchFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setSharedElementCallback()
+
         setupRecyclerView()
 
         setupSearch()
 
         setupObserver()
+
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
 
     }
 
@@ -133,6 +135,7 @@ class SearchFragment : BaseFragment() {
         adapter = SearchAdapter(glide())
         adapter?.listener = object : SearchAdapter.Listener {
             override fun onClick(position: Int, data: ShortData, sharedView: View) {
+                viewModel.searchPosition = position
                 hideKeyboard()
                 val action = SearchFragmentDirections.navigateSearchToDetails(data)
                 val extras = FragmentNavigatorExtras(sharedView to sharedView.transitionName)
@@ -227,7 +230,26 @@ class SearchFragment : BaseFragment() {
         requireActivity().hideKeyboard()
     }
 
+    private fun setSharedElementCallback() {
+        setExitSharedElementCallback(object : SharedElementCallback() {
+            override fun onMapSharedElements(
+                names: MutableList<String>?,
+                sharedElements: MutableMap<String, View>?
+            ) {
+                if (names.isNullOrEmpty() || sharedElements == null) return
+
+                val name = names[0]
+                val position = viewModel.searchPosition
+
+                if (position > -1) sharedElements[name] = binding.recyclerSearch
+                    .findViewHolderForAdapterPosition(position)?.itemView ?: return
+
+            }
+        })
+    }
+
     override fun onBackPressed() {
+        viewModel.searchPosition = -1
         viewModel.clearSearchData(args.category)
         super.onBackPressed()
     }

@@ -4,7 +4,6 @@
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:background="@android:color/white"
 		android:clickable="true"
 		android:focusable="true">
 
@@ -26,7 +25,6 @@
 				android:id="@+id/layout_movies"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:background="@color/color_category_movie"
 				android:transitionName="@string/shared_container_movies">
 
 				<ImageView
@@ -35,7 +33,6 @@
 					android:layout_height="0dp"
 					android:layout_margin="@dimen/dimen_8dp"
 					android:src="@drawable/ic_movies"
-					android:tint="@android:color/white"
 					android:transitionName="@string/shared_icon_movies"
 					app:layout_constraintBottom_toTopOf="@id/txt_title_movies"
 					app:layout_constraintDimensionRatio="H,1:1"
@@ -52,7 +49,6 @@
 					android:layout_margin="@dimen/dimen_8dp"
 					android:gravity="center"
 					android:text="@string/label_movies"
-					android:textColor="@android:color/white"
 					android:textSize="@dimen/dimen_24sp"
 					android:textStyle="bold"
 					android:transitionName="@string/shared_title_movies"
@@ -82,7 +78,6 @@
 				android:id="@+id/layout_series"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:background="@color/color_category_series"
 				android:transitionName="@string/shared_container_series">
 
 				<ImageView
@@ -91,7 +86,6 @@
 					android:layout_height="0dp"
 					android:layout_margin="@dimen/dimen_8dp"
 					android:src="@drawable/ic_series"
-					android:tint="@android:color/white"
 					android:transitionName="@string/shared_icon_series"
 					app:layout_constraintBottom_toTopOf="@id/txt_title_series"
 					app:layout_constraintDimensionRatio="H,1:1"
@@ -108,7 +102,6 @@
 					android:layout_margin="@dimen/dimen_8dp"
 					android:gravity="center"
 					android:text="@string/label_series"
-					android:textColor="@android:color/white"
 					android:textSize="@dimen/dimen_24sp"
 					android:textStyle="bold"
 					android:transitionName="@string/shared_title_series"
