@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class FullData(
     @SerializedName("imdbID") val _id: String,
     @SerializedName("Type") val type: Type,
+    @SerializedName("Poster") val poster: String,
     @SerializedName("Title") val title: String,
     @SerializedName("Year") val year: String,
     @SerializedName("Rated") val rated: String,
@@ -18,7 +19,6 @@ data class FullData(
     @SerializedName("Language") val language: String,
     @SerializedName("Country") val country: String,
     @SerializedName("Awards") val awards: String,
-    @SerializedName("Poster") val poster: String,
     @SerializedName("Ratings") val ratings: List<Rating>,
     @SerializedName("Metascore") val metascore: String,
     @SerializedName("imdbRating") val imdbRating: String,
@@ -26,6 +26,5 @@ data class FullData(
     @SerializedName("DVD") val dvd: String,
     @SerializedName("BoxOffice") val boxOffice: String,
     @SerializedName("Production") val production: String,
-    @SerializedName("Website") val website: String,
-    @SerializedName("Response") val response: String
+    @SerializedName("Website") val website: String
 )

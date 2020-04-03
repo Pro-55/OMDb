@@ -1,9 +1,6 @@
 package com.example.omdb.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.omdb.data.repository.HomeRepositoryImpl
 import com.example.omdb.models.Resource
 import com.example.omdb.models.SearchResult
@@ -91,6 +88,9 @@ class HomeViewModel @Inject constructor(
         }
             .launchIn(viewModelScope)
     }
+
+    fun getDetails(id: String, plot: String = "short") =
+        repository.getMovieDetails(id, plot).asLiveData()
 
     fun clearSearchData(category: Type) {
 

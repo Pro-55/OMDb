@@ -1,6 +1,5 @@
 package com.example.omdb.data.contract
 
-import androidx.lifecycle.LiveData
 import com.example.omdb.models.FullData
 import com.example.omdb.models.Resource
 import com.example.omdb.models.SearchResult
@@ -14,6 +13,6 @@ interface HomeRepository {
 
     fun searchEpisodes(searchString: String, page: Int): Flow<Resource<SearchResult>>
 
-    fun getMovieDetails(id: String): LiveData<Resource<FullData>>
+    fun getMovieDetails(id: String, plot: String): Flow<Resource<FullData>>
 
 }

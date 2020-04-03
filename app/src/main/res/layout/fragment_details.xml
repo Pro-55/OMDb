@@ -1,5 +1,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto">
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tool="http://schemas.android.com/tools">
 
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
@@ -8,14 +9,51 @@
 		android:clickable="true"
 		android:focusable="true">
 
-		<ImageView
-			android:layout_width="match_parent"
+		<androidx.cardview.widget.CardView
+			android:id="@+id/card_poster"
+			android:layout_width="120dp"
 			android:layout_height="0dp"
-			android:src="@drawable/logo_omdb"
-			app:layout_constraintVertical_bias="0"
+			android:layout_marginStart="@dimen/activity_default_margin"
+			android:layout_marginTop="@dimen/activity_default_margin"
+			android:layout_marginEnd="@dimen/dimen_4dp"
+			android:background="@android:color/white"
+			app:cardCornerRadius="@dimen/dimen_8dp"
 			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintDimensionRatio="H,1:1"
-			app:layout_constraintTop_toTopOf="parent" />
+			app:layout_constraintDimensionRatio="H,3:4"
+			app:layout_constraintEnd_toStartOf="@id/txt_title"
+			app:layout_constraintHorizontal_bias="0"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintVertical_bias="0">
+
+			<ImageView
+				android:id="@+id/img_poster"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:scaleType="centerCrop"
+				android:src="@drawable/placeholder_poster"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+		</androidx.cardview.widget.CardView>
+
+		<TextView
+			android:id="@+id/txt_title"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/dimen_4dp"
+			android:layout_marginTop="@dimen/dimen_8dp"
+			android:layout_marginEnd="@dimen/activity_default_margin"
+			android:layout_marginBottom="@dimen/dimen_4dp"
+			android:textColor="@android:color/black"
+			android:textSize="@dimen/dimen_20sp"
+			android:textStyle="bold"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@id/card_poster"
+			app:layout_constraintTop_toTopOf="@id/card_poster"
+			tool:text="Title" />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

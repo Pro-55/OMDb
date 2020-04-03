@@ -1,7 +1,5 @@
 package com.example.omdb.data.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.omdb.BuildConfig.ApiKey
 import com.example.omdb.data.contract.HomeRepository
 import com.example.omdb.data.network.api.OMDbApi
@@ -10,9 +8,6 @@ import com.example.omdb.models.Resource
 import com.example.omdb.models.SearchResult
 import com.example.omdb.util.extensions.resourceFlow
 import kotlinx.coroutines.flow.Flow
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 class HomeRepositoryImpl @Inject constructor(
@@ -80,20 +75,19 @@ class HomeRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getMovieDetails(id: String): LiveData<Resource<FullData>> {
-        val liveData = MutableLiveData<Resource<FullData>>()
-        api.getMovieDetails(ApiKey, id).enqueue(object : Callback<FullData> {
-            override fun onResponse(call: Call<FullData>, response: Response<FullData>) {
-                liveData.postValue(Resource.success(response.body()))
-            }
+    override fun getMovieDetails(id: String, plot: String): Flow<Resource<FullData>> {
+        return resourceFlow {
+            val result = api.getMovieDetails(ApiKey, id, plot)
 
-            override fun onFailure(call: Call<FullData>, t: Throwable) {
-                t.printStackTrace()
-                liveData.postValue(Resource.error(t.message ?: ""))
+            if (result.isSuccessful) {
+                val data = result.body()
+                if (data != null) emit(Resource.success(data))
+                else emit(Resource.error("Something Went wrong!"))
+            } else {
+                val msg = result.message()
+                emit(Resource.error(msg))
             }
-        })
-
-        return liveData
+        }
     }
 
 }

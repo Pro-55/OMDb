@@ -2,7 +2,6 @@ package com.example.omdb.data.network.api
 
 import com.example.omdb.models.FullData
 import com.example.omdb.models.SearchResult
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -18,9 +17,10 @@ interface OMDbApi {
     ): Response<SearchResult>
 
     @GET("/")
-    fun getMovieDetails(
+    suspend fun getMovieDetails(
         @Query("apikey") apiKey: String,
-        @Query("i") id: String
-    ): Call<FullData>
+        @Query("i") id: String,
+        @Query("plot") plot: String
+    ): Response<FullData>
 
 }

@@ -2,7 +2,6 @@ package com.example.omdb.ui.search
 
 import android.os.Bundle
 import android.transition.ChangeBounds
-import android.transition.ChangeClipBounds
 import android.transition.ChangeTransform
 import android.transition.TransitionSet
 import android.util.Log
@@ -13,6 +12,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,15 +21,9 @@ import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import com.example.omdb.BaseFragment
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentSearchBinding
-import com.example.omdb.models.Resource
-import com.example.omdb.models.SearchResult
-import com.example.omdb.models.Status
-import com.example.omdb.models.Type
+import com.example.omdb.models.*
 import com.example.omdb.ui.HomeViewModel
-import com.example.omdb.util.extensions.getViewModel
-import com.example.omdb.util.extensions.glide
-import com.example.omdb.util.extensions.gone
-import com.example.omdb.util.extensions.visible
+import com.example.omdb.util.extensions.*
 import com.jakewharton.rxbinding.widget.RxTextView
 import rx.Subscriber
 import rx.Subscription
@@ -58,7 +53,6 @@ class SearchFragment : BaseFragment() {
         sharedElementEnterTransition = TransitionSet().apply {
             addTransition(ChangeTransform())
             addTransition(ChangeBounds())
-            addTransition(ChangeClipBounds())
             interpolator = LinearOutSlowInInterpolator()
         }
     }
@@ -137,6 +131,14 @@ class SearchFragment : BaseFragment() {
 
     private fun setupRecyclerView() {
         adapter = SearchAdapter(glide())
+        adapter?.listener = object : SearchAdapter.Listener {
+            override fun onClick(position: Int, data: ShortData, sharedView: View) {
+                hideKeyboard()
+                val action = SearchFragmentDirections.navigateSearchToDetails(data)
+                val extras = FragmentNavigatorExtras(sharedView to sharedView.transitionName)
+                findNavController().navigate(action, extras)
+            }
+        }
 
         binding.recyclerSearch.layoutManager =
             GridLayoutManager(requireContext(), 2, VERTICAL, false)
@@ -218,6 +220,11 @@ class SearchFragment : BaseFragment() {
     private fun hidePlaceholders() {
         binding.imgIcon.gone()
         binding.txtTitle.gone()
+    }
+
+    private fun hideKeyboard() {
+        requireActivity().currentFocus?.clearFocus()
+        requireActivity().hideKeyboard()
     }
 
     override fun onBackPressed() {

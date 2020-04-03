@@ -15,6 +15,8 @@ import kotlinx.android.synthetic.main.layout_search_item.view.*
 class SearchAdapter(private val glide: RequestManager) :
     ListAdapter<ShortData, SearchAdapter.ViewHolder>(ShortDataDC()) {
 
+    var listener: Listener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
         LayoutInflater.from(parent.context)
             .inflate(R.layout.layout_search_item, parent, false)
@@ -32,7 +34,10 @@ class SearchAdapter(private val glide: RequestManager) :
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(resources.getDrawable(R.drawable.placeholder_poster))
                 .into(img_poster)
-            Unit
+
+            transitionName = data._id
+            setOnClickListener { listener?.onClick(adapterPosition, data, this) }
+
         }
     }
 
@@ -48,4 +53,9 @@ class SearchAdapter(private val glide: RequestManager) :
             newItem: ShortData
         ): Boolean = oldItem == newItem
     }
+
+    interface Listener {
+        fun onClick(position: Int, data: ShortData, sharedView: View)
+    }
+
 }
