@@ -8,6 +8,8 @@ import com.example.omdb.data.network.api.OMDbApi
 import com.example.omdb.models.FullData
 import com.example.omdb.models.Resource
 import com.example.omdb.models.SearchResult
+import com.example.omdb.util.extensions.resourceFlow
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,64 +23,61 @@ class HomeRepositoryImpl @Inject constructor(
         private val TAG = HomeRepositoryImpl::class.java.simpleName
     }
 
-    override fun searchMovies(searchString: String, page: Int): LiveData<Resource<SearchResult>> {
-        val liveData = MutableLiveData<Resource<SearchResult>>()
-        api.searchContent(apiKey = ApiKey, title = searchString, type = "movie", page = page)
-            .enqueue(object : Callback<SearchResult> {
-                override fun onResponse(
-                    call: Call<SearchResult>,
-                    response: Response<SearchResult>
-                ) {
-                    liveData.postValue(Resource.success(response.body()))
-                }
+    override fun searchMovies(searchString: String, page: Int): Flow<Resource<SearchResult>> {
+        return resourceFlow {
+            val result = api.searchContent(
+                apiKey = ApiKey,
+                title = searchString,
+                type = "movie",
+                page = page
+            )
 
-                override fun onFailure(call: Call<SearchResult>, t: Throwable) {
-                    t.printStackTrace()
-                    liveData.postValue(Resource.error(t.message ?: ""))
-                }
-            })
-
-        return liveData
+            if (result.isSuccessful) {
+                val data = result.body() ?: SearchResult()
+                emit(Resource.success(data))
+            } else {
+                val msg = result.message()
+                emit(Resource.error(msg))
+            }
+        }
     }
 
-    override fun searchSeries(searchString: String, page: Int): LiveData<Resource<SearchResult>> {
-        val liveData = MutableLiveData<Resource<SearchResult>>()
-        api.searchContent(apiKey = ApiKey, title = searchString, type = "series", page = page)
-            .enqueue(object : Callback<SearchResult> {
-                override fun onResponse(
-                    call: Call<SearchResult>,
-                    response: Response<SearchResult>
-                ) {
-                    liveData.postValue(Resource.success(response.body()))
-                }
+    override fun searchSeries(searchString: String, page: Int): Flow<Resource<SearchResult>> {
+        return resourceFlow {
+            val result = api.searchContent(
+                apiKey = ApiKey,
+                title = searchString,
+                type = "series",
+                page = page
+            )
 
-                override fun onFailure(call: Call<SearchResult>, t: Throwable) {
-                    t.printStackTrace()
-                    liveData.postValue(Resource.error(t.message ?: ""))
-                }
-            })
-
-        return liveData
+            if (result.isSuccessful) {
+                val data = result.body() ?: SearchResult()
+                emit(Resource.success(data))
+            } else {
+                val msg = result.message()
+                emit(Resource.error(msg))
+            }
+        }
     }
 
-    override fun searchEpisodes(searchString: String, page: Int): LiveData<Resource<SearchResult>> {
-        val liveData = MutableLiveData<Resource<SearchResult>>()
-        api.searchContent(apiKey = ApiKey, title = searchString, type = "episode", page = page)
-            .enqueue(object : Callback<SearchResult> {
-                override fun onResponse(
-                    call: Call<SearchResult>,
-                    response: Response<SearchResult>
-                ) {
-                    liveData.postValue(Resource.success(response.body()))
-                }
+    override fun searchEpisodes(searchString: String, page: Int): Flow<Resource<SearchResult>> {
+        return resourceFlow {
+            val result = api.searchContent(
+                apiKey = ApiKey,
+                title = searchString,
+                type = "episode",
+                page = page
+            )
 
-                override fun onFailure(call: Call<SearchResult>, t: Throwable) {
-                    t.printStackTrace()
-                    liveData.postValue(Resource.error(t.message ?: ""))
-                }
-            })
-
-        return liveData
+            if (result.isSuccessful) {
+                val data = result.body() ?: SearchResult()
+                emit(Resource.success(data))
+            } else {
+                val msg = result.message()
+                emit(Resource.error(msg))
+            }
+        }
     }
 
     override fun getMovieDetails(id: String): LiveData<Resource<FullData>> {

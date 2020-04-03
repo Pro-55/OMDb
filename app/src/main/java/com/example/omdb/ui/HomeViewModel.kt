@@ -1,14 +1,16 @@
 package com.example.omdb.ui
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import com.example.omdb.data.repository.HomeRepositoryImpl
-import com.example.omdb.models.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import com.example.omdb.models.Resource
+import com.example.omdb.models.SearchResult
+import com.example.omdb.models.Status
+import com.example.omdb.models.Type
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
@@ -17,92 +19,91 @@ class HomeViewModel @Inject constructor(
 
     companion object {
         private val TAG = HomeViewModel::class.java.simpleName
-        private val PAGE_SIZE = 10
+        private const val PAGE_SIZE = 10
     }
 
+    private var movieResult = SearchResult()
     private val _movieSearch = MutableLiveData<Resource<SearchResult>>()
-    val movieSearch = _movieSearch
+    val movieSearch: LiveData<Resource<SearchResult>> = _movieSearch
+    private var seriesResult = SearchResult()
     private val _seriesSearch = MutableLiveData<Resource<SearchResult>>()
-    val seriesSearch = _seriesSearch
+    val seriesSearch: LiveData<Resource<SearchResult>> = _seriesSearch
+    private var episodeResult = SearchResult()
     private val _episodeSearch = MutableLiveData<Resource<SearchResult>>()
-    val episodeSearch = _episodeSearch
+    val episodeSearch: LiveData<Resource<SearchResult>> = _episodeSearch
 
-    fun searchMovies(searchText: String, size: Int = 0) {
+    fun searchMovies(searchText: String, size: Int) {
+        if (size <= 0) movieResult = SearchResult()
         val page = if (size <= 0) 1 else size / PAGE_SIZE + 1
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.searchMovies(searchText, page)
-                .asFlow()
-                .collect {
-                    var resource = it
-                    if (resource.status == Status.SUCCESS) {
-                        val oldResult = resource.data
-                        val old = _movieSearch.value?.data?.search ?: listOf()
-                        val new = oldResult?.search ?: listOf()
-                        val list = mutableListOf<ShortData>()
-                        list.addAll(old)
-                        list.addAll(new)
-                        list.distinctBy { data -> data._id }
-                        val newResult = oldResult?.copy(search = list)
-                        resource = it.copy(data = newResult)
-                    }
-                    _movieSearch.postValue(resource)
-                }
+
+        repository.searchMovies(searchText, page).onEach { resourse ->
+            var newResource = resourse
+            if (resourse.status == Status.SUCCESS) {
+                val list = movieResult.search.toMutableList()
+                val new = resourse.data?.search ?: listOf()
+                list.addAll(new)
+                list.distinctBy { it._id }
+                val total = resourse.data?.totalResults ?: movieResult.totalResults
+                movieResult = movieResult.copy(search = list, totalResults = total)
+                newResource = resourse.copy(data = movieResult)
+            }
+            _movieSearch.postValue(newResource)
         }
+            .launchIn(viewModelScope)
     }
 
     fun searchSeries(searchText: String, size: Int = 0) {
+        if (size <= 0) seriesResult = SearchResult()
         val page = if (size <= 0) 1 else size / PAGE_SIZE + 1
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.searchSeries(searchText, page)
-                .asFlow()
-                .collect {
-                    var resource = it
-                    if (resource.status == Status.SUCCESS) {
-                        val oldResult = resource.data
-                        val old = _seriesSearch.value?.data?.search ?: listOf()
-                        val new = oldResult?.search ?: listOf()
-                        val list = mutableListOf<ShortData>()
-                        list.addAll(old)
-                        list.addAll(new)
-                        list.distinctBy { data -> data._id }
-                        val newResult = oldResult?.copy(search = list)
-                        resource = it.copy(data = newResult)
-                    }
-                    _seriesSearch.postValue(resource)
-                }
+
+        repository.searchSeries(searchText, page).onEach { resourse ->
+            var newResource = resourse
+            if (resourse.status == Status.SUCCESS) {
+                val list = seriesResult.search.toMutableList()
+                val new = resourse.data?.search ?: listOf()
+                list.addAll(new)
+                list.distinctBy { it._id }
+                val total = resourse.data?.totalResults ?: seriesResult.totalResults
+                seriesResult = seriesResult.copy(search = list, totalResults = total)
+                newResource = resourse.copy(data = seriesResult)
+            }
+            _seriesSearch.postValue(newResource)
         }
+            .launchIn(viewModelScope)
     }
 
     fun searchEpisodes(searchText: String, size: Int = 0) {
+        if (size <= 0) episodeResult = SearchResult()
         val page = if (size <= 0) 1 else size / PAGE_SIZE + 1
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.searchEpisodes(searchText, page).asFlow()
-                .collect {
-                    var resource = it
-                    if (resource.status == Status.SUCCESS) {
-                        val oldResult = resource.data
-                        val old = _episodeSearch.value?.data?.search ?: listOf()
-                        val new = oldResult?.search ?: listOf()
-                        val list = mutableListOf<ShortData>()
-                        list.addAll(old)
-                        list.addAll(new)
-                        list.distinctBy { data -> data._id }
-                        val newResult = oldResult?.copy(search = list)
-                        resource = it.copy(data = newResult)
-                    }
-                    _episodeSearch.postValue(resource)
-                }
+
+        repository.searchEpisodes(searchText, page).onEach { resourse ->
+            var newResource = resourse
+            if (resourse.status == Status.SUCCESS) {
+                val list = episodeResult.search.toMutableList()
+                val new = resourse.data?.search ?: listOf()
+                list.addAll(new)
+                list.distinctBy { it._id }
+                val total = resourse.data?.totalResults ?: episodeResult.totalResults
+                episodeResult = episodeResult.copy(search = list, totalResults = total)
+                newResource = resourse.copy(data = episodeResult)
+            }
+            _episodeSearch.postValue(newResource)
         }
+            .launchIn(viewModelScope)
     }
 
     fun clearSearchData(category: Type) {
-        val blankResult = Resource.loading(SearchResult(response = null, error = null))
+
+        val blankResult = Resource.loading(SearchResult())
+        movieResult = SearchResult()
+        seriesResult = SearchResult()
+        episodeResult = SearchResult()
+
         when (category) {
             Type.MOVIES -> _movieSearch.postValue(blankResult)
             Type.SERIES -> _seriesSearch.postValue(blankResult)
             Type.EPISODES -> _episodeSearch.postValue(blankResult)
         }
-
     }
 
 }

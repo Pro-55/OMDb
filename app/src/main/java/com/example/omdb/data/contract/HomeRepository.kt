@@ -4,14 +4,15 @@ import androidx.lifecycle.LiveData
 import com.example.omdb.models.FullData
 import com.example.omdb.models.Resource
 import com.example.omdb.models.SearchResult
+import kotlinx.coroutines.flow.Flow
 
 interface HomeRepository {
 
-    fun searchMovies(searchString: String, page: Int): LiveData<Resource<SearchResult>>
+    fun searchMovies(searchString: String, page: Int): Flow<Resource<SearchResult>>
 
-    fun searchSeries(searchString: String, page: Int): LiveData<Resource<SearchResult>>
+    fun searchSeries(searchString: String, page: Int): Flow<Resource<SearchResult>>
 
-    fun searchEpisodes(searchString: String, page: Int): LiveData<Resource<SearchResult>>
+    fun searchEpisodes(searchString: String, page: Int): Flow<Resource<SearchResult>>
 
     fun getMovieDetails(id: String): LiveData<Resource<FullData>>
 

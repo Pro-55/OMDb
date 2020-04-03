@@ -185,21 +185,18 @@ class SearchFragment : BaseFragment() {
     }
 
     private fun fetchData(searText: String, size: Int = 0) {
-        isLoading = true
         currentText = searText
         when (args.category) {
             Type.MOVIES -> viewModel.searchMovies(searText, size)
             Type.SERIES -> viewModel.searchSeries(searText, size)
+            Type.EPISODES -> viewModel.searchEpisodes(searText, size)
         }
     }
 
     private fun bindResource(resource: Resource<SearchResult>) {
         when (resource.status) {
-            Status.LOADING -> Unit
-            Status.ERROR -> {
-                isLoading = false
-                Log.d(TAG, "TestLog: e:${resource.message}")
-            }
+            Status.LOADING -> isLoading = true
+            Status.ERROR -> isLoading = false
             Status.SUCCESS -> bindSearchResult(resource.data)
         }
     }
