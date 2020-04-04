@@ -18,4 +18,6 @@
 
 	<color name="color_category_episodes">#5BA525</color>
 
+	<color name="color_blur_view">#80000000</color>
+
 </resources>

@@ -29,8 +29,6 @@ class HomeViewModel @Inject constructor(
     private val _episodeSearch = MutableLiveData<Resource<SearchResult>>()
     val episodeSearch: LiveData<Resource<SearchResult>> = _episodeSearch
 
-    var searchPosition = -1
-
     fun searchMovies(searchText: String, size: Int) {
         if (size <= 0) movieResult = SearchResult()
         val page = if (size <= 0) 1 else size / PAGE_SIZE + 1

@@ -56,7 +56,7 @@ class DetailsFragment : BaseFragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
 
         val shortData = args.shortData
-        binding.cardPoster.transitionName = shortData._id
+        binding.imgPoster.transitionName = shortData._id
 
         glide.load(shortData.poster)
             .diskCacheStrategy(DiskCacheStrategy.ALL)

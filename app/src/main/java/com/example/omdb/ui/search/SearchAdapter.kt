@@ -1,6 +1,8 @@
 package com.example.omdb.ui.search
 
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,7 +12,9 @@ import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.omdb.R
 import com.example.omdb.models.ShortData
+import com.example.omdb.util.extensions.animateScale
 import kotlinx.android.synthetic.main.layout_search_item.view.*
+import java.util.*
 
 class SearchAdapter(private val glide: RequestManager) :
     ListAdapter<ShortData, SearchAdapter.ViewHolder>(ShortDataDC()) {
@@ -30,13 +34,43 @@ class SearchAdapter(private val glide: RequestManager) :
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(data: ShortData) = with(itemView) {
+
+            var downTime: Long = -1
+            var isPeeking = false
+
             glide.load(data.poster)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(resources.getDrawable(R.drawable.placeholder_poster))
                 .into(img_poster)
 
-            transitionName = data._id
-            setOnClickListener { listener?.onClick(adapterPosition, data, this) }
+            img_poster.transitionName = data._id
+
+            setOnTouchListener { v, mE ->
+                Log.d("TAG", "TestLog: mE:$mE")
+                when (mE.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        downTime = Date().time
+                        v.animateScale(sX = 0.95F, sY = 0.95F)
+                    }
+                    MotionEvent.ACTION_MOVE -> if (Date().time - downTime > 500) {
+                        if (!isPeeking) {
+                            isPeeking = true
+                            listener?.onHold(data)
+                        }
+                    }
+                    MotionEvent.ACTION_CANCEL -> v.animateScale()
+                    MotionEvent.ACTION_UP -> {
+                        v.animateScale()
+                        if (isPeeking) {
+                            isPeeking = false
+                            listener?.onRelease()
+                        } else performClick()
+                    }
+                }
+                true
+            }
+
+            setOnClickListener { listener?.onClick(data, this.img_poster) }
 
         }
     }
@@ -55,7 +89,9 @@ class SearchAdapter(private val glide: RequestManager) :
     }
 
     interface Listener {
-        fun onClick(position: Int, data: ShortData, sharedView: View)
+        fun onClick(data: ShortData, sharedView: View)
+        fun onHold(data: ShortData)
+        fun onRelease()
     }
 
 }

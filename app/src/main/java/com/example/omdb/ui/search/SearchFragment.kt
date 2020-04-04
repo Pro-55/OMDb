@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.SharedElementCallback
 import androidx.core.view.doOnPreDraw
 import androidx.databinding.DataBindingUtil
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
@@ -17,15 +16,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.omdb.BaseFragment
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentSearchBinding
 import com.example.omdb.models.*
 import com.example.omdb.ui.HomeViewModel
 import com.example.omdb.util.extensions.*
+import com.example.omdb.views.CustomGridLayoutManager
 import com.jakewharton.rxbinding.widget.RxTextView
 import rx.Subscriber
 import rx.Subscription
@@ -44,6 +44,7 @@ class SearchFragment : BaseFragment() {
     private lateinit var binding: FragmentSearchBinding
     private val args by navArgs<SearchFragmentArgs>()
     private val viewModel by lazy { requireActivity().getViewModel<HomeViewModel>(factory) }
+    private val glide by lazy { glide() }
     private var isLoading = false
     private var currentText = ""
     private var totalCount = 0
@@ -118,8 +119,6 @@ class SearchFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setSharedElementCallback()
-
         setupRecyclerView()
 
         setupSearch()
@@ -132,22 +131,34 @@ class SearchFragment : BaseFragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = SearchAdapter(glide())
+        val layoutManager = CustomGridLayoutManager(requireContext(), 2, VERTICAL, false)
+        adapter = SearchAdapter(glide)
         adapter?.listener = object : SearchAdapter.Listener {
-            override fun onClick(position: Int, data: ShortData, sharedView: View) {
-                viewModel.searchPosition = position
+            override fun onClick(data: ShortData, sharedView: View) {
                 hideKeyboard()
+                clearFocus()
                 val action = SearchFragmentDirections.navigateSearchToDetails(data)
                 val extras = FragmentNavigatorExtras(sharedView to sharedView.transitionName)
                 findNavController().navigate(action, extras)
             }
+
+            override fun onHold(data: ShortData) {
+                layoutManager.setScrollEnabled(false)
+                hideKeyboard()
+                showPeekView(data)
+            }
+
+            override fun onRelease() {
+                layoutManager.setScrollEnabled(true)
+                hidePeekView()
+            }
         }
 
-        binding.recyclerSearch.layoutManager =
-            GridLayoutManager(requireContext(), 2, VERTICAL, false)
+        binding.recyclerSearch.layoutManager = layoutManager
         binding.recyclerSearch.adapter = adapter
         binding.recyclerSearch.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                hideKeyboard()
                 val size = adapter?.itemCount ?: 0
                 if (!isLoading
                     && size < totalCount
@@ -175,7 +186,7 @@ class SearchFragment : BaseFragment() {
 
                 override fun onNext(searchBoxText: CharSequence) {
                     val searchText = searchBoxText.toString().trim()
-                    if (searchText.isNotEmpty() && !isLoading) fetchData(searchText)
+                    if (searchText.isNotEmpty()) fetchData(searchText)
                 }
             })
     }
@@ -210,12 +221,12 @@ class SearchFragment : BaseFragment() {
         isLoading = false
         totalCount = result?.totalResults?.toInt() ?: 0
         val list = result?.search ?: listOf()
-        if (list.isNotEmpty()) hidePlaceholders()
-        else showPlaceholders()
+        if (list.isNotEmpty()) hidePlaceholders() else showPlaceholders()
         adapter?.swapData(list)
     }
 
     private fun showPlaceholders() {
+        binding.recyclerSearch.gone()
         binding.imgIcon.visible()
         binding.txtTitle.visible()
     }
@@ -223,33 +234,34 @@ class SearchFragment : BaseFragment() {
     private fun hidePlaceholders() {
         binding.imgIcon.gone()
         binding.txtTitle.gone()
+        binding.recyclerSearch.visible()
+    }
+
+    private fun showPeekView(data: ShortData) {
+        binding.layoutBlur.apply { visibleWithFade(parent as ViewGroup) }
+        binding.cardPeekPoster.apply { visibleWithScaleFade(parent as ViewGroup) }
+
+        glide.load(data.poster)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .placeholder(resources.getDrawable(R.drawable.placeholder_poster))
+            .into(binding.imgPeekPoster)
+
+    }
+
+    private fun hidePeekView() {
+        binding.cardPeekPoster.apply { goneWithScaleFade(parent as ViewGroup) }
+        binding.layoutBlur.apply { goneWithFade(parent as ViewGroup) }
+    }
+
+    private fun clearFocus() {
+        requireActivity().currentFocus?.clearFocus()
     }
 
     private fun hideKeyboard() {
-        requireActivity().currentFocus?.clearFocus()
         requireActivity().hideKeyboard()
     }
 
-    private fun setSharedElementCallback() {
-        setExitSharedElementCallback(object : SharedElementCallback() {
-            override fun onMapSharedElements(
-                names: MutableList<String>?,
-                sharedElements: MutableMap<String, View>?
-            ) {
-                if (names.isNullOrEmpty() || sharedElements == null) return
-
-                val name = names[0]
-                val position = viewModel.searchPosition
-
-                if (position > -1) sharedElements[name] = binding.recyclerSearch
-                    .findViewHolderForAdapterPosition(position)?.itemView ?: return
-
-            }
-        })
-    }
-
     override fun onBackPressed() {
-        viewModel.searchPosition = -1
         viewModel.clearSearchData(args.category)
         super.onBackPressed()
     }
