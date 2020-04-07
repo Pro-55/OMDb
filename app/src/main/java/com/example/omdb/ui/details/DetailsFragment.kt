@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.transition.ChangeBounds
 import android.transition.ChangeTransform
 import android.transition.TransitionSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,14 +17,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.omdb.BaseFragment
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentDetailsBinding
-import com.example.omdb.models.FullData
-import com.example.omdb.models.Resource
-import com.example.omdb.models.Status
-import com.example.omdb.models.TeamDetails
+import com.example.omdb.models.*
 import com.example.omdb.ui.HomeViewModel
-import com.example.omdb.util.extensions.getViewModel
-import com.example.omdb.util.extensions.glide
-import com.example.omdb.util.extensions.showShortSnackBar
+import com.example.omdb.util.extensions.*
 import javax.inject.Inject
 
 class DetailsFragment : BaseFragment() {
@@ -91,7 +85,6 @@ class DetailsFragment : BaseFragment() {
     }
 
     private fun bindDetails(data: FullData) {
-        Log.d(TAG, "TestLog: d:$data")
 
         binding.txtYear.text = "(${data.year})"
 
@@ -109,15 +102,28 @@ class DetailsFragment : BaseFragment() {
 
         binding.txtPlot.text = data.plot
 
-        binding.btnReviews.setOnClickListener {
-            val teamDetails = TeamDetails(
-                cast = data.actors,
-                crew = data.writer,
-                director = data.director,
-                production = data.production
-            )
-            val action = DetailsFragmentDirections.navigateDetailsToTeamDetails(teamDetails)
+        binding.btnRatings.setOnClickListener {
+            val ratings = mutableListOf<Rating>()
+                .apply { addAll(data.ratings) }
+                .toTypedArray()
+            val action = DetailsFragmentDirections.navigateDetailsToRatings(ratings)
             findNavController().navigate(action)
+        }
+
+        var seasons = 0
+        try {
+            seasons = data.seasons?.toInt() ?: 0
+        } catch (e: Exception) {
+        }
+        binding.btnSeasons.apply {
+            if (seasons > 0) {
+                visibleWithFade(parent as ViewGroup)
+                setOnClickListener {
+                    val action =
+                        DetailsFragmentDirections.navigateDetailsToSeasons(data._id, seasons)
+                    findNavController().navigate(action)
+                }
+            } else gone()
         }
 
         binding.btnTeamDetails.setOnClickListener {

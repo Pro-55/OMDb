@@ -11,6 +11,10 @@
 	<string name="label_director">Director</string>
 	<string name="label_production">Production</string>
 
+	<string name="btn_ratings">Ratings</string>
+	<string name="btn_team">Team</string>
+	<string name="btn_seasons">Seasons</string>
+
 	<string name="divider_bullet">•</string>
 
 	<string name="shared_container_movies">shared_container_movies</string>

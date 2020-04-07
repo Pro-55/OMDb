@@ -36,6 +36,12 @@
 		<action
 			android:id="@+id/navigateDetailsToTeamDetails"
 			app:destination="@id/teamDetailsFragment" />
+		<action
+			android:id="@+id/navigateDetailsToRatings"
+			app:destination="@id/ratingsFragment" />
+		<action
+			android:id="@+id/navigateDetailsToSeasons"
+			app:destination="@id/seasonsFragment" />
 	</fragment>
 	<fragment
 		android:id="@+id/teamDetailsFragment"
@@ -45,5 +51,26 @@
 		<argument
 			android:name="teamDetails"
 			app:argType="com.example.omdb.models.TeamDetails" />
+	</fragment>
+	<fragment
+		android:id="@+id/ratingsFragment"
+		android:name="com.example.omdb.ui.details.RatingsFragment"
+		android:label="RatingsFragment"
+		tools:layout="@layout/fragment_ratings">
+		<argument
+			android:name="ratings"
+			app:argType="com.example.omdb.models.Rating[]" />
+	</fragment>
+	<fragment
+		android:id="@+id/seasonsFragment"
+		android:name="com.example.omdb.ui.details.SeasonsFragment"
+		android:label="SeasonsFragment"
+		tools:layout="@layout/fragment_seasons">
+		<argument
+			android:name="id"
+			app:argType="string" />
+		<argument
+			android:name="seasons"
+			app:argType="integer" />
 	</fragment>
 </navigation>

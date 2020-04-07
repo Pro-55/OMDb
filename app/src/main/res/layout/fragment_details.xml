@@ -205,7 +205,7 @@
 			tool:text="After training with his mentor, Batman begins his fight to free crime-ridden Gotham City from corruption." />
 
 		<Button
-			android:id="@+id/btn_reviews"
+			android:id="@+id/btn_ratings"
 			style="@style/Widget.MaterialComponents.Button.TextButton"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
@@ -213,13 +213,31 @@
 			android:drawableEnd="@drawable/ic_next"
 			android:drawablePadding="@dimen/dimen_8dp"
 			android:gravity="start|center_vertical"
-			android:text="Reviews"
+			android:text="@string/btn_ratings"
 			android:textAllCaps="false"
 			android:textColor="?attr/editTextColor"
 			android:textSize="@dimen/dimen_20sp"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/txt_plot" />
+
+		<Button
+			android:id="@+id/btn_seasons"
+			style="@style/Widget.MaterialComponents.Button.TextButton"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/dimen_8dp"
+			android:drawableEnd="@drawable/ic_next"
+			android:drawablePadding="@dimen/dimen_8dp"
+			android:gravity="start|center_vertical"
+			android:text="@string/btn_seasons"
+			android:textAllCaps="false"
+			android:textColor="?attr/editTextColor"
+			android:textSize="@dimen/dimen_20sp"
+			android:visibility="gone"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/btn_ratings" />
 
 		<Button
 			android:id="@+id/btn_team_details"
@@ -230,13 +248,13 @@
 			android:drawableEnd="@drawable/ic_next"
 			android:drawablePadding="@dimen/dimen_8dp"
 			android:gravity="start|center_vertical"
-			android:text="Team"
+			android:text="@string/btn_team"
 			android:textAllCaps="false"
 			android:textColor="?attr/editTextColor"
 			android:textSize="@dimen/dimen_20sp"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/btn_reviews" />
+			app:layout_constraintTop_toBottomOf="@id/btn_seasons" />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
