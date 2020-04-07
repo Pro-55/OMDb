@@ -1,6 +1,5 @@
 package com.example.omdb.ui.search
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -43,10 +42,10 @@ class SearchAdapter(private val glide: RequestManager) :
                 .placeholder(resources.getDrawable(R.drawable.placeholder_poster))
                 .into(img_poster)
 
-            img_poster.transitionName = data._id
+            transitionName = data._id
+            img_poster.transitionName = data.poster
 
             setOnTouchListener { v, mE ->
-                Log.d("TAG", "TestLog: mE:$mE")
                 when (mE.action) {
                     MotionEvent.ACTION_DOWN -> {
                         downTime = Date().time
@@ -70,7 +69,7 @@ class SearchAdapter(private val glide: RequestManager) :
                 true
             }
 
-            setOnClickListener { listener?.onClick(data, this.img_poster) }
+            setOnClickListener { listener?.onClick(data, this, this.img_poster) }
 
         }
     }
@@ -89,7 +88,7 @@ class SearchAdapter(private val glide: RequestManager) :
     }
 
     interface Listener {
-        fun onClick(data: ShortData, sharedView: View)
+        fun onClick(data: ShortData, sharedCard: View, sharedImage: View)
         fun onHold(data: ShortData)
         fun onRelease()
     }

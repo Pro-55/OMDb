@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class ShortData(
     @SerializedName("imdbID") val _id: String,
-    @SerializedName("Type") val type: Type,
+    @SerializedName("Type") val type: String,
     @SerializedName("Poster") val poster: String,
     @SerializedName("Title") val title: String,
     @SerializedName("Year") val year: String

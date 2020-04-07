@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.omdb.BaseFragment
@@ -20,6 +21,7 @@ import com.example.omdb.databinding.FragmentDetailsBinding
 import com.example.omdb.models.FullData
 import com.example.omdb.models.Resource
 import com.example.omdb.models.Status
+import com.example.omdb.models.TeamDetails
 import com.example.omdb.ui.HomeViewModel
 import com.example.omdb.util.extensions.getViewModel
 import com.example.omdb.util.extensions.glide
@@ -56,7 +58,8 @@ class DetailsFragment : BaseFragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
 
         val shortData = args.shortData
-        binding.imgPoster.transitionName = shortData._id
+        binding.cardPoster.transitionName = shortData._id
+        binding.imgPoster.transitionName = shortData.poster
 
         glide.load(shortData.poster)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -89,5 +92,43 @@ class DetailsFragment : BaseFragment() {
 
     private fun bindDetails(data: FullData) {
         Log.d(TAG, "TestLog: d:$data")
+
+        binding.txtYear.text = "(${data.year})"
+
+        binding.dividerYearRated.text = resources.getString(R.string.divider_bullet)
+
+        binding.txtRated.text = data.rated
+
+        binding.dividerRatedRunTime.text = resources.getString(R.string.divider_bullet)
+
+        binding.txtRunTime.text = data.runtime
+
+        binding.txtGenre.text = data.genre
+
+        binding.barRating.rating = data.imdbRating.toFloat() / 2
+
+        binding.txtPlot.text = data.plot
+
+        binding.btnReviews.setOnClickListener {
+            val teamDetails = TeamDetails(
+                cast = data.actors,
+                crew = data.writer,
+                director = data.director,
+                production = data.production
+            )
+            val action = DetailsFragmentDirections.navigateDetailsToTeamDetails(teamDetails)
+            findNavController().navigate(action)
+        }
+
+        binding.btnTeamDetails.setOnClickListener {
+            val teamDetails = TeamDetails(
+                cast = data.actors,
+                crew = data.writer,
+                director = data.director,
+                production = data.production
+            )
+            val action = DetailsFragmentDirections.navigateDetailsToTeamDetails(teamDetails)
+            findNavController().navigate(action)
+        }
     }
 }

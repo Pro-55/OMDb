@@ -5,6 +5,13 @@
 	<string name="label_movies">Movies</string>
 	<string name="label_series">Series</string>
 	<string name="label_episodes">Episodes</string>
+	<string name="label_plot">Plot</string>
+	<string name="label_cast">Cast</string>
+	<string name="label_crew">Crew</string>
+	<string name="label_director">Director</string>
+	<string name="label_production">Production</string>
+
+	<string name="divider_bullet">•</string>
 
 	<string name="shared_container_movies">shared_container_movies</string>
 	<string name="shared_icon_movies">shared_icon_movies</string>

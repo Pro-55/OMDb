@@ -1,0 +1,138 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tool="http://schemas.android.com/tools">
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:clickable="true"
+		android:focusable="true">
+
+		<ImageView
+			android:id="@+id/img_btn_back"
+			android:layout_width="0dp"
+			android:layout_height="?attr/actionBarSize"
+			android:padding="@dimen/activity_default_margin"
+			android:src="@drawable/ic_back"
+			app:layout_constraintDimensionRatio="H,1:1"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<TextView
+			android:id="@+id/txt_title_cast"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/activity_default_margin"
+			android:gravity="center"
+			android:text="@string/label_cast"
+			android:textSize="@dimen/dimen_22sp"
+			android:textStyle="bold"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/img_btn_back" />
+
+		<TextView
+			android:id="@+id/txt_cast"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/activity_default_margin"
+			android:layout_marginTop="@dimen/dimen_8dp"
+			android:layout_marginEnd="@dimen/activity_default_margin"
+			android:gravity="center"
+			android:textSize="@dimen/dimen_16sp"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/txt_title_cast"
+			tool:text="Christian Bale, Michael Caine, Liam Neeson, Katie Holmes" />
+
+		<TextView
+			android:id="@+id/txt_title_crew"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/activity_default_margin"
+			android:gravity="center"
+			android:text="@string/label_crew"
+			android:textSize="@dimen/dimen_22sp"
+			android:textStyle="bold"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/txt_cast" />
+
+		<TextView
+			android:id="@+id/txt_crew"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/activity_default_margin"
+			android:layout_marginTop="@dimen/dimen_8dp"
+			android:layout_marginEnd="@dimen/activity_default_margin"
+			android:gravity="center"
+			android:textSize="@dimen/dimen_16sp"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/txt_title_crew"
+			tool:text="Bob Kane (characters), David S. Goyer (story), Christopher Nolan (screenplay), David S. Goyer (screenplay)" />
+
+		<TextView
+			android:id="@+id/txt_title_director"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/activity_default_margin"
+			android:gravity="center"
+			android:text="@string/label_director"
+			android:textSize="@dimen/dimen_22sp"
+			android:textStyle="bold"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/txt_crew" />
+
+		<TextView
+			android:id="@+id/txt_director"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/activity_default_margin"
+			android:layout_marginTop="@dimen/dimen_8dp"
+			android:layout_marginEnd="@dimen/activity_default_margin"
+			android:gravity="center"
+			android:textSize="@dimen/dimen_16sp"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/txt_title_director"
+			tool:text="Christopher Nolan" />
+
+		<TextView
+			android:id="@+id/txt_title_production"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/activity_default_margin"
+			android:gravity="center"
+			android:text="@string/label_production"
+			android:textSize="@dimen/dimen_22sp"
+			android:textStyle="bold"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/txt_director" />
+
+		<TextView
+			android:id="@+id/txt_production"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/activity_default_margin"
+			android:layout_marginTop="@dimen/dimen_8dp"
+			android:layout_marginEnd="@dimen/activity_default_margin"
+			android:gravity="center"
+			android:textSize="@dimen/dimen_16sp"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/txt_title_production"
+			tool:text="Warner Bros. Pictures" />
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

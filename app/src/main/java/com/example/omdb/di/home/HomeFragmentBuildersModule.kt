@@ -1,6 +1,7 @@
 package com.example.omdb.di.home
 
 import com.example.omdb.ui.details.DetailsFragment
+import com.example.omdb.ui.details.TeamDetailsFragment
 import com.example.omdb.ui.home.HomeFragment
 import com.example.omdb.ui.search.SearchFragment
 import dagger.Module
@@ -17,5 +18,8 @@ abstract class HomeFragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeDetailsFragment(): DetailsFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeTeamDetailsFragment(): TeamDetailsFragment
 
 }

@@ -33,5 +33,17 @@
 		<argument
 			android:name="shortData"
 			app:argType="com.example.omdb.models.ShortData" />
+		<action
+			android:id="@+id/navigateDetailsToTeamDetails"
+			app:destination="@id/teamDetailsFragment" />
+	</fragment>
+	<fragment
+		android:id="@+id/teamDetailsFragment"
+		android:name="com.example.omdb.ui.details.TeamDetailsFragment"
+		android:label="TeamDetailsFragment"
+		tools:layout="@layout/fragment_team_details">
+		<argument
+			android:name="teamDetails"
+			app:argType="com.example.omdb.models.TeamDetails" />
 	</fragment>
 </navigation>

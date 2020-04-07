@@ -134,11 +134,14 @@ class SearchFragment : BaseFragment() {
         val layoutManager = CustomGridLayoutManager(requireContext(), 2, VERTICAL, false)
         adapter = SearchAdapter(glide)
         adapter?.listener = object : SearchAdapter.Listener {
-            override fun onClick(data: ShortData, sharedView: View) {
+            override fun onClick(data: ShortData, sharedCard: View, sharedImage: View) {
                 hideKeyboard()
                 clearFocus()
                 val action = SearchFragmentDirections.navigateSearchToDetails(data)
-                val extras = FragmentNavigatorExtras(sharedView to sharedView.transitionName)
+                val extras = FragmentNavigatorExtras(
+                    sharedCard to sharedCard.transitionName,
+                    sharedImage to sharedImage.transitionName
+                )
                 findNavController().navigate(action, extras)
             }
 

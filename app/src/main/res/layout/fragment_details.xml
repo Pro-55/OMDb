@@ -14,15 +14,10 @@
 			android:layout_height="0dp"
 			android:layout_marginStart="@dimen/activity_default_margin"
 			android:layout_marginTop="@dimen/activity_default_margin"
-			android:layout_marginEnd="@dimen/dimen_4dp"
 			app:cardCornerRadius="@dimen/dimen_8dp"
-			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintDimensionRatio="H,3:4"
-			app:layout_constraintEnd_toStartOf="@id/txt_title"
-			app:layout_constraintHorizontal_bias="0"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintVertical_bias="0">
+			app:layout_constraintTop_toTopOf="parent">
 
 			<ImageView
 				android:id="@+id/img_poster"
@@ -38,19 +33,210 @@
 
 		<TextView
 			android:id="@+id/txt_title"
-			android:layout_width="0dp"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="@dimen/dimen_4dp"
+			android:layout_marginStart="@dimen/dimen_8dp"
 			android:layout_marginTop="@dimen/dimen_8dp"
 			android:layout_marginEnd="@dimen/activity_default_margin"
-			android:layout_marginBottom="@dimen/dimen_4dp"
 			android:textSize="@dimen/dimen_20sp"
 			android:textStyle="bold"
 			app:layout_constrainedWidth="true"
 			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0"
 			app:layout_constraintStart_toEndOf="@id/card_poster"
 			app:layout_constraintTop_toTopOf="@id/card_poster"
 			tool:text="Title" />
+
+		<TextView
+			android:id="@+id/txt_year"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/dimen_8dp"
+			android:layout_marginTop="@dimen/dimen_8dp"
+			android:textSize="@dimen/dimen_14sp"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintHorizontal_bias="0"
+			app:layout_constraintStart_toEndOf="@id/card_poster"
+			app:layout_constraintTop_toBottomOf="@id/txt_title"
+			tool:text="(2005)" />
+
+		<TextView
+			android:id="@+id/divider_year_rated"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/dimen_8dp"
+			android:textSize="@dimen/dimen_14sp"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintBottom_toBottomOf="@id/txt_year"
+			app:layout_constraintHorizontal_bias="0"
+			app:layout_constraintStart_toEndOf="@id/txt_year"
+			app:layout_constraintTop_toTopOf="@id/txt_year"
+			tool:text="@string/divider_bullet" />
+
+		<TextView
+			android:id="@+id/txt_rated"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/dimen_8dp"
+			android:textSize="@dimen/dimen_14sp"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintBottom_toBottomOf="@id/txt_year"
+			app:layout_constraintHorizontal_bias="0"
+			app:layout_constraintStart_toEndOf="@id/divider_year_rated"
+			app:layout_constraintTop_toTopOf="@id/txt_year"
+			tool:text="PG-13" />
+
+		<TextView
+			android:id="@+id/divider_rated_run_time"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/dimen_8dp"
+			android:textSize="@dimen/dimen_14sp"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintBottom_toBottomOf="@id/txt_rated"
+			app:layout_constraintHorizontal_bias="0"
+			app:layout_constraintStart_toEndOf="@id/txt_rated"
+			app:layout_constraintTop_toTopOf="@id/txt_rated"
+			tool:text="@string/divider_bullet" />
+
+		<TextView
+			android:id="@+id/txt_run_time"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/dimen_8dp"
+			android:textSize="@dimen/dimen_14sp"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintBottom_toBottomOf="@id/txt_rated"
+			app:layout_constraintHorizontal_bias="0"
+			app:layout_constraintStart_toEndOf="@id/divider_rated_run_time"
+			app:layout_constraintTop_toTopOf="@id/txt_rated"
+			tool:text="150 min" />
+
+		<androidx.constraintlayout.widget.Barrier
+			android:id="@+id/barrier_genre"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			app:barrierDirection="bottom"
+			app:constraint_referenced_ids="txt_title,txt_year,txt_rated,txt_run_time" />
+
+		<TextView
+			android:id="@+id/txt_genre"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/dimen_8dp"
+			android:layout_marginTop="@dimen/dimen_8dp"
+			android:layout_marginEnd="@dimen/activity_default_margin"
+			android:textSize="@dimen/dimen_14sp"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0"
+			app:layout_constraintStart_toEndOf="@id/card_poster"
+			app:layout_constraintTop_toBottomOf="@id/barrier_genre"
+			tool:text="Action, Adventure, Sci-Fi" />
+
+		<RatingBar
+			android:id="@+id/bar_rating"
+			style="@style/Widget.AppCompat.RatingBar.Small"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/dimen_8dp"
+			android:layout_marginTop="@dimen/dimen_8dp"
+			android:layout_marginEnd="@dimen/activity_default_margin"
+			android:max="5"
+			android:numStars="5"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0"
+			app:layout_constraintStart_toEndOf="@id/card_poster"
+			app:layout_constraintTop_toBottomOf="@id/txt_genre"
+			tool:rating="2.5" />
+
+		<TextView
+			android:id="@+id/txt_language"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/dimen_8dp"
+			android:layout_marginTop="@dimen/dimen_8dp"
+			android:layout_marginEnd="@dimen/activity_default_margin"
+			android:textSize="@dimen/dimen_14sp"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0"
+			app:layout_constraintStart_toEndOf="@id/card_poster"
+			app:layout_constraintTop_toBottomOf="@id/bar_rating"
+			tool:text="English, Mandarin" />
+
+		<androidx.constraintlayout.widget.Barrier
+			android:id="@+id/barrier_cast"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			app:barrierDirection="bottom"
+			app:constraint_referenced_ids="card_poster,txt_language,bar_rating,txt_genre" />
+
+		<TextView
+			android:id="@+id/txt_title_plot"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/activity_default_margin"
+			android:layout_marginTop="@dimen/dimen_8dp"
+			android:layout_marginEnd="@dimen/activity_default_margin"
+			android:text="@string/label_plot"
+			android:textSize="@dimen/dimen_20sp"
+			android:textStyle="bold"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/barrier_cast" />
+
+		<TextView
+			android:id="@+id/txt_plot"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/activity_default_margin"
+			android:layout_marginTop="@dimen/dimen_8dp"
+			android:layout_marginEnd="@dimen/activity_default_margin"
+			android:textSize="@dimen/dimen_14sp"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/txt_title_plot"
+			tool:text="After training with his mentor, Batman begins his fight to free crime-ridden Gotham City from corruption." />
+
+		<Button
+			android:id="@+id/btn_reviews"
+			style="@style/Widget.MaterialComponents.Button.TextButton"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/dimen_8dp"
+			android:drawableEnd="@drawable/ic_next"
+			android:drawablePadding="@dimen/dimen_8dp"
+			android:gravity="start|center_vertical"
+			android:text="Reviews"
+			android:textAllCaps="false"
+			android:textColor="?attr/editTextColor"
+			android:textSize="@dimen/dimen_20sp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/txt_plot" />
+
+		<Button
+			android:id="@+id/btn_team_details"
+			style="@style/Widget.MaterialComponents.Button.TextButton"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/dimen_8dp"
+			android:drawableEnd="@drawable/ic_next"
+			android:drawablePadding="@dimen/dimen_8dp"
+			android:gravity="start|center_vertical"
+			android:text="Team"
+			android:textAllCaps="false"
+			android:textColor="?attr/editTextColor"
+			android:textSize="@dimen/dimen_20sp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/btn_reviews" />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
