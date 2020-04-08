@@ -1,4 +1,4 @@
-package com.example.omdb.ui.details
+package com.example.omdb.ui.details.seasons
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.omdb.R
 import kotlinx.android.synthetic.main.layout_season_item.view.*
 
-class SeasonsAdapter : ListAdapter<Int, SeasonsAdapter.ViewHolder>(IntDC()) {
+class SeasonsAdapter : ListAdapter<Int, SeasonsAdapter.ViewHolder>(
+    IntDC()
+) {
 
     var listener: Listener? = null
 

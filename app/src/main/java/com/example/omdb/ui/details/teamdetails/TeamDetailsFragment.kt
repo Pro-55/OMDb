@@ -1,8 +1,6 @@
-package com.example.omdb.ui.details
+package com.example.omdb.ui.details.teamdetails
 
 import android.os.Bundle
-import android.transition.Slide
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,11 +19,6 @@ class TeamDetailsFragment : BaseFragment() {
     //Global
     private lateinit var binding: FragmentTeamDetailsBinding
     private val args by navArgs<TeamDetailsFragmentArgs>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enterTransition = Slide(Gravity.END)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -86,10 +86,10 @@ fun View.invisibleWithScaleFade(parent: ViewGroup, duration: Long = 300, minSCal
     invisible()
 }
 
-fun View.animateTranslation(tX: Float = 0.0F, tY: Float = 0.0F, duration: Long = 0) {
+fun View.animateTranslate(tX: Float = 0F, tY: Float = 0F, duration: Long = 0) {
     animate().x(tX).y(tY).setDuration(duration).start()
 }
 
-fun View.animateScale(sX: Float = 1.0F, sY: Float = 1.0F, duration: Long = 0) {
+fun View.animateScale(sX: Float = 1F, sY: Float = 1F, duration: Long = 0) {
     animate().scaleX(sX).scaleY(sY).setDuration(duration).start()
 }

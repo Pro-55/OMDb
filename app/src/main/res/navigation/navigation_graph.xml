@@ -34,18 +34,48 @@
 			android:name="shortData"
 			app:argType="com.example.omdb.models.ShortData" />
 		<action
+			android:id="@+id/navigateDetailsToFullPoster"
+			app:destination="@id/fullPosterFragment" />
+		<action
 			android:id="@+id/navigateDetailsToTeamDetails"
-			app:destination="@id/teamDetailsFragment" />
+			app:destination="@id/teamDetailsFragment"
+			app:enterAnim="@anim/slide_in_right"
+			app:exitAnim="@anim/slide_out_left"
+			app:popEnterAnim="@anim/slide_in_left"
+			app:popExitAnim="@anim/slide_out_right" />
 		<action
 			android:id="@+id/navigateDetailsToRatings"
-			app:destination="@id/ratingsFragment" />
+			app:destination="@id/ratingsFragment"
+			app:enterAnim="@anim/slide_in_right"
+			app:exitAnim="@anim/slide_out_left"
+			app:popEnterAnim="@anim/slide_in_left"
+			app:popExitAnim="@anim/slide_out_right" />
 		<action
 			android:id="@+id/navigateDetailsToSeasons"
-			app:destination="@id/seasonsFragment" />
+			app:destination="@id/seasonsFragment"
+			app:enterAnim="@anim/slide_in_right"
+			app:exitAnim="@anim/slide_out_left"
+			app:popEnterAnim="@anim/slide_in_left"
+			app:popExitAnim="@anim/slide_out_right" />
+	</fragment>
+	<fragment
+		android:id="@+id/fullPosterFragment"
+		android:name="com.example.omdb.ui.details.FullPosterFragment"
+		android:label="FullPosterFragment"
+		tools:layout="@layout/fragment_full_poster" >
+		<argument
+			android:name="posterUrl"
+			app:argType="string" />
+		<argument
+			android:name="height"
+			app:argType="integer" />
+		<argument
+			android:name="width"
+			app:argType="integer" />
 	</fragment>
 	<fragment
 		android:id="@+id/teamDetailsFragment"
-		android:name="com.example.omdb.ui.details.TeamDetailsFragment"
+		android:name="com.example.omdb.ui.details.teamdetails.TeamDetailsFragment"
 		android:label="TeamDetailsFragment"
 		tools:layout="@layout/fragment_team_details">
 		<argument
@@ -54,7 +84,7 @@
 	</fragment>
 	<fragment
 		android:id="@+id/ratingsFragment"
-		android:name="com.example.omdb.ui.details.RatingsFragment"
+		android:name="com.example.omdb.ui.details.ratings.RatingsFragment"
 		android:label="RatingsFragment"
 		tools:layout="@layout/fragment_ratings">
 		<argument
@@ -63,7 +93,7 @@
 	</fragment>
 	<fragment
 		android:id="@+id/seasonsFragment"
-		android:name="com.example.omdb.ui.details.SeasonsFragment"
+		android:name="com.example.omdb.ui.details.seasons.SeasonsFragment"
 		android:label="SeasonsFragment"
 		tools:layout="@layout/fragment_seasons">
 		<argument

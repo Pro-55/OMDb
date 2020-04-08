@@ -1,8 +1,6 @@
-package com.example.omdb.ui.details
+package com.example.omdb.ui.details.ratings
 
 import android.os.Bundle
-import android.transition.Slide
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,11 +20,6 @@ class RatingsFragment : BaseFragment() {
     //Global
     private lateinit var binding: FragmentRatingsBinding
     private val args by navArgs<RatingsFragmentArgs>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enterTransition = Slide(Gravity.END)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

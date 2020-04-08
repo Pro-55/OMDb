@@ -1,8 +1,6 @@
-package com.example.omdb.ui.details
+package com.example.omdb.ui.details.seasons
 
 import android.os.Bundle
-import android.transition.Slide
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.omdb.BaseFragment
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentSeasonsBinding
+import com.example.omdb.ui.details.DetailsFragment
 
 class SeasonsFragment : BaseFragment() {
 
@@ -22,11 +21,6 @@ class SeasonsFragment : BaseFragment() {
     //Global
     private lateinit var binding: FragmentSeasonsBinding
     private val args by navArgs<SeasonsFragmentArgs>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enterTransition = Slide(Gravity.END)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

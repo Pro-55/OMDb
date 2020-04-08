@@ -1,5 +1,6 @@
 package com.example.omdb.ui.details
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.transition.ChangeBounds
 import android.transition.ChangeTransform
@@ -11,9 +12,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.omdb.BaseFragment
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentDetailsBinding
@@ -34,6 +40,9 @@ class DetailsFragment : BaseFragment() {
     private val args by navArgs<DetailsFragmentArgs>()
     private val viewModel by lazy { requireActivity().getViewModel<HomeViewModel>(factory) }
     private val glide by lazy { glide() }
+    private var fullData: FullData? = null
+    private var height = 4
+    private var width = 3
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,9 +64,31 @@ class DetailsFragment : BaseFragment() {
         binding.cardPoster.transitionName = shortData._id
         binding.imgPoster.transitionName = shortData.poster
 
-        glide.load(shortData.poster)
+        glide.asBitmap().load(shortData.poster)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .placeholder(resources.getDrawable(R.drawable.placeholder_poster))
+            .listener(object : RequestListener<Bitmap> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Bitmap>?,
+                    isFirstResource: Boolean
+                ): Boolean = false
+
+                override fun onResourceReady(
+                    resource: Bitmap?,
+                    model: Any?,
+                    target: Target<Bitmap>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    val bitmapHeight = resource?.height ?: 0
+                    val bitmapWidth = resource?.width ?: 0
+                    if (bitmapHeight > 0) height = bitmapHeight
+                    if (bitmapWidth > 0) width = bitmapWidth
+                    return false
+                }
+            })
             .into(binding.imgPoster)
 
         binding.txtTitle.text = shortData.title
@@ -70,9 +101,12 @@ class DetailsFragment : BaseFragment() {
 
         val shortData = args.shortData
 
-        viewModel.getDetails(shortData._id)
-            .observe(viewLifecycleOwner, Observer { bindDetailsResource(it) })
-
+        if (fullData != null) {
+            bindDetails(fullData!!)
+        } else {
+            viewModel.getDetails(shortData._id)
+                .observe(viewLifecycleOwner, Observer { bindDetailsResource(it) })
+        }
     }
 
     private fun bindDetailsResource(resource: Resource<FullData>) {
@@ -85,6 +119,8 @@ class DetailsFragment : BaseFragment() {
     }
 
     private fun bindDetails(data: FullData) {
+
+        fullData = data
 
         binding.txtYear.text = "(${data.year})"
 
@@ -101,6 +137,13 @@ class DetailsFragment : BaseFragment() {
         binding.barRating.rating = data.imdbRating.toFloat() / 2
 
         binding.txtPlot.text = data.plot
+
+        binding.cardPoster.setOnClickListener {
+            val action = DetailsFragmentDirections.navigateDetailsToFullPoster(data.poster,height,width)
+            val extras =
+                FragmentNavigatorExtras(binding.imgPoster to binding.imgPoster.transitionName)
+            findNavController().navigate(action, extras)
+        }
 
         binding.btnRatings.setOnClickListener {
             val ratings = mutableListOf<Rating>()
