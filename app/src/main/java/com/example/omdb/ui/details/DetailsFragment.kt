@@ -122,24 +122,58 @@ class DetailsFragment : BaseFragment() {
 
         fullData = data
 
+        if (args.shortData.poster == null) {
+            binding.imgPoster.transitionName = data.poster
+            glide.asBitmap().load(data.poster)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(resources.getDrawable(R.drawable.placeholder_poster))
+                .listener(object : RequestListener<Bitmap> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Bitmap>?,
+                        isFirstResource: Boolean
+                    ): Boolean = false
+
+                    override fun onResourceReady(
+                        resource: Bitmap?,
+                        model: Any?,
+                        target: Target<Bitmap>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        val bitmapHeight = resource?.height ?: 0
+                        val bitmapWidth = resource?.width ?: 0
+                        if (bitmapHeight > 0) height = bitmapHeight
+                        if (bitmapWidth > 0) width = bitmapWidth
+                        return false
+                    }
+                })
+                .into(binding.imgPoster)
+        }
+
         binding.txtYear.text = "(${data.year})"
 
         binding.dividerYearRated.text = resources.getString(R.string.divider_bullet)
 
         binding.txtRated.text = data.rated
 
-        binding.dividerRatedRunTime.text = resources.getString(R.string.divider_bullet)
+        if (data.contentType != Type.SERIES) {
 
-        binding.txtRunTime.text = data.runtime
+            binding.dividerRatedRunTime.text = resources.getString(R.string.divider_bullet)
+
+            binding.txtRunTime.text = data.runtime
+        }
 
         binding.txtGenre.text = data.genre
 
-        binding.barRating.rating = data.imdbRating.toFloat() / 2
+        binding.barRating.rating = data.rating / 2
 
         binding.txtPlot.text = data.plot
 
         binding.cardPoster.setOnClickListener {
-            val action = DetailsFragmentDirections.navigateDetailsToFullPoster(data.poster,height,width)
+            val action =
+                DetailsFragmentDirections.navigateDetailsToFullPoster(data.poster, height, width)
             val extras =
                 FragmentNavigatorExtras(binding.imgPoster to binding.imgPoster.transitionName)
             findNavController().navigate(action, extras)

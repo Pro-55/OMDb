@@ -16,9 +16,23 @@ data class FullData(
     @SerializedName("Actors") val actors: String,
     @SerializedName("Plot") val plot: String,
     @SerializedName("Language") val language: String,
-    @SerializedName("Awards") val awards: String,
     @SerializedName("Ratings") val ratings: List<Rating>,
-    @SerializedName("imdbRating") val imdbRating: String,
-    @SerializedName("Production") val production: String?,
-    @SerializedName("totalSeasons") val seasons: String?
-)
+    @SerializedName("imdbRating") val imdbRating: String? = null,
+    @SerializedName("Production") val production: String? = null,
+    @SerializedName("totalSeasons") val seasons: String? = null
+) {
+    val contentType: Type?
+        get() = when (type) {
+            "movie" -> Type.MOVIES
+            "series" -> Type.SERIES
+            "episode" -> Type.EPISODES
+            else -> null
+        }
+
+    val rating: Float
+        get() = try {
+            imdbRating?.toFloat() ?: 0F
+        } catch (e: Exception) {
+            0F
+        }
+}

@@ -29,9 +29,9 @@ class SeasonsAdapter : ListAdapter<Int, SeasonsAdapter.ViewHolder>(
 
         fun bind(season: Int) = with(itemView) {
 
-            txt_season.text = "Season $season"
+            btn_season.text = "Season $season"
 
-            setOnClickListener { listener?.seasonClicked(season) }
+            btn_season.setOnClickListener { listener?.seasonClicked(season) }
         }
     }
 

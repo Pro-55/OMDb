@@ -198,9 +198,9 @@ class SearchFragment : BaseFragment() {
         val source = when (args.category) {
             Type.MOVIES -> viewModel.movieSearch
             Type.SERIES -> viewModel.seriesSearch
-            Type.EPISODES -> viewModel.episodeSearch
+            else -> null
         }
-        source.observe(viewLifecycleOwner, Observer { bindResource(it) })
+        source?.observe(viewLifecycleOwner, Observer { bindResource(it) })
     }
 
     private fun fetchData(searText: String, size: Int = 0) {
@@ -208,7 +208,6 @@ class SearchFragment : BaseFragment() {
         when (args.category) {
             Type.MOVIES -> viewModel.searchMovies(searText, size)
             Type.SERIES -> viewModel.searchSeries(searText, size)
-            Type.EPISODES -> viewModel.searchEpisodes(searText, size)
         }
     }
 

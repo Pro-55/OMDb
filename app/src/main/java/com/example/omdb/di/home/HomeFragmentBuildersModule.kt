@@ -2,6 +2,7 @@ package com.example.omdb.di.home
 
 import com.example.omdb.ui.details.DetailsFragment
 import com.example.omdb.ui.details.FullPosterFragment
+import com.example.omdb.ui.details.episodes.EpisodesFragment
 import com.example.omdb.ui.details.ratings.RatingsFragment
 import com.example.omdb.ui.details.seasons.SeasonsFragment
 import com.example.omdb.ui.details.teamdetails.TeamDetailsFragment
@@ -30,6 +31,9 @@ abstract class HomeFragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeSeasonsFragment(): SeasonsFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeEpisodesFragment(): EpisodesFragment
 
     @ContributesAndroidInjector
     abstract fun contributeTeamDetailsFragment(): TeamDetailsFragment

@@ -62,7 +62,7 @@
 		android:id="@+id/fullPosterFragment"
 		android:name="com.example.omdb.ui.details.FullPosterFragment"
 		android:label="FullPosterFragment"
-		tools:layout="@layout/fragment_full_poster" >
+		tools:layout="@layout/fragment_full_poster">
 		<argument
 			android:name="posterUrl"
 			app:argType="string" />
@@ -102,5 +102,31 @@
 		<argument
 			android:name="seasons"
 			app:argType="integer" />
+		<action
+			android:id="@+id/navigateSeasonsToEpisodes"
+			app:destination="@id/episodesFragment"
+			app:enterAnim="@anim/slide_in_right"
+			app:exitAnim="@anim/slide_out_left"
+			app:popEnterAnim="@anim/slide_in_left"
+			app:popExitAnim="@anim/slide_out_right" />
+	</fragment>
+	<fragment
+		android:id="@+id/episodesFragment"
+		android:name="com.example.omdb.ui.details.episodes.EpisodesFragment"
+		android:label="EpisodesFragment"
+		tools:layout="@layout/fragment_episodes">
+		<argument
+			android:name="id"
+			app:argType="string" />
+		<argument
+			android:name="season"
+			app:argType="integer" />
+		<action
+			android:id="@+id/navigateEpisodesToDetails"
+			app:destination="@id/detailsFragment"
+			app:enterAnim="@anim/slide_in_right"
+			app:exitAnim="@anim/slide_out_left"
+			app:popEnterAnim="@anim/slide_in_left"
+			app:popExitAnim="@anim/slide_out_right" />
 	</fragment>
 </navigation>

@@ -3,15 +3,15 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tool="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:layout_margin="@dimen/activity_default_margin">
+	android:layout_height="wrap_content">
 
 	<Button
-		android:id="@+id/txt_season"
+		android:id="@+id/btn_season"
 		style="@style/Widget.MaterialComponents.Button.TextButton"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:gravity="start|center_vertical"
+		android:padding="@dimen/dimen_16dp"
 		android:textAllCaps="false"
 		android:textColor="?attr/editTextColor"
 		android:textSize="@dimen/dimen_20sp"

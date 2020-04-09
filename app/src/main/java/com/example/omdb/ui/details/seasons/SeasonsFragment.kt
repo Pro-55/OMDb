@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.omdb.BaseFragment
@@ -33,6 +34,8 @@ class SeasonsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.imgBtnBack.setOnClickListener { onBackPressed() }
+
         setupRecyclerview()
     }
 
@@ -40,15 +43,15 @@ class SeasonsFragment : BaseFragment() {
         val adapter = SeasonsAdapter()
         adapter.listener = object : SeasonsAdapter.Listener {
             override fun seasonClicked(season: Int) {
-
+                val action = SeasonsFragmentDirections.navigateSeasonsToEpisodes(args.id, season)
+                findNavController().navigate(action)
             }
         }
 
         binding.recyclerSeasons.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerSeasons.adapter = adapter
 
-        val list = mutableListOf<Int>()
-        if (args.seasons > 0) for (index in 1..args.seasons + 1) list.add(index)
+        val list = (1..args.seasons).toList()
         adapter.swapData(list)
     }
 }

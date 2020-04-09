@@ -25,9 +25,6 @@ class HomeViewModel @Inject constructor(
     private var seriesResult = SearchResult()
     private val _seriesSearch = MutableLiveData<Resource<SearchResult>>()
     val seriesSearch: LiveData<Resource<SearchResult>> = _seriesSearch
-    private var episodeResult = SearchResult()
-    private val _episodeSearch = MutableLiveData<Resource<SearchResult>>()
-    val episodeSearch: LiveData<Resource<SearchResult>> = _episodeSearch
 
     fun searchMovies(searchText: String, size: Int) {
         if (size <= 0) movieResult = SearchResult()
@@ -69,40 +66,20 @@ class HomeViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun searchEpisodes(searchText: String, size: Int = 0) {
-        if (size <= 0) episodeResult = SearchResult()
-        val page = if (size <= 0) 1 else size / PAGE_SIZE + 1
-
-        repository.searchEpisodes(searchText, page).onEach { resourse ->
-            var newResource = resourse
-            if (resourse.status == Status.SUCCESS) {
-                val list = episodeResult.search.toMutableList()
-                val new = resourse.data?.search ?: listOf()
-                list.addAll(new)
-                list.distinctBy { it._id }
-                val total = resourse.data?.totalResults ?: episodeResult.totalResults
-                episodeResult = episodeResult.copy(search = list, totalResults = total)
-                newResource = resourse.copy(data = episodeResult)
-            }
-            _episodeSearch.postValue(newResource)
-        }
-            .launchIn(viewModelScope)
-    }
-
     fun getDetails(id: String, plot: String = "short") =
-        repository.getMovieDetails(id, plot).asLiveData()
+        repository.getDetails(id, plot).asLiveData()
+
+    fun getEpisodes(id: String, season: Int) = repository.getEpisodes(id, season).asLiveData()
 
     fun clearSearchData(category: Type) {
 
         val blankResult = Resource.loading(SearchResult())
         movieResult = SearchResult()
         seriesResult = SearchResult()
-        episodeResult = SearchResult()
 
         when (category) {
             Type.MOVIES -> _movieSearch.postValue(blankResult)
             Type.SERIES -> _seriesSearch.postValue(blankResult)
-            Type.EPISODES -> _episodeSearch.postValue(blankResult)
         }
     }
 

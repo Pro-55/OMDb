@@ -9,7 +9,7 @@
 		android:focusable="true">
 
 		<androidx.cardview.widget.CardView
-			android:id="@+id/card_seasons_tool_bar"
+			android:id="@+id/card_episodes_tool_bar"
 			android:layout_width="0dp"
 			android:layout_height="?attr/actionBarSize"
 			app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +34,7 @@
 					android:layout_width="0dp"
 					android:layout_height="match_parent"
 					android:gravity="center_vertical"
-					android:text="@string/btn_seasons"
+					android:text="@string/label_episodes"
 					android:textSize="@dimen/dimen_20sp"
 					android:textStyle="bold"
 					app:layout_constrainedWidth="true"
@@ -45,13 +45,13 @@
 		</androidx.cardview.widget.CardView>
 
 		<androidx.recyclerview.widget.RecyclerView
-			android:id="@+id/recycler_seasons"
+			android:id="@+id/recycler_episodes"
 			android:layout_width="0dp"
 			android:layout_height="0dp"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/card_seasons_tool_bar"
-			tool:listitem="@layout/layout_season_item" />
+			app:layout_constraintTop_toBottomOf="@id/card_episodes_tool_bar"
+			tool:listitem="@layout/layout_episode_item" />
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

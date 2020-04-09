@@ -1,23 +1,21 @@
 package com.example.omdb.models
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
-data class ShortData(
+data class Episode(
     @SerializedName("imdbID") val _id: String,
     @SerializedName("Title") val title: String,
-    @SerializedName("Poster") val poster: String? = null
-) : Parcelable {
-
+    @SerializedName("Episode") val episode: String,
+    @SerializedName("Released") val released: String
+) {
     override fun equals(other: Any?): Boolean {
         if (javaClass != other?.javaClass) return false
-        other as ShortData?
+        other as Episode?
 
         if (_id != other._id) return false
+        if (episode != other.episode) return false
         if (title != other.title) return false
-        if (poster != other.poster) return false
+        if (released != other.released) return false
 
         return true
     }
@@ -25,8 +23,8 @@ data class ShortData(
     override fun hashCode(): Int {
         var result = _id.hashCode()
         result = 31 * result + title.hashCode()
-        result = 31 * result + (poster?.hashCode() ?: 0)
+        result = 31 * result + episode.hashCode()
+        result = 31 * result + released.hashCode()
         return result
     }
-
 }
