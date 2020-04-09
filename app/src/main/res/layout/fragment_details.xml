@@ -33,7 +33,7 @@
 
 		<TextView
 			android:id="@+id/txt_title"
-			android:layout_width="wrap_content"
+			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="@dimen/dimen_8dp"
 			android:layout_marginTop="@dimen/dimen_8dp"
@@ -121,7 +121,7 @@
 
 		<TextView
 			android:id="@+id/txt_genre"
-			android:layout_width="wrap_content"
+			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="@dimen/dimen_8dp"
 			android:layout_marginTop="@dimen/dimen_8dp"
@@ -153,7 +153,7 @@
 
 		<TextView
 			android:id="@+id/txt_language"
-			android:layout_width="wrap_content"
+			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="@dimen/dimen_8dp"
 			android:layout_marginTop="@dimen/dimen_8dp"
@@ -175,7 +175,7 @@
 
 		<TextView
 			android:id="@+id/txt_title_plot"
-			android:layout_width="wrap_content"
+			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="@dimen/activity_default_margin"
 			android:layout_marginTop="@dimen/dimen_8dp"
@@ -204,57 +204,74 @@
 			app:layout_constraintTop_toBottomOf="@id/txt_title_plot"
 			tool:text="After training with his mentor, Batman begins his fight to free crime-ridden Gotham City from corruption." />
 
-		<Button
-			android:id="@+id/btn_ratings"
-			style="@style/Widget.MaterialComponents.Button.TextButton"
+		<TextView
+			android:id="@+id/txt_btn_ratings"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/activity_default_margin"
 			android:layout_marginTop="@dimen/dimen_8dp"
+			android:layout_marginEnd="@dimen/activity_default_margin"
 			android:drawableEnd="@drawable/ic_next"
 			android:drawablePadding="@dimen/dimen_8dp"
-			android:gravity="start|center_vertical"
-			android:text="@string/btn_ratings"
-			android:textAllCaps="false"
-			android:textColor="?attr/editTextColor"
+			android:paddingVertical="@dimen/dimen_8dp"
+			android:text="@string/label_ratings"
 			android:textSize="@dimen/dimen_20sp"
+			android:textStyle="bold"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/txt_plot" />
 
-		<Button
-			android:id="@+id/btn_seasons"
-			style="@style/Widget.MaterialComponents.Button.TextButton"
+		<TextView
+			android:id="@+id/txt_btn_team_details"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/activity_default_margin"
 			android:layout_marginTop="@dimen/dimen_8dp"
+			android:layout_marginEnd="@dimen/activity_default_margin"
 			android:drawableEnd="@drawable/ic_next"
 			android:drawablePadding="@dimen/dimen_8dp"
-			android:gravity="start|center_vertical"
-			android:text="@string/btn_seasons"
-			android:textAllCaps="false"
-			android:textColor="?attr/editTextColor"
+			android:paddingVertical="@dimen/dimen_8dp"
+			android:text="@string/label_team"
 			android:textSize="@dimen/dimen_20sp"
-			android:visibility="gone"
+			android:textStyle="bold"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/btn_ratings" />
+			app:layout_constraintTop_toBottomOf="@id/txt_btn_ratings" />
 
-		<Button
-			android:id="@+id/btn_team_details"
-			style="@style/Widget.MaterialComponents.Button.TextButton"
+		<TextView
+			android:id="@+id/txt_title_seasons"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/activity_default_margin"
 			android:layout_marginTop="@dimen/dimen_8dp"
-			android:drawableEnd="@drawable/ic_next"
-			android:drawablePadding="@dimen/dimen_8dp"
-			android:gravity="start|center_vertical"
-			android:text="@string/btn_team"
-			android:textAllCaps="false"
-			android:textColor="?attr/editTextColor"
+			android:layout_marginEnd="@dimen/activity_default_margin"
+			android:text="@string/label_seasons"
 			android:textSize="@dimen/dimen_20sp"
+			android:textStyle="bold"
+			android:visibility="gone"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/txt_btn_team_details" />
+
+		<ScrollView
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_marginTop="@dimen/dimen_8dp"
+			android:paddingHorizontal="@dimen/activity_default_margin"
+			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/btn_seasons" />
+			app:layout_constraintTop_toBottomOf="@id/txt_title_seasons">
+
+			<com.google.android.material.chip.ChipGroup
+				android:id="@+id/chip_group_seasons"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				app:chipSpacing="@dimen/dimen_4dp"
+				app:singleSelection="true" />
+		</ScrollView>
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

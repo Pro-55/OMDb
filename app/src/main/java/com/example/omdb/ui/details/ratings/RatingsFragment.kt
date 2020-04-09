@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.omdb.BaseFragment
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentRatingsBinding
+import com.example.omdb.util.extensions.visible
 
 class RatingsFragment : BaseFragment() {
 
@@ -44,7 +45,8 @@ class RatingsFragment : BaseFragment() {
         binding.recyclerReviews.adapter = adapter
 
         val ratings = args.ratings.asList()
-        adapter.swapData(ratings)
+
+        if (ratings.isNotEmpty()) adapter.swapData(ratings) else binding.txtNotRatings.visible()
 
     }
 

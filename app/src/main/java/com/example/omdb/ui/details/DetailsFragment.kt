@@ -25,7 +25,11 @@ import com.example.omdb.R
 import com.example.omdb.databinding.FragmentDetailsBinding
 import com.example.omdb.models.*
 import com.example.omdb.ui.HomeViewModel
-import com.example.omdb.util.extensions.*
+import com.example.omdb.util.extensions.getViewModel
+import com.example.omdb.util.extensions.glide
+import com.example.omdb.util.extensions.showShortSnackBar
+import com.example.omdb.util.extensions.visible
+import com.google.android.material.chip.Chip
 import javax.inject.Inject
 
 class DetailsFragment : BaseFragment() {
@@ -99,14 +103,9 @@ class DetailsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val shortData = args.shortData
-
-        if (fullData != null) {
-            bindDetails(fullData!!)
-        } else {
-            viewModel.getDetails(shortData._id)
-                .observe(viewLifecycleOwner, Observer { bindDetailsResource(it) })
-        }
+        if (fullData != null) bindDetails(fullData!!)
+        else viewModel.getDetails(args.shortData._id)
+            .observe(viewLifecycleOwner, Observer { bindDetailsResource(it) })
     }
 
     private fun bindDetailsResource(resource: Resource<FullData>) {
@@ -179,7 +178,7 @@ class DetailsFragment : BaseFragment() {
             findNavController().navigate(action, extras)
         }
 
-        binding.btnRatings.setOnClickListener {
+        binding.txtBtnRatings.setOnClickListener {
             val ratings = mutableListOf<Rating>()
                 .apply { addAll(data.ratings) }
                 .toTypedArray()
@@ -187,23 +186,17 @@ class DetailsFragment : BaseFragment() {
             findNavController().navigate(action)
         }
 
-        var seasons = 0
-        try {
-            seasons = data.seasons?.toInt() ?: 0
+        val seasons = try {
+            data.seasons?.toInt() ?: 0
         } catch (e: Exception) {
+            0
         }
-        binding.btnSeasons.apply {
-            if (seasons > 0) {
-                visibleWithFade(parent as ViewGroup)
-                setOnClickListener {
-                    val action =
-                        DetailsFragmentDirections.navigateDetailsToSeasons(data._id, seasons)
-                    findNavController().navigate(action)
-                }
-            } else gone()
+        if (seasons > 0) {
+            binding.txtTitleSeasons.visible()
+            setupSeasonChips(seasons)
         }
 
-        binding.btnTeamDetails.setOnClickListener {
+        binding.txtBtnTeamDetails.setOnClickListener {
             val teamDetails = TeamDetails(
                 cast = data.actors,
                 crew = data.writer,
@@ -214,4 +207,22 @@ class DetailsFragment : BaseFragment() {
             findNavController().navigate(action)
         }
     }
+
+    private fun setupSeasonChips(seasons: Int) {
+        (1..seasons).forEach { season ->
+            val chip = Chip(requireContext()).apply {
+                setTextAppearance(requireContext(), R.style.ChipTextStyle)
+                text = "Season $season"
+                tag = season
+                setOnClickListener { showEpisodes(season) }
+            }
+            binding.chipGroupSeasons.addView(chip)
+        }
+    }
+
+    private fun showEpisodes(season: Int) {
+        val action = DetailsFragmentDirections.navigateDetailsToEpisodes(args.shortData._id, season)
+        findNavController().navigate(action)
+    }
+
 }

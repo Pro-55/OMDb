@@ -192,6 +192,14 @@ class SearchFragment : BaseFragment() {
                     if (searchText.isNotEmpty()) fetchData(searchText)
                 }
             })
+
+        binding.editSearch.setOnEditorActionListener { _, _, _ ->
+            clearFocus()
+            hideKeyboard()
+            val searchText = binding.editSearch.text?.toString()?.trim()
+            if (!searchText.isNullOrEmpty()) fetchData(searchText)
+            true
+        }
     }
 
     private fun setupObserver() {

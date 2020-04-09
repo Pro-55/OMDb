@@ -34,7 +34,7 @@
 					android:layout_width="0dp"
 					android:layout_height="match_parent"
 					android:gravity="center_vertical"
-					android:text="@string/btn_team"
+					android:text="@string/label_team"
 					android:textSize="@dimen/dimen_20sp"
 					android:textStyle="bold"
 					app:layout_constrainedWidth="true"

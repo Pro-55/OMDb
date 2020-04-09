@@ -51,8 +51,8 @@
 			app:popEnterAnim="@anim/slide_in_left"
 			app:popExitAnim="@anim/slide_out_right" />
 		<action
-			android:id="@+id/navigateDetailsToSeasons"
-			app:destination="@id/seasonsFragment"
+			android:id="@+id/navigateDetailsToEpisodes"
+			app:destination="@id/episodesFragment"
 			app:enterAnim="@anim/slide_in_right"
 			app:exitAnim="@anim/slide_out_left"
 			app:popEnterAnim="@anim/slide_in_left"
@@ -90,25 +90,6 @@
 		<argument
 			android:name="ratings"
 			app:argType="com.example.omdb.models.Rating[]" />
-	</fragment>
-	<fragment
-		android:id="@+id/seasonsFragment"
-		android:name="com.example.omdb.ui.details.seasons.SeasonsFragment"
-		android:label="SeasonsFragment"
-		tools:layout="@layout/fragment_seasons">
-		<argument
-			android:name="id"
-			app:argType="string" />
-		<argument
-			android:name="seasons"
-			app:argType="integer" />
-		<action
-			android:id="@+id/navigateSeasonsToEpisodes"
-			app:destination="@id/episodesFragment"
-			app:enterAnim="@anim/slide_in_right"
-			app:exitAnim="@anim/slide_out_left"
-			app:popEnterAnim="@anim/slide_in_left"
-			app:popExitAnim="@anim/slide_out_right" />
 	</fragment>
 	<fragment
 		android:id="@+id/episodesFragment"
