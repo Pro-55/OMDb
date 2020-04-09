@@ -3,6 +3,7 @@ package com.example.omdb.util.extensions
 import android.util.Log
 import com.example.omdb.models.Resource
 import com.example.omdb.util.Constants
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -25,10 +26,11 @@ fun <T> Flow<T>.asIoFlow(doRetry: Boolean = true): Flow<T> {
         .catch {
             when (it) {
                 is IllegalArgumentException -> {
-                    Log.d("ioFlow", "Couldn't complete request: IllegalArgumentException")
+                    Log.d("ioFlow", "TestLog: Couldn't complete request: IllegalArgumentException")
                 }
                 else -> {
                     it.printStackTrace()
+                    FirebaseCrashlytics.getInstance().recordException(it)
                 }
             }
         }
@@ -57,11 +59,15 @@ fun <T> Flow<Resource<T>>.asResourceFlow(doRetry: Boolean = true): Flow<Resource
         .catch {
             when (it) {
                 is IllegalArgumentException -> {
-                    Log.d("resourceFlow", "Couldn't complete request: IllegalArgumentException")
+                    Log.d(
+                        "resourceFlow",
+                        "TestLog: Couldn't complete request: IllegalArgumentException"
+                    )
                     emit(Resource.error(msg = Constants.REQUEST_FAILED_MESSAGE, data = null))
                 }
                 else -> {
                     it.printStackTrace()
+                    FirebaseCrashlytics.getInstance().recordException(it)
                     emit(Resource.error(msg = Constants.REQUEST_FAILED_MESSAGE, data = null))
                 }
             }

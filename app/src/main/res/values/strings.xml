@@ -28,4 +28,7 @@
 	<string name="shared_container_episodes">shared_container_episodes</string>
 	<string name="shared_icon_episodes">shared_icon_episodes</string>
 	<string name="shared_title_episodes">shared_title_episodes</string>
+
+	<string name="channel_notification_default">Others</string>
+	<string name="default_notification_channel_id">channel_default</string>
 </resources>

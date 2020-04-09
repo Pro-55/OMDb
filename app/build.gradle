@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 29
@@ -63,7 +65,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-common-java8:2.2.0'
 
     // Fragment
-    implementation "androidx.fragment:fragment-ktx:1.2.3"
+    implementation "androidx.fragment:fragment-ktx:1.2.4"
 
     // Navigation Component
     implementation "androidx.navigation:navigation-fragment-ktx:2.3.0-alpha04"
@@ -112,6 +114,14 @@ dependencies {
 
     // DiscreteScrollView
     implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
+
+    // Firebase
+    // Google Analytics
+    implementation 'com.google.firebase:firebase-analytics:17.3.0'
+    // Crashlytics
+    implementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta03'
+    // Cloud Messaging
+    implementation 'com.google.firebase:firebase-messaging:20.1.5'
 
     // Test
     testImplementation 'junit:junit:4.13'

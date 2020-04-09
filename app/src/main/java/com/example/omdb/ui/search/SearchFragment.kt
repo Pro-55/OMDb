@@ -121,9 +121,9 @@ class SearchFragment : BaseFragment() {
 
         setupRecyclerView()
 
-        setupSearch()
-
         setupObserver()
+
+        setupSearch()
 
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }
@@ -222,7 +222,10 @@ class SearchFragment : BaseFragment() {
     private fun bindResource(resource: Resource<SearchResult>) {
         when (resource.status) {
             Status.LOADING -> isLoading = true
-            Status.ERROR -> isLoading = false
+            Status.ERROR -> {
+                isLoading = false
+                showShortToast(resource.message)
+            }
             Status.SUCCESS -> bindSearchResult(resource.data)
         }
     }
