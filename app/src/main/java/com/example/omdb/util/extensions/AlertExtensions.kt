@@ -32,15 +32,15 @@ fun FragmentActivity.showLongSnackBar(message: String?) {
     ).show()
 }
 
-fun Fragment.showShortToast(message: String) = requireActivity().showShortToast(message)
+fun Fragment.showShortToast(message: String?) = requireActivity().showShortToast(message)
 
-fun FragmentActivity.showShortToast(message: String) =
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+fun FragmentActivity.showShortToast(message: String?) =
+    Toast.makeText(this, message ?: "Something went wrong!", Toast.LENGTH_SHORT).show()
 
-fun Fragment.showLongToast(message: String) = requireActivity().showLongToast(message)
+fun Fragment.showLongToast(message: String?) = requireActivity().showLongToast(message)
 
-fun FragmentActivity.showLongToast(message: String) =
-    Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+fun FragmentActivity.showLongToast(message: String?) =
+    Toast.makeText(this, message ?: "Something went wrong!", Toast.LENGTH_LONG).show()
 
 fun Context.getProgressDialog(title: String = "", message: String): ProgressDialog =
     ProgressDialog.show(this, title, message, true, false)

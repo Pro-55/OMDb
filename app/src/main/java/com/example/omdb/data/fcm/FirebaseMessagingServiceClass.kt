@@ -69,7 +69,7 @@ class FirebaseMessagingServiceClass : FirebaseMessagingService() {
                     ?: resources.getString(R.string.default_notification_channel_id)
             )
 
-            builder.setSmallIcon(R.drawable.logo_omdb)
+            builder.setSmallIcon(R.drawable.ic_notification_badge)
             val color = data[Constants.KEY_NOTIFICATION_COLOR]
             builder.color = if (color != null) Color.parseColor(color)
             else resources.getColor(R.color.colorAccent)
