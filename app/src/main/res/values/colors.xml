@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="colorPrimary">#cccccc</color>
-	<color name="colorPrimaryDark">#999999</color>
-	<color name="colorAccent">#000000</color>
-	<color name="colorWhite">#ffffff</color>
-	<color name="colorLightGray">#d4d4d4</color>
-	<color name="colorDarkGray">#a1a1a1</color>
-	<color name="colorRed">#c60000</color>
-	<color name="colorYellow">#e8c309</color>
+	<color name="colorPrimary">#FAFAFA</color>
+	<color name="colorPrimaryLight">#FFFFFF</color>
+	<color name="colorPrimaryDark">#C7C7C7</color>
+
+	<color name="colorSecondary">#212121</color>
+	<color name="colorSecondaryLight">#484848</color>
+	<color name="colorSecondaryDark">#000000</color>
+
+	<color name="colorAccent">#F4511E</color>
+
+	<color name="color_error">#B00020</color>
+
+	<color name="color_category_movie">#C60000</color>
+
+	<color name="color_category_series">#3B5998</color>
+
+	<color name="color_category_episodes">#5BA525</color>
+
+	<color name="color_blur_view">#80000000</color>
+
 </resources>
