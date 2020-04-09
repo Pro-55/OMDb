@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "715023116544",
+    "firebase_url": "https://omdb-prod.firebaseio.com",
+    "project_id": "omdb-prod",
+    "storage_bucket": "omdb-prod.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:715023116544:android:1b53a13155ed998300ebe5",
+        "android_client_info": {
+          "package_name": "com.example.omdb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "715023116544-i46mal4pqp27a9b4okmbobmg0ainlr14.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCT4pD-NYEGg5y0qQugdLJi8ZmjOjVBWWs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "715023116544-i46mal4pqp27a9b4okmbobmg0ainlr14.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
