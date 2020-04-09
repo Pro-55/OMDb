@@ -4,6 +4,7 @@
 	xmlns:tool="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
+	android:background="?attr/selectableItemBackground"
 	android:padding="@dimen/dimen_8dp">
 
 	<TextView
@@ -11,6 +12,7 @@
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="@dimen/dimen_8dp"
+		android:textColor="@color/color_primary_text"
 		android:textSize="@dimen/dimen_20sp"
 		app:layout_constrainedWidth="true"
 		app:layout_constraintEnd_toEndOf="parent"
@@ -23,6 +25,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginTop="@dimen/dimen_8dp"
+		android:textColor="@color/color_secondary_text"
 		android:textSize="@dimen/dimen_14sp"
 		app:layout_constrainedWidth="true"
 		app:layout_constraintStart_toStartOf="@id/txt_title"

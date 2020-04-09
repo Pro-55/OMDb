@@ -1,20 +1,21 @@
 <resources>
 
-	<style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+	<style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 		<item name="colorPrimary">@color/colorPrimary</item>
 		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 		<item name="colorAccent">@color/colorAccent</item>
-		<item name="android:statusBarColor">?attr/backgroundColor</item>
+		<item name="android:statusBarColor">@color/colorPrimaryDark</item>
 		<item name="android:fontFamily">@font/product_sans_regular</item>
 	</style>
 
 	<style name="SplashTheme" parent="AppTheme">
-		<item name="colorPrimaryDark">?attr/backgroundColor</item>
+		<item name="colorPrimaryDark">@color/colorPrimary</item>
 		<item name="android:windowBackground">@drawable/splash</item>
 	</style>
 
 	<style name="ChipTextStyle" parent="TextAppearance.MaterialComponents.Chip">
 		<item name="android:fontFamily">@font/product_sans_regular</item>
+		<item name="android:textColor">@color/color_primary_text</item>
 	</style>
 
 </resources>
