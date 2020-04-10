@@ -3,6 +3,7 @@ package com.example.omdb.util
 object Constants {
     const val OMDB_SHARED_PREFS = "omdb_shared_preferences"
 
+    const val KEY_SIGN_UP_STATUS = "sign_up_status"
     const val KEY_FCM_TOKEN = "fcm_token"
 
     const val KEY_NOTIFICATION_ID = "notification_id"

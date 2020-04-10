@@ -15,6 +15,11 @@
 	<string name="label_team">Team</string>
 	<string name="label_no_ratings">No Ratings</string>
 
+	<string name="hint_first_name">First Name</string>
+	<string name="hint_last_name">Last Name</string>
+
+	<string name="btn_save">Save</string>
+
 	<string name="divider_bullet">•</string>
 
 	<string name="shared_container_movies">shared_container_movies</string>

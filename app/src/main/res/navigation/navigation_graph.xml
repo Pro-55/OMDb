@@ -3,7 +3,42 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/navigation_graph"
-	app:startDestination="@id/homeFragment">
+	app:startDestination="@id/mainFragment">
+	<fragment
+		android:id="@+id/mainFragment"
+		android:name="com.example.omdb.ui.MainFragment"
+		android:label="MainFragment"
+		tools:layout="@layout/fragment_main">
+		<action
+			android:id="@+id/navigateMainToSignUp"
+			app:destination="@id/signUpFragment"
+			app:enterAnim="@anim/slide_in_bottom"
+			app:exitAnim="@anim/slide_out_top"
+			app:popEnterAnim="@anim/slide_in_top"
+			app:popExitAnim="@anim/slide_out_bottom"
+			app:popUpTo="@id/mainFragment"
+			app:popUpToInclusive="true" />
+		<action
+			android:id="@+id/navigateMainToHome"
+			app:destination="@id/homeFragment"
+			app:popUpTo="@id/mainFragment"
+			app:popUpToInclusive="true" />
+	</fragment>
+	<fragment
+		android:id="@+id/signUpFragment"
+		android:name="com.example.omdb.ui.authentication.SignUpFragment"
+		android:label="SignUpFragment"
+		tools:layout="@layout/fragment_sign_up">
+		<action
+			android:id="@+id/navigateSignUpToHome"
+			app:destination="@id/homeFragment"
+			app:enterAnim="@anim/slide_in_bottom"
+			app:exitAnim="@anim/slide_out_top"
+			app:popEnterAnim="@anim/slide_in_top"
+			app:popExitAnim="@anim/slide_out_bottom"
+			app:popUpTo="@id/signUpFragment"
+			app:popUpToInclusive="true" />
+	</fragment>
 	<fragment
 		android:id="@+id/homeFragment"
 		android:name="com.example.omdb.ui.home.HomeFragment"

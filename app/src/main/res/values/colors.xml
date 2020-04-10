@@ -7,7 +7,10 @@
 	<color name="colorAccent">#00B0FF</color>
 
 	<color name="color_primary_text">#000000</color>
+
 	<color name="color_secondary_text">#484848</color>
+
+	<color name="color_profile_text">#FFFFFF</color>
 
 	<color name="color_error">#B00020</color>
 

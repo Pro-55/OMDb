@@ -1,12 +1,11 @@
-package com.example.omdb.data.contract
+package com.example.omdb.data.repository.contract
 
-import com.example.omdb.models.FullData
-import com.example.omdb.models.Resource
-import com.example.omdb.models.SearchResult
-import com.example.omdb.models.Season
+import com.example.omdb.models.*
 import kotlinx.coroutines.flow.Flow
 
 interface HomeRepository {
+
+    fun signUp(user: User)
 
     fun searchMovies(searchString: String, page: Int): Flow<Resource<SearchResult>>
 
