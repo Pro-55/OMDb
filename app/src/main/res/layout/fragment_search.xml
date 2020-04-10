@@ -28,6 +28,7 @@
 			android:layout_height="wrap_content"
 			android:layout_margin="@dimen/dimen_8dp"
 			android:gravity="center"
+			android:textColor="@color/color_primary_text"
 			android:textSize="@dimen/dimen_24sp"
 			android:textStyle="bold"
 			app:layout_constrainedWidth="true"
@@ -58,7 +59,9 @@
 				android:hint="@string/hint_search"
 				android:imeOptions="actionSearch"
 				android:padding="@dimen/dimen_8dp"
-				android:singleLine="true" />
+				android:singleLine="true"
+				android:textColor="@color/color_primary_text"
+				android:textColorHint="@color/color_secondary_text" />
 		</androidx.cardview.widget.CardView>
 
 		<androidx.coordinatorlayout.widget.CoordinatorLayout
