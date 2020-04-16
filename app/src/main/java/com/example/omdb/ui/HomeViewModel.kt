@@ -1,11 +1,8 @@
 package com.example.omdb.ui
 
 import androidx.lifecycle.*
-import com.example.omdb.data.repository.HomeRepositoryImpl
-import com.example.omdb.models.Resource
-import com.example.omdb.models.SearchResult
-import com.example.omdb.models.Status
-import com.example.omdb.models.Type
+import com.example.omdb.data.repository.impl.HomeRepositoryImpl
+import com.example.omdb.models.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -25,6 +22,8 @@ class HomeViewModel @Inject constructor(
     private var seriesResult = SearchResult()
     private val _seriesSearch = MutableLiveData<Resource<SearchResult>>()
     val seriesSearch: LiveData<Resource<SearchResult>> = _seriesSearch
+
+    fun signUp(user: User) = repository.signUp(user)
 
     fun searchMovies(searchText: String, size: Int) {
         if (size <= 0) movieResult = SearchResult()

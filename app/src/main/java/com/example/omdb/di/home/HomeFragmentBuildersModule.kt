@@ -1,5 +1,7 @@
 package com.example.omdb.di.home
 
+import com.example.omdb.ui.MainFragment
+import com.example.omdb.ui.authentication.SignUpFragment
 import com.example.omdb.ui.details.DetailsFragment
 import com.example.omdb.ui.details.FullPosterFragment
 import com.example.omdb.ui.details.episodes.EpisodesFragment
@@ -12,6 +14,12 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class HomeFragmentBuildersModule {
+
+    @ContributesAndroidInjector
+    abstract fun contributeMainFragment(): MainFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeSignUpFragment(): SignUpFragment
 
     @ContributesAndroidInjector
     abstract fun contributeHomeFragment(): HomeFragment
