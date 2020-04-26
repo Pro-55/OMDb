@@ -5,6 +5,7 @@
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
+		android:background="@color/color_background"
 		android:clickable="true"
 		android:focusable="true">
 
@@ -24,9 +25,9 @@
 					android:id="@+id/img_btn_back"
 					android:layout_width="0dp"
 					android:layout_height="match_parent"
+					android:background="?attr/selectableItemBackground"
 					android:padding="@dimen/activity_default_margin"
 					android:src="@drawable/ic_back"
-					android:background="?attr/selectableItemBackground"
 					app:layout_constraintDimensionRatio="H,1:1"
 					app:layout_constraintStart_toStartOf="parent"
 					app:layout_constraintTop_toTopOf="parent" />
