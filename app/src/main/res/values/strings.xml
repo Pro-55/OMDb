@@ -14,11 +14,15 @@
 	<string name="label_ratings">Ratings</string>
 	<string name="label_team">Team</string>
 	<string name="label_no_ratings">No Ratings</string>
+	<string name="label_or">OR</string>
 
 	<string name="hint_first_name">First Name</string>
 	<string name="hint_last_name">Last Name</string>
+	<string name="hint_email">Email</string>
 
 	<string name="btn_save">Save</string>
+	<string name="btn_sign_up_with_google">Sign up with Google</string>
+	<string name="btn_sign_up_facebook">Sign up with Facebook</string>
 
 	<string name="divider_bullet">•</string>
 
@@ -36,4 +40,7 @@
 
 	<string name="channel_notification_default">Others</string>
 	<string name="default_notification_channel_id">channel_default</string>
+
+	<string name="facebook_app_id">1156562811345077</string>
+	<string name="fb_login_protocol_scheme">fb1156562811345077</string>
 </resources>

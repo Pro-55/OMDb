@@ -1,25 +1,40 @@
 package com.example.omdb.ui.authentication
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.request.RequestOptions
 import com.example.omdb.BaseFragment
+import com.example.omdb.BuildConfig
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentSignUpBinding
 import com.example.omdb.models.User
 import com.example.omdb.ui.HomeViewModel
 import com.example.omdb.util.Constants
+import com.example.omdb.util.Constants.REQUEST_GOOGLE_SIGN_IN
 import com.example.omdb.util.extensions.getViewModel
+import com.example.omdb.util.extensions.glide
 import com.example.omdb.util.extensions.hideKeyboard
 import com.example.omdb.util.extensions.isValidEmail
-import com.example.omdb.util.extensions.isValidName
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.*
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import java.util.*
 import javax.inject.Inject
 
@@ -32,11 +47,19 @@ class SignUpFragment : BaseFragment() {
     //Global
     @Inject lateinit var factory: ViewModelProvider.Factory
     @Inject lateinit var sp: SharedPreferences
+    @Inject lateinit var auth: FirebaseAuth
+    @Inject lateinit var crashlytics: FirebaseCrashlytics
     private lateinit var binding: FragmentSignUpBinding
     private val viewModel by lazy { requireActivity().getViewModel<HomeViewModel>(factory) }
+    private val fbCallbackManager: CallbackManager by lazy { CallbackManager.Factory.create() }
+    private var firstName: String? = null
+    private var lastName: String? = null
+    private var email: String? = null
+    private var profileUrl: String? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up, container, false)
@@ -46,15 +69,22 @@ class SignUpFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.btnGoogle.setOnClickListener { hitLoginGoogle() }
+
+        binding.btnFacebook.setOnClickListener { hitLoginFacebook() }
+
         binding.btnSave.setOnClickListener {
             hideKeyboard()
             clearFocus()
             if (isValid()) {
-                val id = UUID.randomUUID().toString()
-                val fName = binding.editFirstName.text.toString()
-                val lName = binding.editLastName.text.toString()
-                val email = binding.editEmail.text.toString()
-                val user = User(_id = id, firstName = fName, lastName = lName, email = email)
+                val id = auth.currentUser?.uid ?: UUID.randomUUID().toString()
+                val user = User(
+                    _id = id,
+                    firstName = firstName ?: "",
+                    lastName = lastName ?: "",
+                    email = email ?: "",
+                    profileUrl = profileUrl
+                )
                 viewModel.signUp(user)
                 sp.edit().putBoolean(Constants.KEY_SIGN_UP_STATUS, true).apply()
                 val action = SignUpFragmentDirections.navigateSignUpToHome()
@@ -63,22 +93,6 @@ class SignUpFragment : BaseFragment() {
         }
 
         binding.editFirstName.apply {
-            addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {}
-
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    val text = s?.toString()?.trim() ?: ""
-                    if (text.isEmpty() || text.length == 1) binding.txtProfile.text = text
-                }
-            })
             setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) binding.tilFirstName.error = null
             }
@@ -88,7 +102,6 @@ class SignUpFragment : BaseFragment() {
                 true
             }
         }
-
 
         binding.editLastName.apply {
             setOnFocusChangeListener { _, hasFocus ->
@@ -113,23 +126,65 @@ class SignUpFragment : BaseFragment() {
         }
     }
 
+    private fun hitLoginGoogle() {
+        // Configure Google Sign In
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(BuildConfig.GCP_CLIENT_ID)
+            .requestEmail()
+            .requestProfile()
+            .build()
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        val googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
+
+        val signInIntent = googleSignInClient.signInIntent
+        startActivityForResult(signInIntent, REQUEST_GOOGLE_SIGN_IN)
+    }
+
+    private fun hitLoginFacebook() {
+
+        val fbLoginManager = LoginManager.getInstance()
+
+        val fbParams = listOf("name", "first_name", "last_name", "email", "public_profile")
+
+        // Set Read permission for fields
+        fbLoginManager.logInWithReadPermissions(this@SignUpFragment, fbParams)
+
+        // Facebook callback for retrieving Access Token
+        fbLoginManager.registerCallback(fbCallbackManager, object : FacebookCallback<LoginResult> {
+
+            override fun onSuccess(result: LoginResult) {
+                val credential = FacebookAuthProvider.getCredential(result.accessToken.token)
+                firebaseAuth(credential)
+            }
+
+            override fun onCancel() {
+                Log.e(TAG, "TestLog: Facebook sign in cancelled!")
+            }
+
+            override fun onError(e: FacebookException) {
+                Log.e(TAG, "TestLog: Facebook sign in failed: $e")
+                crashlytics.recordException(e)
+            }
+
+        })
+
+    }
+
     private fun isValid(): Boolean {
         var isValid = true
 
-        val fName = binding.editFirstName.text?.toString() ?: ""
-        if (!fName.isValidName()) {
+        if (firstName.isNullOrEmpty()) {
             binding.tilFirstName.error = " "
             isValid = false
         }
 
-        val lName = binding.editLastName.text?.toString() ?: ""
-        if (!lName.isValidName()) {
+        if (lastName.isNullOrEmpty()) {
             binding.tilLastName.error = " "
             isValid = false
         }
 
-        val eMail = binding.editEmail.text?.toString() ?: ""
-        if (!eMail.isValidEmail()) {
+        if (!email.isValidEmail()) {
             binding.tilEmail.error = " "
             isValid = false
         }
@@ -145,5 +200,69 @@ class SignUpFragment : BaseFragment() {
         requireActivity().hideKeyboard()
     }
 
+    override fun onStart() {
+        super.onStart()
+        val user = auth.currentUser ?: return
+        setFirebaseUser(user)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        // Facebook Callback for Sign In
+        fbCallbackManager.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == RESULT_OK) {
+            when (requestCode) {
+                REQUEST_GOOGLE_SIGN_IN -> {
+                    val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+                    try {
+                        // Google Sign In was successful, authenticate with Firebase
+                        val account = task.getResult(ApiException::class.java)
+                        if (account != null) {
+                            val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+                            firebaseAuth(credential)
+                        }
+                    } catch (e: ApiException) {
+                        Log.e(TAG, "TestLog: Google sign in failed: $e")
+                        crashlytics.recordException(e)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun firebaseAuth(credential: AuthCredential) {
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(requireActivity()) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    val user = auth.currentUser ?: return@addOnCompleteListener
+                    setFirebaseUser(user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.e(TAG, "TestLog: signInWithCredential failed: ${task.exception}")
+                }
+            }
+    }
+
+    private fun setFirebaseUser(user: FirebaseUser) {
+        val name = user.displayName?.split(" ")
+        if (!name.isNullOrEmpty()) {
+            firstName = name.first()
+            lastName = name.last()
+
+            if (!firstName.isNullOrEmpty()) binding.editFirstName.setText(firstName)
+            if (!lastName.isNullOrEmpty()) binding.editLastName.setText(lastName)
+        }
+        email = user.email
+        if (!email.isNullOrEmpty()) binding.editEmail.setText(email)
+
+        profileUrl = user.photoUrl?.toString()
+
+        glide().load(profileUrl)
+            .transform(CircleCrop())
+            .placeholder(resources.getDrawable(R.drawable.ic_profile_placeholder))
+            .apply(RequestOptions().override(200, 200))
+            .into(binding.imgProfile)
+    }
 
 }

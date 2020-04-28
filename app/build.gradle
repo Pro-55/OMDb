@@ -19,22 +19,22 @@ android {
     }
     dataBinding { enabled = true }
     buildTypes {
-        buildTypes {
-            debug {
-                applicationIdSuffix ".debug"
-                buildConfigField "String", "BaseUrl", DEV_URL
-                buildConfigField "String", "ApiKey", OMDB_API_KEY
-                minifyEnabled false
-                shrinkResources false
-                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            }
-            release {
-                buildConfigField "String", "BaseUrl", PROD_URL
-                buildConfigField "String", "ApiKey", OMDB_API_KEY
-                minifyEnabled true
-                shrinkResources true
-                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            }
+        debug {
+            applicationIdSuffix ".debug"
+            buildConfigField "String", "BaseUrl", DEV_URL
+            buildConfigField "String", "ApiKey", OMDB_API_KEY
+            buildConfigField "String", "GCP_CLIENT_ID", DEV_CLIENT_ID
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+            buildConfigField "String", "BaseUrl", PROD_URL
+            buildConfigField "String", "ApiKey", OMDB_API_KEY
+            buildConfigField "String", "GCP_CLIENT_ID", PROD_CLIENT_ID
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
@@ -119,9 +119,9 @@ dependencies {
     implementation 'com.google.dagger:dagger:2.28'
     kapt 'com.google.dagger:dagger-compiler:2.28'
     // Android
-    implementation 'com.google.dagger:dagger-android:2.26'
-    implementation 'com.google.dagger:dagger-android-support:2.26'
-    kapt 'com.google.dagger:dagger-android-processor:2.26'
+    implementation 'com.google.dagger:dagger-android:2.27'
+    implementation 'com.google.dagger:dagger-android-support:2.27'
+    kapt 'com.google.dagger:dagger-android-processor:2.27'
 
     // DiscreteScrollView
     implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
@@ -133,9 +133,15 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
     // Cloud Messaging
     implementation 'com.google.firebase:firebase-messaging:20.3.0'
+    // Authentication
+    implementation 'com.google.firebase:firebase-auth:19.3.1'
+    implementation 'com.google.android.gms:play-services-auth:18.0.0'
 
     // Android Debug DB
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
+
+    // Facebook
+    implementation 'com.facebook.android:facebook-android-sdk:5.15.3'
 
     // Test
     testImplementation 'junit:junit:4.13'
