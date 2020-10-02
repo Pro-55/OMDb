@@ -134,8 +134,8 @@ dependencies {
     // Cloud Messaging
     implementation 'com.google.firebase:firebase-messaging:20.3.0'
     // Authentication
-    implementation 'com.google.firebase:firebase-auth:19.3.1'
-    implementation 'com.google.android.gms:play-services-auth:18.0.0'
+    implementation 'com.google.firebase:firebase-auth:19.4.0'
+    implementation 'com.google.android.gms:play-services-auth:18.1.0'
 
     // Android Debug DB
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
