@@ -9,9 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -20,29 +20,25 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.example.omdb.BaseFragment
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentDetailsBinding
+import com.example.omdb.framework.BaseFragment
 import com.example.omdb.models.*
 import com.example.omdb.ui.HomeViewModel
-import com.example.omdb.util.extensions.getViewModel
 import com.example.omdb.util.extensions.glide
 import com.example.omdb.util.extensions.showShortSnackBar
 import com.example.omdb.util.extensions.visible
 import com.google.android.material.chip.Chip
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailsFragment : BaseFragment() {
 
-    companion object {
-        private val TAG = DetailsFragment::class.java.simpleName
-    }
-
     //Global
-    @Inject lateinit var factory: ViewModelProvider.Factory
+    private val TAG = DetailsFragment::class.java.simpleName
     private lateinit var binding: FragmentDetailsBinding
     private val args by navArgs<DetailsFragmentArgs>()
-    private val viewModel by lazy { requireActivity().getViewModel<HomeViewModel>(factory) }
+    private val viewModel by viewModels<HomeViewModel>()
     private val glide by lazy { glide() }
     private var fullData: FullData? = null
     private var height = 4

@@ -7,19 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
-import com.example.omdb.BaseFragment
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentMainBinding
+import com.example.omdb.framework.BaseFragment
 import com.example.omdb.util.Constants
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainFragment : BaseFragment() {
 
-    companion object {
-        private val TAG = MainFragment::class.java.simpleName
-    }
-
     //Global
+    private val TAG = MainFragment::class.java.simpleName
     @Inject lateinit var sp: SharedPreferences
     private lateinit var binding: FragmentMainBinding
 

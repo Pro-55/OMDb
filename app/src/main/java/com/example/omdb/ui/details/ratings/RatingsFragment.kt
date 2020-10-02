@@ -7,18 +7,15 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.omdb.BaseFragment
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentRatingsBinding
+import com.example.omdb.framework.BaseFragment
 import com.example.omdb.util.extensions.visible
 
 class RatingsFragment : BaseFragment() {
 
-    companion object {
-        private val TAG = RatingsFragment::class.java.simpleName
-    }
-
     //Global
+    private val TAG = RatingsFragment::class.java.simpleName
     private lateinit var binding: FragmentRatingsBinding
     private val args by navArgs<RatingsFragmentArgs>()
 

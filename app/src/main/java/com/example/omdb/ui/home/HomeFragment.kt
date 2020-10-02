@@ -7,18 +7,15 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import com.example.omdb.BaseFragment
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentHomeBinding
+import com.example.omdb.framework.BaseFragment
 import com.example.omdb.models.Type
 
 class HomeFragment : BaseFragment() {
 
-    companion object {
-        private val TAG = HomeFragment::class.java.simpleName
-    }
-
     //Global
+    private val TAG = HomeFragment::class.java.simpleName
     private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(

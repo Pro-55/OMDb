@@ -6,19 +6,18 @@ import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.omdb.R
 import com.example.omdb.databinding.ActivityHomeBinding
 import com.example.omdb.util.NotificationChannels
-import dagger.android.support.DaggerAppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 
-class HomeActivity : DaggerAppCompatActivity() {
-
-    companion object {
-        private val TAG = HomeActivity::class.java.simpleName
-    }
+@AndroidEntryPoint
+class HomeActivity : AppCompatActivity() {
 
     //Global
+    private val TAG = HomeActivity::class.java.simpleName
     private lateinit var binding: ActivityHomeBinding
     private val manager by lazy { getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager }
 

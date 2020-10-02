@@ -6,17 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.navArgs
-import com.example.omdb.BaseFragment
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentTeamDetailsBinding
+import com.example.omdb.framework.BaseFragment
 
 class TeamDetailsFragment : BaseFragment() {
 
-    companion object {
-        private val TAG = TeamDetailsFragment::class.java.simpleName
-    }
-
     //Global
+    private val TAG = TeamDetailsFragment::class.java.simpleName
     private lateinit var binding: FragmentTeamDetailsBinding
     private val args by navArgs<TeamDetailsFragmentArgs>()
 

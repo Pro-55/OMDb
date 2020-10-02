@@ -8,20 +8,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
-import com.example.omdb.BaseFragment
 import com.example.omdb.BuildConfig
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentSignUpBinding
+import com.example.omdb.framework.BaseFragment
 import com.example.omdb.models.User
 import com.example.omdb.ui.HomeViewModel
 import com.example.omdb.util.Constants
 import com.example.omdb.util.Constants.REQUEST_GOOGLE_SIGN_IN
-import com.example.omdb.util.extensions.getViewModel
 import com.example.omdb.util.extensions.glide
 import com.example.omdb.util.extensions.hideKeyboard
 import com.example.omdb.util.extensions.isValidEmail
@@ -35,26 +35,21 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.*
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SignUpFragment : BaseFragment() {
 
-    companion object {
-        private val TAG = SignUpFragment::class.java.simpleName
-    }
-
     //Global
-    @Inject lateinit var factory: ViewModelProvider.Factory
+    private val TAG = SignUpFragment::class.java.simpleName
     @Inject lateinit var sp: SharedPreferences
     @Inject lateinit var auth: FirebaseAuth
     @Inject lateinit var crashlytics: FirebaseCrashlytics
     private lateinit var binding: FragmentSignUpBinding
-    private val viewModel by lazy { requireActivity().getViewModel<HomeViewModel>(factory) }
+    private val viewModel by viewModels<HomeViewModel>()
     private val fbCallbackManager: CallbackManager by lazy { CallbackManager.Factory.create() }
-    private var firstName: String? = null
-    private var lastName: String? = null
-    private var email: String? = null
     private var profileUrl: String? = null
 
     override fun onCreateView(
@@ -76,7 +71,10 @@ class SignUpFragment : BaseFragment() {
         binding.btnSave.setOnClickListener {
             hideKeyboard()
             clearFocus()
-            if (isValid()) {
+            val firstName = binding.editFirstName.text?.toString()?.trim()
+            val lastName = binding.editLastName.text?.toString()?.trim()
+            val email = binding.editEmail.text?.toString()?.trim()
+            if (isValid(firstName, lastName, email)) {
                 val id = auth.currentUser?.uid ?: UUID.randomUUID().toString()
                 val user = User(
                     _id = id,
@@ -171,7 +169,7 @@ class SignUpFragment : BaseFragment() {
 
     }
 
-    private fun isValid(): Boolean {
+    private fun isValid(firstName: String?, lastName: String?, email: String?): Boolean {
         var isValid = true
 
         if (firstName.isNullOrEmpty()) {
@@ -247,20 +245,22 @@ class SignUpFragment : BaseFragment() {
     private fun setFirebaseUser(user: FirebaseUser) {
         val name = user.displayName?.split(" ")
         if (!name.isNullOrEmpty()) {
-            firstName = name.first()
-            lastName = name.last()
+            val firstName = name.first()
+            val lastName = name.last()
 
-            if (!firstName.isNullOrEmpty()) binding.editFirstName.setText(firstName)
-            if (!lastName.isNullOrEmpty()) binding.editLastName.setText(lastName)
+            if (firstName.isNotEmpty()) binding.editFirstName.setText(firstName)
+            if (lastName.isNotEmpty()) binding.editLastName.setText(lastName)
         }
-        email = user.email
+        val email = user.email
         if (!email.isNullOrEmpty()) binding.editEmail.setText(email)
 
         profileUrl = user.photoUrl?.toString()
 
         glide().load(profileUrl)
             .transform(CircleCrop())
-            .placeholder(resources.getDrawable(R.drawable.ic_profile_placeholder))
+            .placeholder(
+                ResourcesCompat.getDrawable(resources, R.drawable.ic_profile_placeholder, null)
+            )
             .apply(RequestOptions().override(200, 200))
             .into(binding.imgProfile)
     }
