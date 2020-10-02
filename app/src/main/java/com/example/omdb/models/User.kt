@@ -16,7 +16,5 @@ data class User(
     @ColumnInfo(name = "last_name")
     val lastName: String = "",
 
-    val email: String = "",
-
-    val profileUrl: String? = null
+    val email: String = ""
 )

@@ -8,13 +8,18 @@
 		android:clickable="true"
 		android:focusable="true">
 
-		<ImageView
-			android:id="@+id/img_profile"
+		<TextView
+			android:id="@+id/txt_profile"
 			android:layout_width="0dp"
-			android:layout_height="@dimen/dimen_120dp"
-			android:layout_margin="@dimen/dimen_80dp"
-			android:scaleType="centerCrop"
-			android:src="@drawable/ic_profile_placeholder"
+			android:layout_height="wrap_content"
+			android:layout_marginHorizontal="@dimen/activity_default_margin"
+			android:layout_marginTop="@dimen/dimen_80dp"
+			android:background="@drawable/ic_profile_background"
+			android:gravity="center"
+			android:padding="@dimen/activity_default_margin"
+			android:textColor="@color/color_profile_text"
+			android:textSize="@dimen/dimen_60sp"
+			android:textStyle="bold"
 			app:layout_constraintDimensionRatio="H,1:1"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +30,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			app:barrierDirection="bottom"
-			app:constraint_referenced_ids="img_profile" />
+			app:constraint_referenced_ids="txt_profile" />
 
 		<com.google.android.material.textfield.TextInputLayout
 			android:id="@+id/til_first_name"
@@ -67,13 +72,6 @@
 				android:hint="@string/hint_last_name" />
 		</com.google.android.material.textfield.TextInputLayout>
 
-		<androidx.constraintlayout.widget.Barrier
-			android:id="@+id/barrier_edit"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			app:barrierDirection="bottom"
-			app:constraint_referenced_ids="til_first_name,til_last_name" />
-
 		<com.google.android.material.textfield.TextInputLayout
 			android:id="@+id/til_email"
 			style="@style/TextInputLayoutStyle"
@@ -89,83 +87,15 @@
 				style="@style/EmailTextInputStyle"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:hint="@string/hint_email" />
+				android:hint="@string/hint_last_name" />
 		</com.google.android.material.textfield.TextInputLayout>
 
-		<View
-			android:id="@+id/divider_start"
-			android:layout_width="0dp"
-			android:layout_height="1dp"
-			android:layout_marginHorizontal="@dimen/activity_default_margin"
-			android:background="@color/color_secondary_text"
-			app:layout_constraintBottom_toBottomOf="@id/txt_or"
-			app:layout_constraintEnd_toStartOf="@id/txt_or"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="@id/txt_or" />
-
-		<TextView
-			android:id="@+id/txt_or"
+		<androidx.constraintlayout.widget.Barrier
+			android:id="@+id/barrier_edit"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginVertical="@dimen/activity_default_margin"
-			android:text="@string/label_or"
-			android:textColor="@color/color_secondary_text"
-			android:textSize="@dimen/dimen_20sp"
-			app:layout_constraintEnd_toStartOf="@id/divider_end"
-			app:layout_constraintStart_toEndOf="@id/divider_start"
-			app:layout_constraintTop_toBottomOf="@id/til_email" />
-
-		<View
-			android:id="@+id/divider_end"
-			android:layout_width="0dp"
-			android:layout_height="1dp"
-			android:layout_marginHorizontal="@dimen/activity_default_margin"
-			android:background="@color/color_secondary_text"
-			app:layout_constraintBottom_toBottomOf="@id/txt_or"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toEndOf="@id/txt_or"
-			app:layout_constraintTop_toTopOf="@id/txt_or" />
-
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/btn_google"
-			style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_margin="@dimen/activity_default_margin"
-			android:padding="@dimen/activity_default_margin"
-			android:text="@string/btn_sign_up_with_google"
-			android:textAllCaps="false"
-			android:textColor="@color/color_primary_text"
-			android:textSize="@dimen/dimen_16sp"
-			app:cornerRadius="@dimen/dimen_4dp"
-			app:icon="@drawable/ic_google"
-			app:iconGravity="textStart"
-			app:iconTint="@null"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/txt_or"
-			app:rippleColor="@color/color_secondary_text" />
-
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/btn_facebook"
-			style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_margin="@dimen/activity_default_margin"
-			android:padding="@dimen/activity_default_margin"
-			android:text="@string/btn_sign_up_facebook"
-			android:textAllCaps="false"
-			android:textColor="@color/color_primary_text"
-			android:textSize="@dimen/dimen_16sp"
-			app:cornerRadius="@dimen/dimen_4dp"
-			app:icon="@drawable/ic_facebook"
-			app:iconGravity="textStart"
-			app:iconPadding="@dimen/dimen_8dp"
-			app:iconTint="@null"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/btn_google"
-			app:rippleColor="@color/color_secondary_text" />
+			app:barrierDirection="bottom"
+			app:constraint_referenced_ids="til_first_name,til_last_name" />
 
 		<Button
 			android:id="@+id/btn_save"
@@ -180,7 +110,7 @@
 			android:textSize="@dimen/dimen_20sp"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/btn_facebook" />
+			app:layout_constraintTop_toBottomOf="@id/til_email" />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

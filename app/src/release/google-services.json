@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "902978935628",
-    "firebase_url": "https://omdb-prod-275511.firebaseio.com",
-    "project_id": "omdb-prod-275511",
-    "storage_bucket": "omdb-prod-275511.appspot.com"
+    "project_number": "715023116544",
+    "firebase_url": "https://omdb-prod.firebaseio.com",
+    "project_id": "omdb-prod",
+    "storage_bucket": "omdb-prod.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:902978935628:android:6ce13ca2587c3a0c33cde9",
+        "mobilesdk_app_id": "1:715023116544:android:1b53a13155ed998300ebe5",
         "android_client_info": {
           "package_name": "com.example.omdb"
         }
       },
       "oauth_client": [
         {
-          "client_id": "902978935628-28dmvpvi8bk7hrim3dhup92ti34b1kfj.apps.googleusercontent.com",
+          "client_id": "715023116544-i46mal4pqp27a9b4okmbobmg0ainlr14.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBxOazFsjszMTZ7Dd2tFkK6oqRdKQ8-2Ys"
+          "current_key": "AIzaSyCT4pD-NYEGg5y0qQugdLJi8ZmjOjVBWWs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "902978935628-28dmvpvi8bk7hrim3dhup92ti34b1kfj.apps.googleusercontent.com",
+              "client_id": "715023116544-i46mal4pqp27a9b4okmbobmg0ainlr14.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
