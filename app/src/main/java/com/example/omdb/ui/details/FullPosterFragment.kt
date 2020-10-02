@@ -13,20 +13,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.omdb.BaseFragment
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentFullPosterBinding
+import com.example.omdb.framework.BaseFragment
 import com.example.omdb.util.extensions.animateTranslate
 import com.example.omdb.util.extensions.getDisplayMetrics
 import com.example.omdb.util.extensions.glide
 
 class FullPosterFragment : BaseFragment() {
 
-    companion object {
-        private val TAG = FullPosterFragment::class.java.simpleName
-    }
-
     //Global
+    private val TAG = FullPosterFragment::class.java.simpleName
     private lateinit var binding: FragmentFullPosterBinding
     private val args by navArgs<FullPosterFragmentArgs>()
     private val h by lazy { requireActivity().getDisplayMetrics().heightPixels }

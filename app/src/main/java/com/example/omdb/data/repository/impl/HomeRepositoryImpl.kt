@@ -1,8 +1,8 @@
 package com.example.omdb.data.repository.impl
 
 import com.example.omdb.BuildConfig.ApiKey
+import com.example.omdb.data.api.OMDbApi
 import com.example.omdb.data.local.AppDatabase
-import com.example.omdb.data.network.api.OMDbApi
 import com.example.omdb.data.repository.contract.HomeRepository
 import com.example.omdb.models.*
 import com.example.omdb.util.extensions.resourceFlow

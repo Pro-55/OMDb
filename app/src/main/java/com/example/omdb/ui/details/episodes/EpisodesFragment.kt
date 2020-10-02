@@ -5,32 +5,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.omdb.BaseFragment
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentEpisodesBinding
+import com.example.omdb.framework.BaseFragment
 import com.example.omdb.models.*
 import com.example.omdb.ui.HomeViewModel
 import com.example.omdb.ui.details.DetailsFragment
-import com.example.omdb.util.extensions.getViewModel
 import com.example.omdb.util.extensions.showShortSnackBar
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EpisodesFragment : BaseFragment() {
 
-    companion object {
-        private val TAG = DetailsFragment::class.java.simpleName
-    }
-
     //Global
-    @Inject lateinit var factory: ViewModelProvider.Factory
+    private val TAG = DetailsFragment::class.java.simpleName
     private lateinit var binding: FragmentEpisodesBinding
     private val args by navArgs<EpisodesFragmentArgs>()
-    private val viewModel by lazy { requireActivity().getViewModel<HomeViewModel>(factory) }
+    private val viewModel by viewModels<HomeViewModel>()
     private var adapter: EpisodesAdapter? = null
     private val episodes = mutableListOf<Episode>()
 

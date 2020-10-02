@@ -1,12 +1,12 @@
-package com.example.omdb
+package com.example.omdb.framework
 
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import dagger.android.support.DaggerFragment
 
-open class BaseFragment : DaggerFragment() {
+open class BaseFragment : Fragment() {
 
     companion object {
         private val TAG = BaseFragment::class.java.simpleName

@@ -10,40 +10,37 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.omdb.BaseFragment
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentSearchBinding
+import com.example.omdb.framework.BaseFragment
 import com.example.omdb.models.*
 import com.example.omdb.ui.HomeViewModel
 import com.example.omdb.util.extensions.*
 import com.example.omdb.views.CustomGridLayoutManager
 import com.jakewharton.rxbinding.widget.RxTextView
+import dagger.hilt.android.AndroidEntryPoint
 import rx.Subscriber
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
+@AndroidEntryPoint
 class SearchFragment : BaseFragment() {
 
-    companion object {
-        private val TAG = SearchFragment::class.java.simpleName
-    }
-
     //Global
-    @Inject lateinit var factory: ViewModelProvider.Factory
+    private val TAG = SearchFragment::class.java.simpleName
     private lateinit var binding: FragmentSearchBinding
     private val args by navArgs<SearchFragmentArgs>()
-    private val viewModel by lazy { requireActivity().getViewModel<HomeViewModel>(factory) }
+    private val viewModel by viewModels<HomeViewModel>()
     private val glide by lazy { glide() }
     private var isLoading = false
     private var currentText = ""

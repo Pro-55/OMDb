@@ -1,4 +1,4 @@
-package com.example.omdb.data.network.api
+package com.example.omdb.data.api
 
 import com.example.omdb.models.FullData
 import com.example.omdb.models.SearchResult
