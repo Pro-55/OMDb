@@ -8,9 +8,8 @@ import androidx.navigation.fragment.findNavController
 
 open class BaseFragment : Fragment() {
 
-    companion object {
-        private val TAG = BaseFragment::class.java.simpleName
-    }
+    // Global
+    private val TAG = BaseFragment::class.java.simpleName
 
     private lateinit var backPressedCallback: OnBackPressedCallback
 
