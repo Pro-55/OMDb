@@ -9,16 +9,14 @@ import com.example.omdb.util.extensions.resourceFlow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.runBlocking
-import javax.inject.Inject
 
-class HomeRepositoryImpl @Inject constructor(
+class HomeRepositoryImpl constructor(
     private val api: OMDbApi,
     private val db: AppDatabase
 ) : HomeRepository {
 
-    companion object {
-        private val TAG = HomeRepositoryImpl::class.java.simpleName
-    }
+    // Global
+    private val TAG = HomeRepositoryImpl::class.java.simpleName
 
     override fun signUp(user: User) {
         runBlocking(Dispatchers.IO) { db.userDao.insert(user) }

@@ -19,9 +19,8 @@ import java.util.*
 
 class FirebaseMessagingServiceClass : FirebaseMessagingService() {
 
-    companion object {
-        private val TAG = FirebaseMessagingServiceClass::class.java.simpleName
-    }
+    // Global
+    private val TAG = FirebaseMessagingServiceClass::class.java.simpleName
 
     /**
      * Called when message is received.
