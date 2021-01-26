@@ -1,15 +1,16 @@
 package com.example.omdb.ui
 
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.omdb.data.repository.impl.HomeRepositoryImpl
 import com.example.omdb.models.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
-class HomeViewModel @ViewModelInject constructor(
-    @Assisted private val savedStateHandle: SavedStateHandle,
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
     private val repository: HomeRepositoryImpl
 ) : ViewModel() {
 
