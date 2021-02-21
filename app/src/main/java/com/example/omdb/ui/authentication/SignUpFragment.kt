@@ -1,6 +1,5 @@
 package com.example.omdb.ui.authentication
 
-import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -25,6 +24,7 @@ import com.example.omdb.util.Constants.REQUEST_GOOGLE_SIGN_IN
 import com.example.omdb.util.extensions.glide
 import com.example.omdb.util.extensions.hideKeyboard
 import com.example.omdb.util.extensions.isValidEmail
+import com.example.omdb.util.extensions.showShortSnackBar
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -56,7 +56,7 @@ class SignUpFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up, container, false)
         return binding.root
     }
@@ -143,7 +143,7 @@ class SignUpFragment : BaseFragment() {
 
         val fbLoginManager = LoginManager.getInstance()
 
-        val fbParams = listOf("name", "first_name", "last_name", "email", "public_profile")
+        val fbParams = listOf("email", "public_profile")
 
         // Set Read permission for fields
         fbLoginManager.logInWithReadPermissions(this@SignUpFragment, fbParams)
@@ -157,12 +157,13 @@ class SignUpFragment : BaseFragment() {
             }
 
             override fun onCancel() {
-                Log.e(TAG, "TestLog: Facebook sign in cancelled!")
+                Log.e(TAG, "TestLog: Facebook sign in canceled!")
             }
 
             override fun onError(e: FacebookException) {
                 Log.e(TAG, "TestLog: Facebook sign in failed: $e")
                 crashlytics.recordException(e)
+                showShortSnackBar(Constants.REQUEST_FAILED_MESSAGE)
             }
 
         })
@@ -208,21 +209,21 @@ class SignUpFragment : BaseFragment() {
         // Facebook Callback for Sign In
         fbCallbackManager.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == RESULT_OK) {
-            when (requestCode) {
-                REQUEST_GOOGLE_SIGN_IN -> {
-                    val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-                    try {
-                        // Google Sign In was successful, authenticate with Firebase
-                        val account = task.getResult(ApiException::class.java)
-                        if (account != null) {
-                            val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-                            firebaseAuth(credential)
-                        }
-                    } catch (e: ApiException) {
-                        Log.e(TAG, "TestLog: Google sign in failed: $e")
-                        crashlytics.recordException(e)
+        when (requestCode) {
+            REQUEST_GOOGLE_SIGN_IN -> {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+                try {
+                    // Google Sign In was successful, authenticate with Firebase
+                    val account = task.getResult(ApiException::class.java)
+                    if (account != null) {
+                        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+                        firebaseAuth(credential)
                     }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Log.e(TAG, "TestLog: Google sign in failed: $e")
+                    crashlytics.recordException(e)
+                    showShortSnackBar(Constants.REQUEST_FAILED_MESSAGE)
                 }
             }
         }
