@@ -6,16 +6,18 @@
 		android:layout_height="match_parent"
 		android:background="@color/color_background"
 		android:clickable="true"
-		android:focusable="true">
+		android:focusable="true"
+		android:focusableInTouchMode="true">
 
 		<ImageView
 			android:id="@+id/img_profile"
 			android:layout_width="0dp"
 			android:layout_height="@dimen/dimen_120dp"
 			android:layout_margin="@dimen/dimen_80dp"
+			android:contentDescription="@string/cd_profile"
 			android:scaleType="centerCrop"
 			android:src="@drawable/ic_profile_placeholder"
-			app:layout_constraintDimensionRatio="H,1:1"
+			app:layout_constraintDimensionRatio="W,1:1"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent" />

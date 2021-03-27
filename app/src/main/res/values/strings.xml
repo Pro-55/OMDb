@@ -38,6 +38,15 @@
 	<string name="shared_icon_episodes">shared_icon_episodes</string>
 	<string name="shared_title_episodes">shared_title_episodes</string>
 
+	<string name="cd_search">Search</string>
+	<string name="cd_cancel">Cancel</string>
+	<string name="cd_big_poster">Big Poster</string>
+	<string name="cd_poster">Poster</string>
+	<string name="cd_back_button">Back Button</string>
+	<string name="cd_movies">Movies</string>
+	<string name="cd_series">Series</string>
+	<string name="cd_profile">Profile</string>
+
 	<string name="channel_notification_default">Others</string>
 	<string name="default_notification_channel_id">channel_default</string>
 
