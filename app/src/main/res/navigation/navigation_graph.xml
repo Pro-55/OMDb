@@ -67,7 +67,14 @@
 		tools:layout="@layout/fragment_details">
 		<argument
 			android:name="shortData"
-			app:argType="com.example.omdb.models.ShortData" />
+			android:defaultValue="@null"
+			app:argType="com.example.omdb.models.ShortData"
+			app:nullable="true" />
+		<argument
+			android:name="contentId"
+			android:defaultValue="@null"
+			app:argType="string"
+			app:nullable="true" />
 		<action
 			android:id="@+id/navigateDetailsToFullPoster"
 			app:destination="@id/fullPosterFragment" />
@@ -92,6 +99,9 @@
 			app:exitAnim="@anim/slide_out_left"
 			app:popEnterAnim="@anim/slide_in_left"
 			app:popExitAnim="@anim/slide_out_right" />
+		<deepLink
+			android:id="@+id/deepLinkDetails"
+			app:uri="omdb.example.com/details/{contentId}" />
 	</fragment>
 	<fragment
 		android:id="@+id/fullPosterFragment"

@@ -152,7 +152,8 @@ class SearchFragment : BaseFragment() {
             override fun onClick(data: ShortData, sharedCard: View, sharedImage: View) {
                 hideKeyboard()
                 clearFocus()
-                val action = SearchFragmentDirections.navigateSearchToDetails(data)
+                val action = SearchFragmentDirections.navigateSearchToDetails()
+                    .apply { shortData = data }
                 val extras = FragmentNavigatorExtras(
                     sharedCard to sharedCard.transitionName,
                     sharedImage to sharedImage.transitionName

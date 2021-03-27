@@ -55,7 +55,8 @@ class EpisodesFragment : BaseFragment() {
         adapter?.listener = object : EpisodesAdapter.Listener {
             override fun episodeClicked(episode: Episode) {
                 val shortData = ShortData(_id = episode._id, title = episode.title)
-                val action = EpisodesFragmentDirections.navigateEpisodesToDetails(shortData)
+                val action = EpisodesFragmentDirections.navigateEpisodesToDetails()
+                    .apply { this.shortData = shortData }
                 findNavController().navigate(action)
             }
         }
