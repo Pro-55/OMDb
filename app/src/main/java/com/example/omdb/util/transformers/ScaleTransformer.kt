@@ -8,6 +8,7 @@ import kotlin.math.abs
 class ScaleTransformer(private val minScale: Float = 0.5F, private val maxScale: Float = 1F) :
     DiscreteScrollItemTransformer {
 
+    // Global
     private var pivotX = Pivot.X.CENTER.create()
     private var pivotY = Pivot.Y.CENTER.create()
     private var scaleDiff =

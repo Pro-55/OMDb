@@ -15,6 +15,7 @@
 			android:id="@+id/img_poster"
 			android:layout_width="0dp"
 			android:layout_height="0dp"
+			android:contentDescription="@string/cd_poster"
 			android:scaleType="centerCrop"
 			android:src="@drawable/placeholder_poster"
 			app:layout_constraintBottom_toBottomOf="parent"
@@ -24,5 +25,4 @@
 			app:layout_constraintTop_toTopOf="parent" />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.cardview.widget.CardView>

@@ -6,7 +6,8 @@
 		android:layout_height="match_parent"
 		android:background="@color/color_background"
 		android:clickable="true"
-		android:focusable="true">
+		android:focusable="true"
+		android:focusableInTouchMode="true">
 
 		<androidx.cardview.widget.CardView
 			android:id="@+id/card_movies"
@@ -34,6 +35,7 @@
 					android:layout_width="100dp"
 					android:layout_height="0dp"
 					android:layout_margin="@dimen/dimen_8dp"
+					android:contentDescription="@string/cd_movies"
 					android:src="@drawable/ic_movies"
 					android:transitionName="@string/shared_icon_movies"
 					app:layout_constraintBottom_toTopOf="@id/txt_title_movies"
@@ -89,6 +91,7 @@
 					android:layout_width="100dp"
 					android:layout_height="0dp"
 					android:layout_margin="@dimen/dimen_8dp"
+					android:contentDescription="@string/cd_series"
 					android:src="@drawable/ic_series"
 					android:transitionName="@string/shared_icon_series"
 					app:layout_constraintBottom_toTopOf="@id/txt_title_series"

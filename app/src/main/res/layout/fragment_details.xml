@@ -7,7 +7,8 @@
 		android:layout_height="match_parent"
 		android:background="@color/color_background"
 		android:clickable="true"
-		android:focusable="true">
+		android:focusable="true"
+		android:focusableInTouchMode="true">
 
 		<androidx.cardview.widget.CardView
 			android:id="@+id/card_poster"
@@ -25,6 +26,7 @@
 				android:id="@+id/img_poster"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
+				android:contentDescription="@string/cd_poster"
 				android:scaleType="centerCrop"
 				android:src="@drawable/placeholder_poster"
 				app:layout_constraintBottom_toBottomOf="parent"
@@ -221,13 +223,13 @@
 			android:layout_height="wrap_content"
 			android:layout_marginTop="@dimen/dimen_8dp"
 			android:background="?attr/selectableItemBackground"
-			android:drawableEnd="@drawable/ic_next"
 			android:drawablePadding="@dimen/dimen_8dp"
 			android:padding="@dimen/activity_default_margin"
 			android:text="@string/label_ratings"
 			android:textColor="@color/color_primary_text"
 			android:textSize="@dimen/dimen_20sp"
 			android:textStyle="bold"
+			app:drawableEndCompat="@drawable/ic_next"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/txt_plot" />
@@ -237,13 +239,13 @@
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:background="?attr/selectableItemBackground"
-			android:drawableEnd="@drawable/ic_next"
 			android:drawablePadding="@dimen/dimen_8dp"
 			android:padding="@dimen/activity_default_margin"
 			android:text="@string/label_team"
 			android:textColor="@color/color_primary_text"
 			android:textSize="@dimen/dimen_20sp"
 			android:textStyle="bold"
+			app:drawableEndCompat="@drawable/ic_next"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/txt_btn_ratings" />

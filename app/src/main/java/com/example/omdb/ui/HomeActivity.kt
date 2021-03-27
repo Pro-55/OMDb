@@ -24,7 +24,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val colorBackground = resources.getColor(R.color.color_background)
+            val colorBackground = resources.getColor(R.color.color_background, null)
             window.statusBarColor = colorBackground
             window.navigationBarColor = colorBackground
             val isNightMode =

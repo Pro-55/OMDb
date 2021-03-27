@@ -1,9 +1,9 @@
 package com.example.omdb.ui.search
 
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,13 +11,13 @@ import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.omdb.R
 import com.example.omdb.models.ShortData
-import com.example.omdb.util.extensions.animateScale
+import com.example.omdb.util.listners.OnHoldListener
 import kotlinx.android.synthetic.main.layout_search_item.view.*
-import java.util.*
 
 class SearchAdapter(private val glide: RequestManager) :
     ListAdapter<ShortData, SearchAdapter.ViewHolder>(ShortDataDC()) {
 
+    // Global
     var listener: Listener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
@@ -39,35 +39,25 @@ class SearchAdapter(private val glide: RequestManager) :
 
             glide.load(data.poster)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(resources.getDrawable(R.drawable.placeholder_poster))
+                .placeholder(AppCompatResources.getDrawable(context, R.drawable.placeholder_poster))
                 .into(img_poster)
 
             transitionName = data._id
             img_poster.transitionName = data.poster
 
-            setOnTouchListener { v, mE ->
-                when (mE.action) {
-                    MotionEvent.ACTION_DOWN -> {
-                        downTime = Date().time
-                        v.animateScale(sX = 0.95F, sY = 0.95F)
-                    }
-                    MotionEvent.ACTION_MOVE -> if (Date().time - downTime > 500) {
-                        if (!isPeeking) {
-                            isPeeking = true
-                            listener?.onHold(data)
-                        }
-                    }
-                    MotionEvent.ACTION_CANCEL -> v.animateScale()
-                    MotionEvent.ACTION_UP -> {
-                        v.animateScale()
-                        if (isPeeking) {
-                            isPeeking = false
-                            listener?.onRelease()
-                        } else performClick()
-                    }
+            setOnTouchListener(OnHoldListener(object : OnHoldListener.Listener {
+                override fun onClick() {
+                    performClick()
                 }
-                true
-            }
+
+                override fun onHold() {
+                    listener?.onHold(data)
+                }
+
+                override fun onRelease() {
+                    listener?.onRelease()
+                }
+            }))
 
             setOnClickListener { listener?.onClick(data, this, this.img_poster) }
 

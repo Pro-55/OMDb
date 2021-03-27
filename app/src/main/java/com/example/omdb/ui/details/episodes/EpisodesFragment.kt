@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,7 +46,7 @@ class EpisodesFragment : BaseFragment() {
 
         if (episodes.isNotEmpty()) adapter?.swapData(episodes)
         else viewModel.getEpisodes(args.id, args.season)
-            .observe(viewLifecycleOwner, Observer { bindResource(it) })
+            .observe(viewLifecycleOwner, { bindResource(it) })
 
     }
 
