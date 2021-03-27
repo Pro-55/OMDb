@@ -5,9 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.navigation.NavDeepLinkBuilder
 import com.example.omdb.R
 import com.example.omdb.ui.HomeActivity
 import com.example.omdb.util.Constants
@@ -42,9 +45,29 @@ class FirebaseMessagingServiceClass : FirebaseMessagingService() {
 
         val data = remoteMessage.data
 
+//        showDeepLinkNotification(requestId, data)
+
 //        showSystemNotification(requestId, data)
 
 //        broadcastNotificationData(requestId, data)
+    }
+
+    private fun showDeepLinkNotification(requestId: Int, data: MutableMap<String, String>) {
+
+        // Check if message contains a data payload.
+        data.isNotEmpty().let {
+
+            val args = Bundle()
+            data.keys.forEach { key -> args.putString(key, data[key]) }
+
+            val pendingIntent = NavDeepLinkBuilder(this)
+                .setGraph(R.navigation.navigation_graph)
+                .setDestination(R.id.detailsFragment)
+                .setArguments(args)
+                .createPendingIntent()
+
+            buildNotification(requestId, data, pendingIntent)
+        }
     }
 
     private fun showSystemNotification(requestId: Int, data: MutableMap<String, String>) {
@@ -62,26 +85,7 @@ class FirebaseMessagingServiceClass : FirebaseMessagingService() {
                 this, requestId, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT
             )
 
-            val builder = NotificationCompat.Builder(
-                this,
-                data[Constants.KEY_NOTIFICATION_CHANEL_ID]
-                    ?: resources.getString(R.string.default_notification_channel_id)
-            )
-
-            builder.setSmallIcon(R.drawable.ic_notification_badge)
-            val color = data[Constants.KEY_NOTIFICATION_COLOR]
-            builder.color = if (color != null) Color.parseColor(color)
-            else resources.getColor(R.color.colorAccent)
-
-            builder.apply {
-                setContentTitle(data[Constants.KEY_NOTIFICATION_TITLE])
-                setContentText(data[Constants.KEY_NOTIFICATION_BODY])
-                setContentIntent(pendingIntent)
-                setAutoCancel(true)
-            }
-            with(NotificationManagerCompat.from(this)) {
-                notify(requestId, builder.build())
-            }
+            buildNotification(requestId, data, pendingIntent)
         }
     }
 
@@ -96,6 +100,31 @@ class FirebaseMessagingServiceClass : FirebaseMessagingService() {
             val localBroadcastManager = LocalBroadcastManager.getInstance(this)
             localBroadcastManager.sendBroadcast(notificationIntent)
         }
+    }
+
+    private fun buildNotification(
+        requestId: Int,
+        data: MutableMap<String, String>,
+        pendingIntent: PendingIntent
+    ) {
+        val builder = NotificationCompat.Builder(
+            this,
+            data[Constants.KEY_NOTIFICATION_CHANEL_ID]
+                ?: resources.getString(R.string.default_notification_channel_id)
+        )
+
+        builder.setSmallIcon(R.drawable.ic_notification_badge)
+        val color = data[Constants.KEY_NOTIFICATION_COLOR]
+        builder.color = if (color != null) Color.parseColor(color)
+        else ResourcesCompat.getColor(resources, R.color.colorAccent, null)
+
+        builder.apply {
+            setContentTitle(data[Constants.KEY_NOTIFICATION_TITLE])
+            setContentText(data[Constants.KEY_NOTIFICATION_BODY])
+            setContentIntent(pendingIntent)
+            setAutoCancel(true)
+        }
+        with(NotificationManagerCompat.from(this)) { notify(requestId, builder.build()) }
     }
 
     /**

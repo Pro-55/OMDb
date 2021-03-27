@@ -25,6 +25,7 @@ import com.example.omdb.databinding.FragmentDetailsBinding
 import com.example.omdb.framework.BaseFragment
 import com.example.omdb.models.*
 import com.example.omdb.ui.HomeViewModel
+import com.example.omdb.util.Constants
 import com.example.omdb.util.extensions.glide
 import com.example.omdb.util.extensions.showShortSnackBar
 import com.example.omdb.util.extensions.visible
@@ -40,12 +41,16 @@ class DetailsFragment : BaseFragment() {
     private val args by navArgs<DetailsFragmentArgs>()
     private val viewModel by viewModels<HomeViewModel>()
     private val glide by lazy { glide() }
+    private var shortData: ShortData? = null
     private var fullData: FullData? = null
+    private var contentId: String? = null
     private var height = 4
     private var width = 3
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        shortData = args.shortData
+        contentId = args.contentId
         sharedElementEnterTransition = TransitionSet().apply {
             addTransition(ChangeTransform())
             addTransition(ChangeBounds())
@@ -59,42 +64,42 @@ class DetailsFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
+        if (shortData != null) {
+            contentId = shortData!!._id
+            binding.cardPoster.transitionName = shortData!!._id
+            binding.imgPoster.transitionName = shortData!!.poster
 
-        val shortData = args.shortData
-        binding.cardPoster.transitionName = shortData._id
-        binding.imgPoster.transitionName = shortData.poster
+            glide.asBitmap().load(shortData!!.poster)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(
+                    AppCompatResources.getDrawable(requireContext(), R.drawable.placeholder_poster)
+                )
+                .listener(object : RequestListener<Bitmap> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Bitmap>?,
+                        isFirstResource: Boolean
+                    ): Boolean = false
 
-        glide.asBitmap().load(shortData.poster)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .placeholder(
-                AppCompatResources.getDrawable(requireContext(), R.drawable.placeholder_poster)
-            )
-            .listener(object : RequestListener<Bitmap> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Bitmap>?,
-                    isFirstResource: Boolean
-                ): Boolean = false
+                    override fun onResourceReady(
+                        resource: Bitmap?,
+                        model: Any?,
+                        target: Target<Bitmap>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        val bitmapHeight = resource?.height ?: 0
+                        val bitmapWidth = resource?.width ?: 0
+                        if (bitmapHeight > 0) height = bitmapHeight
+                        if (bitmapWidth > 0) width = bitmapWidth
+                        return false
+                    }
+                })
+                .into(binding.imgPoster)
 
-                override fun onResourceReady(
-                    resource: Bitmap?,
-                    model: Any?,
-                    target: Target<Bitmap>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    val bitmapHeight = resource?.height ?: 0
-                    val bitmapWidth = resource?.width ?: 0
-                    if (bitmapHeight > 0) height = bitmapHeight
-                    if (bitmapWidth > 0) width = bitmapWidth
-                    return false
-                }
-            })
-            .into(binding.imgPoster)
-
-        binding.txtTitle.text = shortData.title
-
+            binding.txtTitle.text = shortData!!.title
+        }
         return binding.root
     }
 
@@ -102,8 +107,12 @@ class DetailsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (fullData != null) bindDetails(fullData!!)
-        else viewModel.getDetails(args.shortData._id)
+        else if (!contentId.isNullOrEmpty()) viewModel.getDetails(contentId!!)
             .observe(viewLifecycleOwner, { bindDetailsResource(it) })
+        else {
+            requireActivity().showShortSnackBar(Constants.REQUEST_FAILED_MESSAGE)
+            onBackPressed()
+        }
     }
 
     private fun bindDetailsResource(resource: Resource<FullData>) {
@@ -119,7 +128,7 @@ class DetailsFragment : BaseFragment() {
 
         fullData = data
 
-        if (args.shortData.poster == null) {
+        if (shortData?.poster == null) {
             binding.imgPoster.transitionName = data.poster
             glide.asBitmap().load(data.poster)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -221,7 +230,8 @@ class DetailsFragment : BaseFragment() {
     }
 
     private fun showEpisodes(season: Int) {
-        val action = DetailsFragmentDirections.navigateDetailsToEpisodes(args.shortData._id, season)
+        if (contentId.isNullOrEmpty()) return
+        val action = DetailsFragmentDirections.navigateDetailsToEpisodes(contentId!!, season)
         findNavController().navigate(action)
     }
 
