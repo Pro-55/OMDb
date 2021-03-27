@@ -5,9 +5,9 @@ import android.transition.ChangeBounds
 import android.transition.ChangeTransform
 import android.transition.TransitionSet
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.databinding.DataBindingUtil
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
@@ -16,9 +16,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentFullPosterBinding
 import com.example.omdb.framework.BaseFragment
-import com.example.omdb.util.extensions.animateTranslate
 import com.example.omdb.util.extensions.getDisplayMetrics
 import com.example.omdb.util.extensions.glide
+import com.example.omdb.util.listners.OnDragToDismissListener
 
 class FullPosterFragment : BaseFragment() {
 
@@ -26,10 +26,7 @@ class FullPosterFragment : BaseFragment() {
     private val TAG = FullPosterFragment::class.java.simpleName
     private lateinit var binding: FragmentFullPosterBinding
     private val args by navArgs<FullPosterFragmentArgs>()
-    private val h by lazy { requireActivity().getDisplayMetrics().heightPixels }
     private val glide by lazy { glide() }
-    private var dX = 0F
-    private var dY = 0F
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +57,9 @@ class FullPosterFragment : BaseFragment() {
 
         glide.load(url)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .placeholder(resources.getDrawable(R.drawable.placeholder_poster))
+            .placeholder(
+                AppCompatResources.getDrawable(requireContext(), R.drawable.placeholder_poster)
+            )
             .into(binding.imgPoster)
 
         return binding.root
@@ -69,25 +68,15 @@ class FullPosterFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.setOnTouchListener { v, mE ->
-            when (mE.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    dX = v.x - mE.rawX
-                    dY = v.y - mE.rawY
-                }
-                MotionEvent.ACTION_MOVE -> {
-                    val mEY = mE.rawY + dY
-                    v.animateTranslate(tY = mEY)
-                }
-                MotionEvent.ACTION_UP -> {
-                    val top = v.y
-                    val bottom = top + v.bottom
-                    val shouldDismiss = top > h / 4 || bottom < h * 3 / 4
-                    if (shouldDismiss) onBackPressed()
-                    else v.animateTranslate(duration = 150)
-                }
-            }
-            false
-        }
+        view.setOnTouchListener(
+            OnDragToDismissListener(
+                displayMetrics = requireActivity().getDisplayMetrics(),
+                orientation = OnDragToDismissListener.Orientation.VERTICAL,
+                listener = object : OnDragToDismissListener.Listener {
+                    override fun onDismiss() {
+                        onBackPressed()
+                    }
+                })
+        )
     }
 }

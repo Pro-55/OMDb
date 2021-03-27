@@ -8,11 +8,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.doOnPreDraw
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -42,6 +43,7 @@ class SearchFragment : BaseFragment() {
     private val args by navArgs<SearchFragmentArgs>()
     private val viewModel by viewModels<HomeViewModel>()
     private val glide by lazy { glide() }
+    private val category by lazy { args.category }
     private var isLoading = false
     private var currentText = ""
     private var totalCount = 0
@@ -69,7 +71,7 @@ class SearchFragment : BaseFragment() {
         val sharedContainer: Int
         val sharedIcon: Int
         val sharedTitle: Int
-        when (args.category) {
+        when (category) {
             Type.MOVIES -> {
                 hint = R.string.label_movies
                 icon = R.drawable.ic_movies
@@ -102,7 +104,7 @@ class SearchFragment : BaseFragment() {
 
         binding.imgIcon.apply {
             transitionName = resources.getString(sharedIcon)
-            setImageDrawable(resources.getDrawable(icon))
+            setImageDrawable(AppCompatResources.getDrawable(requireContext(), icon))
         }
 
         binding.txtTitle.apply {
@@ -116,6 +118,8 @@ class SearchFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setListeners()
+
         setupRecyclerView()
 
         setupObserver()
@@ -125,6 +129,20 @@ class SearchFragment : BaseFragment() {
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }
 
+    }
+
+    private fun setListeners() {
+        binding.editSearch.doOnTextChanged { _, _, _, count ->
+            binding.imgBtnCancel.apply {
+                val parent = this.parent as ViewGroup
+                if (count > 0) visibleWithFade(parent, 150) else {
+                    goneWithFade(parent, 150)
+                    bindSearchResult()
+                }
+            }
+        }
+
+        binding.imgBtnCancel.setOnClickListener { binding.editSearch.setText("") }
     }
 
     private fun setupRecyclerView() {
@@ -164,7 +182,7 @@ class SearchFragment : BaseFragment() {
                     && size < totalCount
                     && !recyclerView.canScrollVertically(1) // check if scrolled to bottom
                 ) {
-                    fetchData(currentText, size)
+                    if (currentText.isNotEmpty()) fetchData(currentText, size)
                 }
             }
         })
@@ -200,17 +218,17 @@ class SearchFragment : BaseFragment() {
     }
 
     private fun setupObserver() {
-        val source = when (args.category) {
+        val source = when (category) {
             Type.MOVIES -> viewModel.movieSearch
             Type.SERIES -> viewModel.seriesSearch
             else -> null
         }
-        source?.observe(viewLifecycleOwner, Observer { bindResource(it) })
+        source?.observe(viewLifecycleOwner, { bindResource(it) })
     }
 
     private fun fetchData(searText: String, size: Int = 0) {
         currentText = searText
-        when (args.category) {
+        when (category) {
             Type.MOVIES -> viewModel.searchMovies(searText, size)
             Type.SERIES -> viewModel.searchSeries(searText, size)
         }
@@ -227,7 +245,7 @@ class SearchFragment : BaseFragment() {
         }
     }
 
-    private fun bindSearchResult(result: SearchResult?) {
+    private fun bindSearchResult(result: SearchResult? = null) {
         isLoading = false
         totalCount = result?.totalResults?.toInt() ?: 0
         val list = result?.search ?: listOf()
@@ -253,7 +271,9 @@ class SearchFragment : BaseFragment() {
 
         glide.load(data.poster)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .placeholder(resources.getDrawable(R.drawable.placeholder_poster))
+            .placeholder(
+                AppCompatResources.getDrawable(requireContext(), R.drawable.placeholder_poster)
+            )
             .into(binding.imgPeekPoster)
 
     }
@@ -272,7 +292,7 @@ class SearchFragment : BaseFragment() {
     }
 
     override fun onBackPressed() {
-        viewModel.clearSearchData(args.category)
+        viewModel.clearSearchData(category)
         super.onBackPressed()
     }
 
