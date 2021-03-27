@@ -5,7 +5,6 @@ import android.transition.TransitionManager
 import android.transition.TransitionSet
 import android.view.View
 import android.view.ViewGroup
-import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import com.example.omdb.transition.Scale
 
 fun View.visible() {
@@ -50,36 +49,75 @@ fun View.invisibleWithFade(parent: ViewGroup, duration: Long = 300) {
     invisible()
 }
 
-fun View.visibleWithScaleFade(parent: ViewGroup, duration: Long = 300, minSCale: Float = 0.8F) {
+fun View.visibleWithScaleFade(
+    parent: ViewGroup,
+    duration: Long = 300,
+    minScale: Float = 0.8F,
+    direction: Scale.Direction? = null,
+    pivotX: Float = 0F,
+    pivotY: Float = 0F
+) {
     val transitionSet = TransitionSet().apply {
-        addTransition(Scale(minScale = minSCale))
+        addTransition(
+            Scale(
+                minScale = minScale,
+                direction = direction,
+                pivotX = pivotX,
+                pivotY = pivotY
+            )
+        )
         addTransition(Fade())
         this.duration = duration
-        this.interpolator = FastOutLinearInInterpolator()
         addTarget(this@visibleWithScaleFade)
     }
     TransitionManager.beginDelayedTransition(parent, transitionSet)
     visible()
 }
 
-fun View.goneWithScaleFade(parent: ViewGroup, duration: Long = 300, minSCale: Float = 0.8F) {
+fun View.goneWithScaleFade(
+    parent: ViewGroup,
+    duration: Long = 300,
+    minScale: Float = 0.8F,
+    direction: Scale.Direction? = null,
+    pivotX: Float = 0F,
+    pivotY: Float = 0F
+) {
     val transitionSet = TransitionSet().apply {
-        addTransition(Scale(minScale = minSCale))
+        addTransition(
+            Scale(
+                minScale = minScale,
+                direction = direction,
+                pivotX = pivotX,
+                pivotY = pivotY
+            )
+        )
         addTransition(Fade())
         this.duration = duration
-        this.interpolator = FastOutLinearInInterpolator()
         addTarget(this@goneWithScaleFade)
     }
     TransitionManager.beginDelayedTransition(parent, transitionSet)
     gone()
 }
 
-fun View.invisibleWithScaleFade(parent: ViewGroup, duration: Long = 300, minSCale: Float = 0.8F) {
+fun View.invisibleWithScaleFade(
+    parent: ViewGroup,
+    duration: Long = 300,
+    minScale: Float = 0.8F,
+    direction: Scale.Direction? = null,
+    pivotX: Float = 0F,
+    pivotY: Float = 0F
+) {
     val transitionSet = TransitionSet().apply {
-        addTransition(Scale(minScale = minSCale))
+        addTransition(
+            Scale(
+                minScale = minScale,
+                direction = direction,
+                pivotX = pivotX,
+                pivotY = pivotY
+            )
+        )
         addTransition(Fade())
         this.duration = duration
-        this.interpolator = FastOutLinearInInterpolator()
         addTarget(this@invisibleWithScaleFade)
     }
     TransitionManager.beginDelayedTransition(parent, transitionSet)
