@@ -1,5 +1,6 @@
 package com.example.omdb.ui.details
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.transition.ChangeBounds
@@ -64,42 +65,11 @@ class DetailsFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
-        if (shortData != null) {
-            contentId = shortData!!._id
-            binding.cardPoster.transitionName = shortData!!._id
-            binding.imgPoster.transitionName = shortData!!.poster
 
-            glide.asBitmap().load(shortData!!.poster)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(
-                    AppCompatResources.getDrawable(requireContext(), R.drawable.placeholder_poster)
-                )
-                .listener(object : RequestListener<Bitmap> {
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Bitmap>?,
-                        isFirstResource: Boolean
-                    ): Boolean = false
+        setListeners()
 
-                    override fun onResourceReady(
-                        resource: Bitmap?,
-                        model: Any?,
-                        target: Target<Bitmap>?,
-                        dataSource: DataSource?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        val bitmapHeight = resource?.height ?: 0
-                        val bitmapWidth = resource?.width ?: 0
-                        if (bitmapHeight > 0) height = bitmapHeight
-                        if (bitmapWidth > 0) width = bitmapWidth
-                        return false
-                    }
-                })
-                .into(binding.imgPoster)
+        if (shortData != null) setShortData(shortData!!)
 
-            binding.txtTitle.text = shortData!!.title
-        }
         return binding.root
     }
 
@@ -113,6 +83,47 @@ class DetailsFragment : BaseFragment() {
             requireActivity().showShortSnackBar(Constants.REQUEST_FAILED_MESSAGE)
             onBackPressed()
         }
+    }
+
+    private fun setListeners() {
+        binding.efabShare.setOnClickListener { showShareIntent() }
+    }
+
+    private fun setShortData(data: ShortData) {
+        contentId = data._id
+        binding.cardPoster.transitionName = data._id
+        binding.imgPoster.transitionName = data.poster
+
+        glide.asBitmap().load(data.poster)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .placeholder(
+                AppCompatResources.getDrawable(requireContext(), R.drawable.placeholder_poster)
+            )
+            .listener(object : RequestListener<Bitmap> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Bitmap>?,
+                    isFirstResource: Boolean
+                ): Boolean = false
+
+                override fun onResourceReady(
+                    resource: Bitmap?,
+                    model: Any?,
+                    target: Target<Bitmap>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    val bitmapHeight = resource?.height ?: 0
+                    val bitmapWidth = resource?.width ?: 0
+                    if (bitmapHeight > 0) height = bitmapHeight
+                    if (bitmapWidth > 0) width = bitmapWidth
+                    return false
+                }
+            })
+            .into(binding.imgPoster)
+
+        binding.txtTitle.text = data.title
     }
 
     private fun bindDetailsResource(resource: Resource<FullData>) {
@@ -159,6 +170,8 @@ class DetailsFragment : BaseFragment() {
                 })
                 .into(binding.imgPoster)
         }
+
+        binding.txtTitle.text = data.title
 
         binding.txtYear.text = "(${data.year})"
 
@@ -233,6 +246,16 @@ class DetailsFragment : BaseFragment() {
         if (contentId.isNullOrEmpty()) return
         val action = DetailsFragmentDirections.navigateDetailsToEpisodes(contentId!!, season)
         findNavController().navigate(action)
+    }
+
+    private fun showShareIntent() {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, "omdb.example.com/details/${contentId}")
+            type = "text/*"
+        }
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 
 }

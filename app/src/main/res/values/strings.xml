@@ -24,6 +24,7 @@
 	<string name="btn_save">Save</string>
 	<string name="btn_sign_up_with_google">Sign up with Google</string>
 	<string name="btn_sign_up_facebook">Sign up with Facebook</string>
+	<string name="btn_share">Share</string>
 
 	<string name="divider_bullet">•</string>
 
@@ -47,6 +48,7 @@
 	<string name="cd_movies">Movies</string>
 	<string name="cd_series">Series</string>
 	<string name="cd_profile">Profile</string>
+	<string name="cd_share_button">Share Button</string>
 
 	<string name="channel_notification_default">Others</string>
 	<string name="default_notification_channel_id">channel_default</string>
