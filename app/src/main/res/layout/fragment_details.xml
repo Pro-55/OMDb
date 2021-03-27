@@ -283,5 +283,20 @@
 				app:singleSelection="true" />
 		</ScrollView>
 
+		<com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+			android:id="@+id/efab_share"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/activity_default_margin"
+			android:contentDescription="@string/cd_share_button"
+			android:gravity="center"
+			android:text="@string/btn_share"
+			android:textColor="@color/color_profile_text"
+			app:backgroundTint="@color/colorAccent"
+			app:icon="@drawable/ic_share"
+			app:iconTint="@color/color_profile_text"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent" />
+
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
