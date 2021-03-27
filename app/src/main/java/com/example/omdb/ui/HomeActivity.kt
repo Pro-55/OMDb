@@ -5,12 +5,19 @@ import android.content.Context
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
-import android.view.View
+import android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+import android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+import android.view.ViewGroup
+import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.omdb.R
 import com.example.omdb.databinding.ActivityHomeBinding
+import com.example.omdb.transition.Scale
+import com.example.omdb.util.ConnectionLiveData
 import com.example.omdb.util.NotificationChannels
+import com.example.omdb.util.extensions.goneWithScaleFade
+import com.example.omdb.util.extensions.visibleWithScaleFade
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,13 +40,33 @@ class HomeActivity : AppCompatActivity() {
                     else -> false
                 }
             if (!isNightMode) {
-                window.decorView.systemUiVisibility =
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-                    else View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                val decorView = window.decorView
+                when {
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> decorView.windowInsetsController
+                        ?.setSystemBarsAppearance(
+                            APPEARANCE_LIGHT_STATUS_BARS,
+                            APPEARANCE_LIGHT_STATUS_BARS
+                        )
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> decorView.systemUiVisibility =
+                        SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> decorView.systemUiVisibility =
+                        SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                    else -> decorView.systemUiVisibility = SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                }
             }
         }
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+        ConnectionLiveData(this).observe(this, { isNetworkAvailable ->
+            binding.txtNetworkStatus.apply {
+                val parent = this.parent as ViewGroup
+                val direction = Scale.Direction.DOWN
+                if (!isNetworkAvailable)
+                    visibleWithScaleFade(parent = parent, direction = direction)
+                else
+                    goneWithScaleFade(parent = parent, direction = direction)
+            }
+        })
 
         NotificationChannels.create(manager, resources)
     }

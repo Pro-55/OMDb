@@ -15,6 +15,7 @@
 	<string name="label_team">Team</string>
 	<string name="label_no_ratings">No Ratings</string>
 	<string name="label_or">OR</string>
+	<string name="label_no_network_connection">No Network Connection</string>
 
 	<string name="hint_first_name">First Name</string>
 	<string name="hint_last_name">Last Name</string>
