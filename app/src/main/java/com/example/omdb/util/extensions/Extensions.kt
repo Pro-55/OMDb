@@ -19,7 +19,8 @@ import java.io.File
 
 fun FragmentActivity.getDisplayMetrics(): DisplayMetrics {
     val displayMetrics = DisplayMetrics()
-    this.windowManager.defaultDisplay.getMetrics(displayMetrics)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) display?.getRealMetrics(displayMetrics)
+    else windowManager?.defaultDisplay?.getMetrics(displayMetrics)
     return displayMetrics
 }
 
@@ -35,7 +36,7 @@ fun FragmentActivity.showKeyboard(view: View) {
 
 fun File.getMimeType(): String? {
     var type: String? = null
-    val extension = MimeTypeMap.getFileExtensionFromUrl(this.absolutePath)
+    val extension = MimeTypeMap.getFileExtensionFromUrl(absolutePath)
     extension?.let {
         type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(it)
     }
