@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.layout_episode_item.view.*
 class EpisodesAdapter(private val season: Int) :
     ListAdapter<Episode, EpisodesAdapter.ViewHolder>(EpisodeDC()) {
 
+    // Global
     var listener: Listener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(

@@ -8,10 +8,10 @@ import android.transition.TransitionSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -66,7 +66,9 @@ class DetailsFragment : BaseFragment() {
 
         glide.asBitmap().load(shortData.poster)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .placeholder(resources.getDrawable(R.drawable.placeholder_poster))
+            .placeholder(
+                AppCompatResources.getDrawable(requireContext(), R.drawable.placeholder_poster)
+            )
             .listener(object : RequestListener<Bitmap> {
                 override fun onLoadFailed(
                     e: GlideException?,
@@ -101,7 +103,7 @@ class DetailsFragment : BaseFragment() {
 
         if (fullData != null) bindDetails(fullData!!)
         else viewModel.getDetails(args.shortData._id)
-            .observe(viewLifecycleOwner, Observer { bindDetailsResource(it) })
+            .observe(viewLifecycleOwner, { bindDetailsResource(it) })
     }
 
     private fun bindDetailsResource(resource: Resource<FullData>) {
@@ -121,7 +123,9 @@ class DetailsFragment : BaseFragment() {
             binding.imgPoster.transitionName = data.poster
             glide.asBitmap().load(data.poster)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(resources.getDrawable(R.drawable.placeholder_poster))
+                .placeholder(
+                    AppCompatResources.getDrawable(requireContext(), R.drawable.placeholder_poster)
+                )
                 .listener(object : RequestListener<Bitmap> {
                     override fun onLoadFailed(
                         e: GlideException?,
