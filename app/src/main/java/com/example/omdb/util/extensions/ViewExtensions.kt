@@ -5,7 +5,7 @@ import android.transition.TransitionManager
 import android.transition.TransitionSet
 import android.view.View
 import android.view.ViewGroup
-import com.example.omdb.transition.Scale
+import com.example.omdb.util.transition.Scale
 
 fun View.visible() {
     if (!isVisible()) visibility = View.VISIBLE

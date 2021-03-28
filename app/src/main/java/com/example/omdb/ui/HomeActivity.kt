@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.omdb.R
 import com.example.omdb.databinding.ActivityHomeBinding
-import com.example.omdb.transition.Scale
+import com.example.omdb.util.transition.Scale
 import com.example.omdb.util.ConnectionLiveData
 import com.example.omdb.util.NotificationChannels
 import com.example.omdb.util.extensions.goneWithScaleFade

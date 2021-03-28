@@ -1,4 +1,4 @@
-package com.example.omdb.transition
+package com.example.omdb.util.transition
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
