@@ -71,14 +71,14 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-common-java8:2.3.1'
 
     // Navigation Component
-    implementation "androidx.navigation:navigation-fragment-ktx:2.3.4"
-    implementation "androidx.navigation:navigation-ui-ktx:2.3.4"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.5"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
 
     // Constraint Layout
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
     // RecyclerView
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.0'
 
     // RxAndroid implementation
     implementation 'io.reactivex:rxandroid:1.2.1'
@@ -87,7 +87,7 @@ dependencies {
     implementation 'com.jakewharton.rxbinding:rxbinding:1.0.1'
 
     // Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.8.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
 
     // Retrofit GSON conversion
     implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
