@@ -9,32 +9,32 @@ apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion '30.0.2'
     buildFeatures {
         dataBinding true
     }
     defaultConfig {
-        applicationId "com.example.omdb"
+        applicationId 'com.example.omdb'
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        versionName '1.0'
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
         debug {
-            applicationIdSuffix ".debug"
-            buildConfigField "String", "BaseUrl", DEV_URL
-            buildConfigField "String", "ApiKey", OMDB_API_KEY
-            buildConfigField "String", "GCP_CLIENT_ID", DEV_CLIENT_ID
+            applicationIdSuffix '.debug'
+            buildConfigField 'String', 'BaseUrl', DEV_URL
+            buildConfigField 'String', 'ApiKey', OMDB_API_KEY
+            buildConfigField 'String', 'GCP_CLIENT_ID', DEV_CLIENT_ID
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
-            buildConfigField "String", "BaseUrl", PROD_URL
-            buildConfigField "String", "ApiKey", OMDB_API_KEY
-            buildConfigField "String", "GCP_CLIENT_ID", PROD_CLIENT_ID
+            buildConfigField 'String', 'BaseUrl', PROD_URL
+            buildConfigField 'String', 'ApiKey', OMDB_API_KEY
+            buildConfigField 'String', 'GCP_CLIENT_ID', PROD_CLIENT_ID
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -71,8 +71,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-common-java8:2.3.1'
 
     // Navigation Component
-    implementation "androidx.navigation:navigation-fragment-ktx:2.3.5"
-    implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
 
     // Constraint Layout
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
@@ -101,11 +101,11 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
 
     // Room
-    implementation "androidx.room:room-runtime:2.3.0"
-    kapt "androidx.room:room-compiler:2.3.0"
+    implementation 'androidx.room:room-runtime:2.3.0'
+    kapt 'androidx.room:room-compiler:2.3.0'
 
     // Kotlin Extensions and Coroutines support for Room
-    implementation "androidx.room:room-ktx:2.3.0"
+    implementation 'androidx.room:room-ktx:2.3.0'
 
     // Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1'
