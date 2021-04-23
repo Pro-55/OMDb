@@ -16,6 +16,7 @@ import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
@@ -30,7 +31,6 @@ import com.example.omdb.util.Constants
 import com.example.omdb.util.extensions.glide
 import com.example.omdb.util.extensions.showShortSnackBar
 import com.example.omdb.util.extensions.visible
-import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,6 +42,7 @@ class DetailsFragment : BaseFragment() {
     private val args by navArgs<DetailsFragmentArgs>()
     private val viewModel by viewModels<HomeViewModel>()
     private val glide by lazy { glide() }
+    private var adapter: SeasonsAdapter? = null
     private var shortData: ShortData? = null
     private var fullData: FullData? = null
     private var contentId: String? = null
@@ -68,6 +69,8 @@ class DetailsFragment : BaseFragment() {
 
         setListeners()
 
+        setupRecyclerview()
+
         if (shortData != null) setShortData(shortData!!)
 
         return binding.root
@@ -87,6 +90,20 @@ class DetailsFragment : BaseFragment() {
 
     private fun setListeners() {
         binding.efabShare.setOnClickListener { showShareIntent() }
+    }
+
+    private fun setupRecyclerview() {
+        adapter = SeasonsAdapter()
+        adapter?.listener = object : SeasonsAdapter.Listener {
+            override fun seasonClicked(season: Int) {
+                showEpisodes(season)
+            }
+        }
+        binding.recyclerSeasons.layoutManager =
+            StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL).apply {
+                gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+            }
+        binding.recyclerSeasons.adapter = adapter
     }
 
     private fun setShortData(data: ShortData) {
@@ -215,7 +232,7 @@ class DetailsFragment : BaseFragment() {
         }
         if (seasons > 0) {
             binding.txtTitleSeasons.visible()
-            setupSeasonChips(seasons)
+            adapter?.swapData((1..seasons).toList())
         }
 
         binding.txtBtnTeamDetails.setOnClickListener {
@@ -227,18 +244,6 @@ class DetailsFragment : BaseFragment() {
             )
             val action = DetailsFragmentDirections.navigateDetailsToTeamDetails(teamDetails)
             findNavController().navigate(action)
-        }
-    }
-
-    private fun setupSeasonChips(seasons: Int) {
-        (1..seasons).forEach { season ->
-            val chip = Chip(requireContext()).apply {
-                setTextAppearance(requireContext(), R.style.ChipTextStyle)
-                text = "Season $season"
-                tag = season
-                setOnClickListener { showEpisodes(season) }
-            }
-            binding.chipGroupSeasons.addView(chip)
         }
     }
 
