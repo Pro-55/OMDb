@@ -10,8 +10,9 @@ import com.example.omdb.R
 import com.example.omdb.models.Episode
 import kotlinx.android.synthetic.main.layout_episode_item.view.*
 
-class EpisodesAdapter(private val season: Int) :
-    ListAdapter<Episode, EpisodesAdapter.ViewHolder>(EpisodeDC()) {
+class EpisodesAdapter(
+    private val season: Int
+) : ListAdapter<Episode, EpisodesAdapter.ViewHolder>(EpisodeDC()) {
 
     // Global
     var listener: Listener? = null

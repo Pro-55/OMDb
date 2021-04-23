@@ -30,16 +30,16 @@ class HomeViewModel @Inject constructor(
         if (size <= 0) movieResult = SearchResult()
         val page = if (size <= 0) 1 else size / PAGE_SIZE + 1
 
-        repository.searchMovies(searchText, page).onEach { resourse ->
-            var newResource = resourse
-            if (resourse.status == Status.SUCCESS) {
+        repository.searchMovies(searchText, page).onEach { resource ->
+            var newResource = resource
+            if (resource.status == Status.SUCCESS) {
                 val list = movieResult.search.toMutableList()
-                val new = resourse.data?.search ?: listOf()
+                val new = resource.data?.search ?: listOf()
                 list.addAll(new)
                 list.distinctBy { it._id }
-                val total = resourse.data?.totalResults ?: movieResult.totalResults
+                val total = resource.data?.totalResults ?: movieResult.totalResults
                 movieResult = movieResult.copy(search = list, totalResults = total)
-                newResource = resourse.copy(data = movieResult)
+                newResource = resource.copy(data = movieResult)
             }
             _movieSearch.postValue(newResource)
         }
@@ -50,16 +50,16 @@ class HomeViewModel @Inject constructor(
         if (size <= 0) seriesResult = SearchResult()
         val page = if (size <= 0) 1 else size / PAGE_SIZE + 1
 
-        repository.searchSeries(searchText, page).onEach { resourse ->
-            var newResource = resourse
-            if (resourse.status == Status.SUCCESS) {
+        repository.searchSeries(searchText, page).onEach { resource ->
+            var newResource = resource
+            if (resource.status == Status.SUCCESS) {
                 val list = seriesResult.search.toMutableList()
-                val new = resourse.data?.search ?: listOf()
+                val new = resource.data?.search ?: listOf()
                 list.addAll(new)
                 list.distinctBy { it._id }
-                val total = resourse.data?.totalResults ?: seriesResult.totalResults
+                val total = resource.data?.totalResults ?: seriesResult.totalResults
                 seriesResult = seriesResult.copy(search = list, totalResults = total)
-                newResource = resourse.copy(data = seriesResult)
+                newResource = resource.copy(data = seriesResult)
             }
             _seriesSearch.postValue(newResource)
         }

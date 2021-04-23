@@ -14,8 +14,9 @@ import com.example.omdb.models.ShortData
 import com.example.omdb.util.listners.OnHoldListener
 import kotlinx.android.synthetic.main.layout_search_item.view.*
 
-class SearchAdapter(private val glide: RequestManager) :
-    ListAdapter<ShortData, SearchAdapter.ViewHolder>(ShortDataDC()) {
+class SearchAdapter(
+    private val glide: RequestManager
+) : ListAdapter<ShortData, SearchAdapter.ViewHolder>(ShortDataDC()) {
 
     // Global
     var listener: Listener? = null

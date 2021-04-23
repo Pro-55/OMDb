@@ -19,7 +19,6 @@ import com.google.firebase.messaging.RemoteMessage
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 class FirebaseMessagingServiceClass : FirebaseMessagingService() {
 
     // Global
