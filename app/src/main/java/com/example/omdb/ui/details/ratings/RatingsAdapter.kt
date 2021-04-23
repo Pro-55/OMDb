@@ -10,8 +10,7 @@ import com.example.omdb.R
 import com.example.omdb.models.Rating
 import kotlinx.android.synthetic.main.layout_rating_item.view.*
 
-class RatingsAdapter :
-    ListAdapter<Rating, RatingsAdapter.ViewHolder>(RatingDC()) {
+class RatingsAdapter : ListAdapter<Rating, RatingsAdapter.ViewHolder>(RatingDC()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
         LayoutInflater.from(parent.context)
