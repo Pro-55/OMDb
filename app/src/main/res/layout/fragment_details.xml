@@ -266,22 +266,21 @@
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/txt_btn_team_details" />
 
-		<ScrollView
-			android:layout_width="match_parent"
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/recycler_seasons"
+			android:layout_width="0dp"
 			android:layout_height="0dp"
-			android:paddingHorizontal="@dimen/activity_default_margin"
+			android:layout_marginHorizontal="@dimen/dimen_8dp"
+			android:clipToPadding="false"
+			android:overScrollMode="never"
+			android:paddingBottom="64dp"
+			android:splitMotionEvents="false"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/txt_title_seasons">
-
-			<com.google.android.material.chip.ChipGroup
-				android:id="@+id/chip_group_seasons"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				app:chipSpacing="@dimen/dimen_4dp"
-				app:singleSelection="true" />
-		</ScrollView>
+			app:layout_constraintTop_toBottomOf="@id/txt_title_seasons"
+			tool:itemCount="10"
+			tool:listitem="@layout/layout_season_item" />
 
 		<com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 			android:id="@+id/efab_share"

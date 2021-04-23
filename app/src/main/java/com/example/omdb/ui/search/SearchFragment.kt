@@ -270,6 +270,11 @@ class SearchFragment : BaseFragment() {
         binding.layoutBlur.apply { visibleWithFade(parent as ViewGroup) }
         binding.cardPeekPoster.apply { visibleWithScaleFade(parent as ViewGroup) }
 
+
+        val titleDate =
+            "${data.title} ${resources.getString(R.string.divider_bullet)} (${data.year})"
+        binding.txtPeekTitleDate.text = titleDate
+
         glide.load(data.poster)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .placeholder(
