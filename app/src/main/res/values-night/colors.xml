@@ -19,4 +19,6 @@
 
 	<color name="color_background">@android:color/black</color>
 
+	<color name="color_card_background">#424242</color>
+
 </resources>

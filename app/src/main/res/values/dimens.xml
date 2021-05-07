@@ -4,6 +4,8 @@
 	<!-- Default screen margins, per the Material Design guidelines. -->
 	<dimen name="activity_default_margin">16dp</dimen>
 
+	<dimen name="corner_radius">8dp</dimen>
+
 	<dimen name="dimen_2dp">2dp</dimen>
 	<dimen name="dimen_4dp">4dp</dimen>
 	<dimen name="dimen_6dp">6dp</dimen>
