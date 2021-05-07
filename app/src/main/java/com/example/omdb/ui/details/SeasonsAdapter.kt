@@ -1,13 +1,13 @@
 package com.example.omdb.ui.details
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.omdb.R
-import kotlinx.android.synthetic.main.layout_season_item.view.*
+import com.example.omdb.databinding.LayoutSeasonItemBinding
 
 class SeasonsAdapter : ListAdapter<Int, SeasonsAdapter.ViewHolder>(IntDC()) {
 
@@ -15,8 +15,9 @@ class SeasonsAdapter : ListAdapter<Int, SeasonsAdapter.ViewHolder>(IntDC()) {
     var listener: Listener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
-        LayoutInflater.from(parent.context)
-            .inflate(R.layout.layout_season_item, parent, false)
+        DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context), R.layout.layout_season_item, parent, false
+        )
     )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
@@ -24,9 +25,11 @@ class SeasonsAdapter : ListAdapter<Int, SeasonsAdapter.ViewHolder>(IntDC()) {
 
     fun swapData(data: List<Int>) = submitList(data.toMutableList())
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(season: Int) = with(itemView) {
-            chip_season.apply {
+    inner class ViewHolder(
+        private val binding: LayoutSeasonItemBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(season: Int) = with(binding) {
+            chipSeason.apply {
                 text = "Season $season"
                 setOnClickListener { listener?.seasonClicked(season) }
             }

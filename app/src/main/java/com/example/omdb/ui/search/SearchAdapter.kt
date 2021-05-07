@@ -4,15 +4,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.omdb.R
+import com.example.omdb.databinding.LayoutSearchItemBinding
 import com.example.omdb.models.ShortData
 import com.example.omdb.util.listners.OnHoldListener
-import kotlinx.android.synthetic.main.layout_search_item.view.*
 
 class SearchAdapter(
     private val glide: RequestManager
@@ -22,8 +23,9 @@ class SearchAdapter(
     var listener: Listener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
-        LayoutInflater.from(parent.context)
-            .inflate(R.layout.layout_search_item, parent, false)
+        DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context), R.layout.layout_search_item, parent, false
+        )
     )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
@@ -31,24 +33,31 @@ class SearchAdapter(
 
     fun swapData(data: List<ShortData>) = submitList(data.toMutableList())
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(
+        private val binding: LayoutSearchItemBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(data: ShortData) = with(itemView) {
+        fun bind(data: ShortData) = with(binding) {
 
             var downTime: Long = -1
             var isPeeking = false
 
             glide.load(data.poster)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(AppCompatResources.getDrawable(context, R.drawable.placeholder_poster))
-                .into(img_poster)
+                .placeholder(
+                    AppCompatResources.getDrawable(
+                        root.context,
+                        R.drawable.placeholder_poster
+                    )
+                )
+                .into(imgPoster)
 
-            transitionName = data._id
-            img_poster.transitionName = data.poster
+            root.transitionName = data._id
+            imgPoster.transitionName = data.poster
 
-            setOnTouchListener(OnHoldListener(object : OnHoldListener.Listener {
+            root.setOnTouchListener(OnHoldListener(object : OnHoldListener.Listener {
                 override fun onClick() {
-                    performClick()
+                    root.performClick()
                 }
 
                 override fun onHold() {
@@ -60,7 +69,7 @@ class SearchAdapter(
                 }
             }))
 
-            setOnClickListener { listener?.onClick(data, this, this.img_poster) }
+            root.setOnClickListener { listener?.onClick(data, root, imgPoster) }
 
         }
     }
