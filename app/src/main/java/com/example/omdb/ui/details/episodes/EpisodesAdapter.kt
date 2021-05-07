@@ -1,14 +1,14 @@
 package com.example.omdb.ui.details.episodes
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.omdb.R
+import com.example.omdb.databinding.LayoutEpisodeItemBinding
 import com.example.omdb.models.Episode
-import kotlinx.android.synthetic.main.layout_episode_item.view.*
 
 class EpisodesAdapter(
     private val season: Int
@@ -18,8 +18,9 @@ class EpisodesAdapter(
     var listener: Listener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
-        LayoutInflater.from(parent.context)
-            .inflate(R.layout.layout_episode_item, parent, false)
+        DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context), R.layout.layout_episode_item, parent, false
+        )
     )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
@@ -27,16 +28,18 @@ class EpisodesAdapter(
 
     fun swapData(data: List<Episode>) = submitList(data.toMutableList())
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(
+        private val binding: LayoutEpisodeItemBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(episode: Episode) = with(itemView) {
+        fun bind(episode: Episode) = with(binding) {
 
-            txt_title.text = episode.title
+            txtTitle.text = episode.title
 
-            val bullet = resources.getString(R.string.divider_bullet)
-            txt_released.text = "S$season $bullet E${episode.episode} | ${episode.released}"
+            val bullet = root.resources.getString(R.string.divider_bullet)
+            txtReleased.text = "S$season $bullet E${episode.episode} | ${episode.released}"
 
-            setOnClickListener { listener?.episodeClicked(episode) }
+            root.setOnClickListener { listener?.episodeClicked(episode) }
         }
     }
 
