@@ -56,6 +56,7 @@ fun AlertDialog.Builder.buildConfirmationDialog(
     binding.btnNegative.text = negativeButton
 
     val dialog = setView(binding.root).create()
+        .apply { window?.decorView?.setBackgroundResource(android.R.color.transparent) }
 
     binding.btnPositive.setOnClickListener {
         positiveButtonClick.invoke(it)

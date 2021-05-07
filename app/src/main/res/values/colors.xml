@@ -19,4 +19,6 @@
 
 	<color name="color_background">@android:color/white</color>
 
+	<color name="color_card_background">@android:color/white</color>
+
 </resources>
