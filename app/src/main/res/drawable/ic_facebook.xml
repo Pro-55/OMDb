@@ -1,12 +1,12 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="23.99997dp"
-    android:height="24dp"
-    android:viewportWidth="792"
-    android:viewportHeight="792.001">
-    <path
-        android:fillColor="@color/com_facebook_blue"
-        android:pathData="M396,0c218.717,0 396,177.309 396,396 0,218.719 -177.284,396 -396,396s-396,-177.286 -396,-396C0,177.309 177.284,0 396,0Z" />
-    <path
-        android:fillColor="@android:color/white"
-        android:pathData="M444.214,272.62h51.035v-75.388h-59.993v0.271c-72.692,2.575 -87.59,43.437 -88.9,86.354h-0.149v37.645h-49.5v73.828h49.5v197.9h74.6v-197.9h61.107l11.8,-73.828h-72.888v-22.745C420.825,284.253 430.477,272.62 444.214,272.62Z" />
+	android:width="23.99997dp"
+	android:height="24dp"
+	android:viewportWidth="792"
+	android:viewportHeight="792.001">
+	<path
+		android:fillColor="@color/com_facebook_blue"
+		android:pathData="M396,0c218.717,0 396,177.309 396,396 0,218.719 -177.284,396 -396,396s-396,-177.286 -396,-396C0,177.309 177.284,0 396,0Z" />
+	<path
+		android:fillColor="@android:color/white"
+		android:pathData="M444.214,272.62h51.035v-75.388h-59.993v0.271c-72.692,2.575 -87.59,43.437 -88.9,86.354h-0.149v37.645h-49.5v73.828h49.5v197.9h74.6v-197.9h61.107l11.8,-73.828h-72.888v-22.745C420.825,284.253 430.477,272.62 444.214,272.62Z" />
 </vector>
