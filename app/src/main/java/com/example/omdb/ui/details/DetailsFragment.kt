@@ -25,7 +25,10 @@ import com.bumptech.glide.request.target.Target
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentDetailsBinding
 import com.example.omdb.framework.BaseFragment
-import com.example.omdb.models.*
+import com.example.omdb.models.FullData
+import com.example.omdb.models.Resource
+import com.example.omdb.models.ShortData
+import com.example.omdb.models.Status
 import com.example.omdb.ui.HomeViewModel
 import com.example.omdb.util.Constants
 import com.example.omdb.util.extensions.glide
@@ -196,7 +199,7 @@ class DetailsFragment : BaseFragment() {
 
         binding.txtRated.text = data.rated
 
-        if (data.contentType != Type.SERIES) {
+        if (data.isNotSeries()) {
 
             binding.dividerRatedRunTime.text = resources.getString(R.string.divider_bullet)
 
@@ -205,7 +208,7 @@ class DetailsFragment : BaseFragment() {
 
         binding.txtGenre.text = data.genre
 
-        binding.barRating.rating = data.rating / 2
+        binding.barRating.rating = data.rating
 
         binding.txtPlot.text = data.plot
 
@@ -218,31 +221,19 @@ class DetailsFragment : BaseFragment() {
         }
 
         binding.txtBtnRatings.setOnClickListener {
-            val ratings = mutableListOf<Rating>()
-                .apply { addAll(data.ratings) }
-                .toTypedArray()
+            val ratings = data.ratings.toTypedArray()
             val action = DetailsFragmentDirections.navigateDetailsToRatings(ratings)
             findNavController().navigate(action)
         }
 
-        val seasons = try {
-            data.seasons?.toInt() ?: 0
-        } catch (e: Exception) {
-            0
-        }
+        val seasons = data.seasons
         if (seasons > 0) {
             binding.txtTitleSeasons.visible()
             adapter?.swapData((1..seasons).toList())
         }
 
         binding.txtBtnTeamDetails.setOnClickListener {
-            val teamDetails = TeamDetails(
-                cast = data.actors,
-                crew = data.writer,
-                director = data.director,
-                production = data.production
-            )
-            val action = DetailsFragmentDirections.navigateDetailsToTeamDetails(teamDetails)
+            val action = DetailsFragmentDirections.navigateDetailsToTeamDetails(data.team)
             findNavController().navigate(action)
         }
     }

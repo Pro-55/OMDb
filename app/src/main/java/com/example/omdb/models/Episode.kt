@@ -1,12 +1,10 @@
 package com.example.omdb.models
 
-import com.google.gson.annotations.SerializedName
-
 data class Episode(
-    @SerializedName("imdbID") val _id: String,
-    @SerializedName("Title") val title: String,
-    @SerializedName("Episode") val episode: String,
-    @SerializedName("Released") val released: String
+    val _id: String,
+    val title: String,
+    val episode: String,
+    val released: String
 ) {
     override fun equals(other: Any?): Boolean {
         if (javaClass != other?.javaClass) return false

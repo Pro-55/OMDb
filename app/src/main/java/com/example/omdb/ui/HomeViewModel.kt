@@ -33,12 +33,7 @@ class HomeViewModel @Inject constructor(
         repository.searchMovies(searchText, page).onEach { resource ->
             var newResource = resource
             if (resource.status == Status.SUCCESS) {
-                val list = movieResult.search.toMutableList()
-                val new = resource.data?.search ?: listOf()
-                list.addAll(new)
-                list.distinctBy { it._id }
-                val total = resource.data?.totalResults ?: movieResult.totalResults
-                movieResult = movieResult.copy(search = list, totalResults = total)
+                movieResult = movieResult.update(resource.data)
                 newResource = resource.copy(data = movieResult)
             }
             _movieSearch.postValue(newResource)
@@ -53,12 +48,7 @@ class HomeViewModel @Inject constructor(
         repository.searchSeries(searchText, page).onEach { resource ->
             var newResource = resource
             if (resource.status == Status.SUCCESS) {
-                val list = seriesResult.search.toMutableList()
-                val new = resource.data?.search ?: listOf()
-                list.addAll(new)
-                list.distinctBy { it._id }
-                val total = resource.data?.totalResults ?: seriesResult.totalResults
-                seriesResult = seriesResult.copy(search = list, totalResults = total)
+                seriesResult = seriesResult.update(resource.data)
                 newResource = resource.copy(data = seriesResult)
             }
             _seriesSearch.postValue(newResource)
