@@ -1,8 +1,7 @@
 package com.example.omdb.models.network
 
-import com.example.omdb.models.FullData
-import com.example.omdb.models.TeamDetails
 import com.example.omdb.models.Type
+import com.example.omdb.models.local.EntityFullData
 import com.google.gson.annotations.SerializedName
 
 data class NetworkFullData(
@@ -20,12 +19,12 @@ data class NetworkFullData(
     @SerializedName("Plot") val plot: String,
     @SerializedName("Language") val language: String,
     @SerializedName("Ratings") val ratings: List<NetworkRating>,
-    @SerializedName("imdbRating") val imdbRating: String? = null,
-    @SerializedName("Production") val production: String? = null,
-    @SerializedName("totalSeasons") val seasons: String? = null
+    @SerializedName("imdbRating") val imdbRating: String?,
+    @SerializedName("Production") val production: String?,
+    @SerializedName("totalSeasons") val seasons: String?
 )
 
-fun NetworkFullData.parse(): FullData = FullData(
+fun NetworkFullData.parse(isFavorite: Boolean): EntityFullData = EntityFullData(
     _id = _id,
     type = when (type) {
         "movie" -> Type.MOVIES
@@ -39,15 +38,12 @@ fun NetworkFullData.parse(): FullData = FullData(
     rated = rated,
     runtime = runtime,
     genre = genre,
-    team = TeamDetails(
-        cast = actors,
-        crew = writer,
-        director = director,
-        production = production
-    ),
+    actors = actors,
+    writer = writer,
+    director = director,
+    production = production,
     plot = plot,
     language = language,
-    ratings = ratings.parse(),
     rating = try {
         imdbRating?.toFloat() ?: 0F
     } catch (e: Exception) {
@@ -57,5 +53,6 @@ fun NetworkFullData.parse(): FullData = FullData(
         seasons?.toInt() ?: 0
     } catch (e: Exception) {
         0
-    }
+    },
+    isFavorite = isFavorite
 )

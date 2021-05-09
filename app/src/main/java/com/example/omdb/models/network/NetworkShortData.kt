@@ -7,7 +7,7 @@ data class NetworkShortData(
     @SerializedName("imdbID") val _id: String,
     @SerializedName("Title") val title: String,
     @SerializedName("Year") val year: String,
-    @SerializedName("Poster") val poster: String? = null
+    @SerializedName("Poster") val poster: String?
 )
 
 fun NetworkShortData.parse(): ShortData = ShortData(

@@ -1,6 +1,6 @@
 package com.example.omdb.models.network
 
-import com.example.omdb.models.Episode
+import com.example.omdb.models.local.EntityEpisode
 import com.google.gson.annotations.SerializedName
 
 data class NetworkEpisode(
@@ -10,11 +10,19 @@ data class NetworkEpisode(
     @SerializedName("Released") val released: String
 )
 
-fun NetworkEpisode.parse(): Episode = Episode(
+fun NetworkEpisode.parse(
+    contentId: String,
+    season: Int
+): EntityEpisode = EntityEpisode(
     _id = _id,
+    contentId = contentId,
+    season = season,
     title = title,
     episode = episode,
     released = released
 )
 
-fun List<NetworkEpisode?>.parse(): List<Episode> = mapNotNull { it?.parse() }
+fun List<NetworkEpisode?>.parse(
+    contentId: String,
+    season: Int
+): List<EntityEpisode> = mapNotNull { it?.parse(contentId, season) }
