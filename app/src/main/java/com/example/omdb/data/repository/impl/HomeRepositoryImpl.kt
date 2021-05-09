@@ -5,6 +5,7 @@ import com.example.omdb.data.api.OMDbApi
 import com.example.omdb.data.local.AppDatabase
 import com.example.omdb.data.repository.contract.HomeRepository
 import com.example.omdb.models.*
+import com.example.omdb.models.network.parse
 import com.example.omdb.util.extensions.resourceFlow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -32,7 +33,7 @@ class HomeRepositoryImpl constructor(
             )
 
             if (result.isSuccessful) {
-                val data = result.body() ?: SearchResult()
+                val data = result.body()?.parse() ?: SearchResult()
                 emit(Resource.success(data))
             } else {
                 val msg = result.message()
@@ -51,7 +52,7 @@ class HomeRepositoryImpl constructor(
             )
 
             if (result.isSuccessful) {
-                val data = result.body() ?: SearchResult()
+                val data = result.body()?.parse() ?: SearchResult()
                 emit(Resource.success(data))
             } else {
                 val msg = result.message()
@@ -65,7 +66,7 @@ class HomeRepositoryImpl constructor(
             val result = api.getDetails(ApiKey, id, plot)
 
             if (result.isSuccessful) {
-                val data = result.body()
+                val data = result.body()?.parse()
                 if (data != null) emit(Resource.success(data))
                 else emit(Resource.error("Something Went wrong!"))
             } else {
@@ -80,7 +81,7 @@ class HomeRepositoryImpl constructor(
             val result = api.getEpisodes(ApiKey, id, season)
 
             if (result.isSuccessful) {
-                val data = result.body()
+                val data = result.body()?.parse()
                 if (data != null) emit(Resource.success(data))
                 else emit(Resource.error("Something Went wrong!"))
             } else {
