@@ -14,7 +14,8 @@ data class FullData(
     val language: String,
     val ratings: List<Rating>,
     val rating: Float,
-    val seasons: Int
+    val seasons: Int,
+    val isFavorite: Boolean
 ) {
 
     fun isNotSeries(): Boolean = type != Type.SERIES

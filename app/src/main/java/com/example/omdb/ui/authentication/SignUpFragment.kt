@@ -17,14 +17,12 @@ import com.example.omdb.BuildConfig
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentSignUpBinding
 import com.example.omdb.framework.BaseFragment
-import com.example.omdb.models.User
+import com.example.omdb.models.Status
+import com.example.omdb.models.local.EntityUser
 import com.example.omdb.ui.HomeViewModel
 import com.example.omdb.util.Constants
 import com.example.omdb.util.Constants.REQUEST_GOOGLE_SIGN_IN
-import com.example.omdb.util.extensions.glide
-import com.example.omdb.util.extensions.hideKeyboard
-import com.example.omdb.util.extensions.isValidEmail
-import com.example.omdb.util.extensions.showShortSnackBar
+import com.example.omdb.util.extensions.*
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -76,17 +74,24 @@ class SignUpFragment : BaseFragment() {
             val email = binding.editEmail.text?.toString()?.trim()
             if (isValid(firstName, lastName, email)) {
                 val id = auth.currentUser?.uid ?: UUID.randomUUID().toString()
-                val user = User(
+                val user = EntityUser(
                     _id = id,
                     firstName = firstName ?: "",
                     lastName = lastName ?: "",
                     email = email ?: "",
                     profileUrl = profileUrl
                 )
-                viewModel.signUp(user)
-                sp.edit().putBoolean(Constants.KEY_SIGN_UP_STATUS, true).apply()
-                val action = SignUpFragmentDirections.navigateSignUpToHome()
-                findNavController().navigate(action)
+                viewModel.signUp(user).observe(viewLifecycleOwner, { resource ->
+                    when (resource.status) {
+                        Status.SUCCESS -> {
+                            sp.edit().putBoolean(Constants.KEY_SIGN_UP_STATUS, true).apply()
+                            val action = SignUpFragmentDirections.navigateSignUpToHome()
+                            findNavController().navigate(action)
+                        }
+                        Status.ERROR -> showShortToast(resource.message)
+                    }
+                })
+
             }
         }
 

@@ -1,5 +1,6 @@
 package com.example.omdb.di
 
+import android.net.Network
 import com.example.omdb.BuildConfig.BaseUrl
 import dagger.Module
 import dagger.Provides

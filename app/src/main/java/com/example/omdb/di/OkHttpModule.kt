@@ -15,24 +15,17 @@ object OkHttpModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(logging: HttpLoggingInterceptor): OkHttpClient {
-        val clientBuilder = OkHttpClient().newBuilder()
-            .connectTimeout(5, TimeUnit.SECONDS)
-            // Do consider increasing read/write timeouts if backend service is running long queries
-            .writeTimeout(15, TimeUnit.SECONDS)
-            .readTimeout(15, TimeUnit.SECONDS)
-
-//        clientBuilder.addNetworkInterceptor(logging)
-        return clientBuilder.build()
-    }
+    fun provideOkHttpClient(logging: HttpLoggingInterceptor): OkHttpClient =
+        OkHttpClient().newBuilder()
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS)
+//        .addNetworkInterceptor(logging)
+            .build()
 
     @Singleton
     @Provides
-    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
-        // OkHttp Logging Interceptor
-        val logging = HttpLoggingInterceptor()
-        logging.level = HttpLoggingInterceptor.Level.BODY
-        return logging
-    }
+    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor()
+        .apply { level = HttpLoggingInterceptor.Level.BODY }
 
 }

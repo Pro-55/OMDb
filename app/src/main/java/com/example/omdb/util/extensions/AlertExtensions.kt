@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.example.omdb.R
 import com.example.omdb.databinding.LayoutConfirmationDialogBinding
+import com.example.omdb.util.Constants
 import com.google.android.material.snackbar.Snackbar
 
 fun Fragment.showShortSnackBar(message: String?) = requireActivity().showShortSnackBar(message)
@@ -16,7 +17,7 @@ fun Fragment.showShortSnackBar(message: String?) = requireActivity().showShortSn
 fun FragmentActivity.showShortSnackBar(message: String?) {
     Snackbar.make(
         findViewById(android.R.id.content),
-        message ?: "Something went wrong!",
+        message ?: Constants.REQUEST_FAILED_MESSAGE,
         Snackbar.LENGTH_SHORT
     ).show()
 }
@@ -26,7 +27,7 @@ fun Fragment.showLongSnackBar(message: String?) = requireActivity().showLongSnac
 fun FragmentActivity.showLongSnackBar(message: String?) {
     Snackbar.make(
         findViewById(android.R.id.content),
-        message ?: "Something went wrong!",
+        message ?: Constants.REQUEST_FAILED_MESSAGE,
         Snackbar.LENGTH_LONG
     ).show()
 }
@@ -34,12 +35,12 @@ fun FragmentActivity.showLongSnackBar(message: String?) {
 fun Fragment.showShortToast(message: String?) = requireActivity().showShortToast(message)
 
 fun FragmentActivity.showShortToast(message: String?) =
-    Toast.makeText(this, message ?: "Something went wrong!", Toast.LENGTH_SHORT).show()
+    Toast.makeText(this, message ?: Constants.REQUEST_FAILED_MESSAGE, Toast.LENGTH_SHORT).show()
 
 fun Fragment.showLongToast(message: String?) = requireActivity().showLongToast(message)
 
 fun FragmentActivity.showLongToast(message: String?) =
-    Toast.makeText(this, message ?: "Something went wrong!", Toast.LENGTH_LONG).show()
+    Toast.makeText(this, message ?: Constants.REQUEST_FAILED_MESSAGE, Toast.LENGTH_LONG).show()
 
 fun AlertDialog.Builder.buildConfirmationDialog(
     inflater: LayoutInflater,
