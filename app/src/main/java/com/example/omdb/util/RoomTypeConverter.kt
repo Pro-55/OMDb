@@ -6,7 +6,7 @@ import com.example.omdb.models.Type
 class RoomTypeConverter {
 
     @TypeConverter
-    fun toContentType(contentType: Type?): Int? {
+    fun toContentType(contentType: Type?): Int {
         return contentType?.ordinal ?: 0
     }
 

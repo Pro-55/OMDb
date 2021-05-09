@@ -1,8 +1,8 @@
 package com.example.omdb.data.api
 
-import com.example.omdb.models.FullData
-import com.example.omdb.models.SearchResult
-import com.example.omdb.models.Season
+import com.example.omdb.models.network.NetworkFullData
+import com.example.omdb.models.network.NetworkSearchResult
+import com.example.omdb.models.network.NetworkSeason
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -15,20 +15,20 @@ interface OMDbApi {
         @Query("s") title: String,
         @Query("type") type: String,
         @Query("page") page: Int
-    ): Response<SearchResult>
+    ): Response<NetworkSearchResult>
 
     @GET("/")
     suspend fun getDetails(
         @Query("apikey") apiKey: String,
         @Query("i") id: String,
         @Query("plot") plot: String
-    ): Response<FullData>
+    ): Response<NetworkFullData>
 
     @GET("/")
     suspend fun getEpisodes(
         @Query("apikey") apiKey: String,
         @Query("i") id: String,
         @Query("season") season: Int
-    ): Response<Season>
+    ): Response<NetworkSeason>
 
 }

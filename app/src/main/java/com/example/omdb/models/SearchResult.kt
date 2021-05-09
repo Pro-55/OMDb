@@ -1,8 +1,16 @@
 package com.example.omdb.models
 
-import com.google.gson.annotations.SerializedName
-
 data class SearchResult(
-    @SerializedName("Search") val search: List<ShortData> = listOf(),
-    @SerializedName("totalResults") val totalResults: String = "0"
+    val search: List<ShortData> = listOf(),
+    val totalResults: String = "0"
 )
+
+fun SearchResult.update(data: SearchResult?): SearchResult {
+    if (data == null) return this
+    val list = search.toMutableList()
+    val new = data.search
+    list.addAll(new)
+    list.distinctBy { it._id }
+    val total = data.totalResults
+    return copy(search = list, totalResults = total)
+}

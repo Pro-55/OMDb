@@ -1,15 +1,14 @@
 package com.example.omdb.models
 
 import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ShortData(
-    @SerializedName("imdbID") val _id: String,
-    @SerializedName("Title") val title: String,
-    @SerializedName("Year") val year: String,
-    @SerializedName("Poster") val poster: String? = null
+    val _id: String,
+    val title: String,
+    val year: String,
+    val poster: String?
 ) : Parcelable {
 
     override fun equals(other: Any?): Boolean {

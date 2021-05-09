@@ -3,6 +3,7 @@ package com.example.omdb.ui
 import androidx.lifecycle.*
 import com.example.omdb.data.repository.impl.HomeRepositoryImpl
 import com.example.omdb.models.*
+import com.example.omdb.models.local.EntityUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -24,7 +25,7 @@ class HomeViewModel @Inject constructor(
     private val _seriesSearch = MutableLiveData<Resource<SearchResult>>()
     val seriesSearch: LiveData<Resource<SearchResult>> = _seriesSearch
 
-    fun signUp(user: User) = repository.signUp(user)
+    fun signUp(user: EntityUser) = repository.signUp(user).asLiveData()
 
     fun searchMovies(searchText: String, size: Int) {
         if (size <= 0) movieResult = SearchResult()
@@ -33,12 +34,7 @@ class HomeViewModel @Inject constructor(
         repository.searchMovies(searchText, page).onEach { resource ->
             var newResource = resource
             if (resource.status == Status.SUCCESS) {
-                val list = movieResult.search.toMutableList()
-                val new = resource.data?.search ?: listOf()
-                list.addAll(new)
-                list.distinctBy { it._id }
-                val total = resource.data?.totalResults ?: movieResult.totalResults
-                movieResult = movieResult.copy(search = list, totalResults = total)
+                movieResult = movieResult.update(resource.data)
                 newResource = resource.copy(data = movieResult)
             }
             _movieSearch.postValue(newResource)
@@ -53,12 +49,7 @@ class HomeViewModel @Inject constructor(
         repository.searchSeries(searchText, page).onEach { resource ->
             var newResource = resource
             if (resource.status == Status.SUCCESS) {
-                val list = seriesResult.search.toMutableList()
-                val new = resource.data?.search ?: listOf()
-                list.addAll(new)
-                list.distinctBy { it._id }
-                val total = resource.data?.totalResults ?: seriesResult.totalResults
-                seriesResult = seriesResult.copy(search = list, totalResults = total)
+                seriesResult = seriesResult.update(resource.data)
                 newResource = resource.copy(data = seriesResult)
             }
             _seriesSearch.postValue(newResource)

@@ -8,11 +8,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 
-fun <T> ioFlow(doRetry: Boolean = true, block: suspend FlowCollector<T>.() -> Unit): Flow<T> {
-    return flow(block).asIoFlow(doRetry)
-}
+fun <T> ioFlow(
+    doRetry: Boolean = false,
+    block: suspend FlowCollector<T>.() -> Unit
+): Flow<T> = flow(block).asIoFlow(doRetry)
 
-fun <T> Flow<T>.asIoFlow(doRetry: Boolean = true): Flow<T> {
+fun <T> Flow<T>.asIoFlow(doRetry: Boolean = false): Flow<T> {
     return this
         .distinctUntilChanged()
         .retryWhen { cause, attempt ->
@@ -24,27 +25,24 @@ fun <T> Flow<T>.asIoFlow(doRetry: Boolean = true): Flow<T> {
             else doRetry
         }
         .catch {
+            it.printStackTrace()
+            FirebaseCrashlytics.getInstance().recordException(it)
             when (it) {
-                is IllegalArgumentException -> {
-                    Log.d("ioFlow", "TestLog: Couldn't complete request: IllegalArgumentException")
-                }
-                else -> {
-                    it.printStackTrace()
-                    FirebaseCrashlytics.getInstance().recordException(it)
-                }
+                is IllegalArgumentException -> Log.d("IF", "TestLog: IllegalArgumentException")
+                else -> Log.d("IF", "TestLog: Exception")
             }
         }
         .flowOn(Dispatchers.IO)
 }
 
 fun <T> resourceFlow(
-    doRetry: Boolean = true,
+    doRetry: Boolean = false,
     block: suspend FlowCollector<Resource<T>>.() -> Unit
 ): Flow<Resource<T>> {
     return flow(block).asResourceFlow(doRetry)
 }
 
-fun <T> Flow<Resource<T>>.asResourceFlow(doRetry: Boolean = true): Flow<Resource<T>> {
+fun <T> Flow<Resource<T>>.asResourceFlow(doRetry: Boolean = false): Flow<Resource<T>> {
     return this
         .onStart { emit(Resource.loading(data = null)) }
         .distinctUntilChanged()
@@ -57,17 +55,15 @@ fun <T> Flow<Resource<T>>.asResourceFlow(doRetry: Boolean = true): Flow<Resource
             else doRetry
         }
         .catch {
+            it.printStackTrace()
+            FirebaseCrashlytics.getInstance().recordException(it)
             when (it) {
                 is IllegalArgumentException -> {
-                    Log.d(
-                        "resourceFlow",
-                        "TestLog: Couldn't complete request: IllegalArgumentException"
-                    )
+                    Log.d("RF", "TestLog: IllegalArgumentException")
                     emit(Resource.error(msg = Constants.REQUEST_FAILED_MESSAGE, data = null))
                 }
                 else -> {
-                    it.printStackTrace()
-                    FirebaseCrashlytics.getInstance().recordException(it)
+                    Log.d("RF", "TestLog: Exception")
                     emit(Resource.error(msg = Constants.REQUEST_FAILED_MESSAGE, data = null))
                 }
             }

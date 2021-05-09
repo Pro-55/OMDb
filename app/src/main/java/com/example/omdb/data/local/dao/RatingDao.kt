@@ -3,12 +3,12 @@ package com.example.omdb.data.local.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
-import com.example.omdb.models.local.EntityUser
+import com.example.omdb.models.local.EntityRating
 
 @Dao
-interface UserDao {
+interface RatingDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(user: EntityUser): Long
+    suspend fun insertAll(ratings: List<EntityRating>): List<Long>
 
 }
