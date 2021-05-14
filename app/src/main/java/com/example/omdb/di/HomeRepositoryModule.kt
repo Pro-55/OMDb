@@ -1,5 +1,6 @@
 package com.example.omdb.di
 
+import android.content.SharedPreferences
 import com.example.omdb.data.api.OMDbApi
 import com.example.omdb.data.local.AppDatabase
 import com.example.omdb.data.repository.impl.HomeRepositoryImpl
@@ -15,7 +16,7 @@ object HomeRepositoryModule {
 
     @ViewModelScoped
     @Provides
-    fun provideHomeRepository(api: OMDbApi, db: AppDatabase) =
-        HomeRepositoryImpl(api, db)
+    fun provideHomeRepository(api: OMDbApi, db: AppDatabase, sp: SharedPreferences) =
+        HomeRepositoryImpl(api, db, sp)
 
 }

@@ -15,7 +15,8 @@ import java.net.UnknownHostException
 
 class HomeRepositoryImpl constructor(
     private val api: OMDbApi,
-    private val db: AppDatabase
+    private val db: AppDatabase,
+    private val sp: SharedPreferences
 ) : HomeRepository {
 
     // Global
@@ -25,6 +26,11 @@ class HomeRepositoryImpl constructor(
         return resourceFlow {
             val insertResult = db.userDao.insert(user)
             if (insertResult > -1) {
+                with(sp.edit()) {
+                    putBoolean(Constants.KEY_SIGN_UP_STATUS, true)
+                    putString(Constants.KEY_USER_ID, user._id)
+                    apply()
+                }
                 emit(Resource.success(user.parse()))
             } else {
                 emit(Resource.error(Constants.REQUEST_FAILED_MESSAGE))
