@@ -3,16 +3,16 @@ package com.example.omdb.ui.search
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.omdb.R
 import com.example.omdb.databinding.LayoutSearchItemBinding
 import com.example.omdb.models.ShortData
+import com.example.omdb.util.extensions.addPosterPlaceholder
+import com.example.omdb.util.extensions.diskCacheStrategyAll
 import com.example.omdb.util.listners.OnHoldListener
 
 class SearchAdapter(
@@ -43,13 +43,8 @@ class SearchAdapter(
             var isPeeking = false
 
             glide.load(data.poster)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(
-                    AppCompatResources.getDrawable(
-                        root.context,
-                        R.drawable.placeholder_poster
-                    )
-                )
+                .diskCacheStrategyAll()
+                .addPosterPlaceholder(root.context)
                 .into(imgPoster)
 
             root.transitionName = data._id

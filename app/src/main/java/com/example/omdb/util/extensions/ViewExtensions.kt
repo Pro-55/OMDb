@@ -131,3 +131,11 @@ fun View.animateTranslate(tX: Float = 0F, tY: Float = 0F, duration: Long = 0) {
 fun View.animateScale(sX: Float = 1F, sY: Float = 1F, duration: Long = 0) {
     animate().scaleX(sX).scaleY(sY).setDuration(duration).start()
 }
+
+fun View.enable() {
+    if (!isEnabled) isEnabled = true
+}
+
+fun View.disable() {
+    if (isEnabled) isEnabled = false
+}

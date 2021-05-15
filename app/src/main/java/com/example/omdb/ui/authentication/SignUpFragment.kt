@@ -1,17 +1,15 @@
 package com.example.omdb.ui.authentication
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 import com.example.omdb.BuildConfig
 import com.example.omdb.R
@@ -28,6 +26,10 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
+import com.github.razir.progressbutton.attachTextChangeAnimator
+import com.github.razir.progressbutton.bindProgressButton
+import com.github.razir.progressbutton.hideProgress
+import com.github.razir.progressbutton.showProgress
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -42,7 +44,6 @@ class SignUpFragment : BaseFragment() {
 
     //Global
     private val TAG = SignUpFragment::class.java.simpleName
-    @Inject lateinit var sp: SharedPreferences
     @Inject lateinit var auth: FirebaseAuth
     @Inject lateinit var crashlytics: FirebaseCrashlytics
     private lateinit var binding: FragmentSignUpBinding
@@ -62,36 +63,47 @@ class SignUpFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setListeners()
+
+    }
+
+    private fun setListeners() {
         binding.btnGoogle.setOnClickListener { hitLoginGoogle() }
 
         binding.btnFacebook.setOnClickListener { hitLoginFacebook() }
 
-        binding.btnSave.setOnClickListener {
-            hideKeyboard()
-            clearFocus()
-            val firstName = binding.editFirstName.text?.toString()?.trim()
-            val lastName = binding.editLastName.text?.toString()?.trim()
-            val email = binding.editEmail.text?.toString()?.trim()
-            if (isValid(firstName, lastName, email)) {
-                val id = auth.currentUser?.uid ?: UUID.randomUUID().toString()
-                val user = EntityUser(
-                    _id = id,
-                    firstName = firstName ?: "",
-                    lastName = lastName ?: "",
-                    email = email ?: "",
-                    profileUrl = profileUrl
-                )
-                viewModel.signUp(user).observe(viewLifecycleOwner, { resource ->
-                    when (resource.status) {
-                        Status.SUCCESS -> {
-                            sp.edit().putBoolean(Constants.KEY_SIGN_UP_STATUS, true).apply()
-                            val action = SignUpFragmentDirections.navigateSignUpToHome()
-                            findNavController().navigate(action)
-                        }
-                        Status.ERROR -> showShortToast(resource.message)
-                    }
-                })
+        binding.btnSave.apply {
+            this@SignUpFragment.bindProgressButton(this)
+            attachTextChangeAnimator()
+            setOnClickListener {
+                requireActivity().hideKeyboard()
+                clearFocus()
+                val firstName = binding.editFirstName.text?.toString()?.trim()
+                val lastName = binding.editLastName.text?.toString()?.trim()
+                val email = binding.editEmail.text?.toString()?.trim()
+                if (isValid(firstName, lastName, email)) {
+                    val id = auth.currentUser?.uid ?: UUID.randomUUID().toString()
+                    val user = EntityUser(
+                        _id = id,
+                        firstName = firstName ?: "",
+                        lastName = lastName ?: "",
+                        email = email ?: "",
+                        profileUrl = profileUrl
+                    )
+                    viewModel.signUp(user)
+                        .observe(viewLifecycleOwner, { resource ->
+                            when (resource.status) {
+                                Status.LOADING -> startLoading()
+                                Status.SUCCESS -> {
+                                    stopLoading(true, resource.message)
+                                    val action = SignUpFragmentDirections.navigateSignUpToHome()
+                                    findNavController().navigate(action)
+                                }
+                                Status.ERROR -> stopLoading(false, resource.message)
+                            }
+                        })
 
+                }
             }
         }
 
@@ -101,7 +113,7 @@ class SignUpFragment : BaseFragment() {
             }
             setOnEditorActionListener { _, _, _ ->
                 clearFocus()
-                hideKeyboard()
+                requireActivity().hideKeyboard()
                 true
             }
         }
@@ -112,7 +124,7 @@ class SignUpFragment : BaseFragment() {
             }
             setOnEditorActionListener { _, _, _ ->
                 clearFocus()
-                hideKeyboard()
+                requireActivity().hideKeyboard()
                 true
             }
         }
@@ -123,7 +135,7 @@ class SignUpFragment : BaseFragment() {
             }
             setOnEditorActionListener { _, _, _ ->
                 clearFocus()
-                hideKeyboard()
+                requireActivity().hideKeyboard()
                 true
             }
         }
@@ -196,14 +208,6 @@ class SignUpFragment : BaseFragment() {
         return isValid
     }
 
-    private fun clearFocus() {
-        requireActivity().currentFocus?.clearFocus()
-    }
-
-    private fun hideKeyboard() {
-        requireActivity().hideKeyboard()
-    }
-
     override fun onStart() {
         super.onStart()
         val user = auth.currentUser ?: return
@@ -263,12 +267,43 @@ class SignUpFragment : BaseFragment() {
         profileUrl = user.photoUrl?.toString()
 
         glide().load(profileUrl)
-            .transform(CircleCrop())
-            .placeholder(
-                ResourcesCompat.getDrawable(resources, R.drawable.ic_profile_placeholder, null)
-            )
+            .diskCacheStrategyAll()
+            .circleCrop()
+            .addProfilePlaceholder(requireContext())
             .apply(RequestOptions().override(200, 200))
             .into(binding.imgProfile)
+    }
+
+    private fun startLoading() {
+        binding.editFirstName.disable()
+        binding.editLastName.disable()
+        binding.editEmail.disable()
+        binding.btnGoogle.disable()
+        binding.btnFacebook.disable()
+        binding.btnSave.apply {
+            disable()
+            showProgress {
+                buttonText = "Saving..."
+                progressColor = ContextCompat.getColor(requireContext(), R.color.color_primary_text)
+            }
+        }
+    }
+
+    private fun stopLoading(isSuccess: Boolean, message: String?) {
+        if (!isSuccess) showShortToast(message)
+        binding.editFirstName.enable()
+        binding.editLastName.enable()
+        binding.editEmail.enable()
+        binding.btnGoogle.enable()
+        binding.btnFacebook.enable()
+        binding.btnSave.apply {
+            enable()
+            if (isSuccess) {
+                hideProgress("Saved")
+            } else {
+                hideProgress("Save")
+            }
+        }
     }
 
 }

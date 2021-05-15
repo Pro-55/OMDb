@@ -1,5 +1,6 @@
 package com.example.omdb.data.repository.impl
 
+import android.content.SharedPreferences
 import androidx.room.withTransaction
 import com.example.omdb.BuildConfig.ApiKey
 import com.example.omdb.data.api.OMDbApi
@@ -15,7 +16,8 @@ import java.net.UnknownHostException
 
 class HomeRepositoryImpl constructor(
     private val api: OMDbApi,
-    private val db: AppDatabase
+    private val db: AppDatabase,
+    private val sp: SharedPreferences
 ) : HomeRepository {
 
     // Global
@@ -25,10 +27,33 @@ class HomeRepositoryImpl constructor(
         return resourceFlow {
             val insertResult = db.userDao.insert(user)
             if (insertResult > -1) {
+                with(sp.edit()) {
+                    putBoolean(Constants.KEY_SIGN_UP_STATUS, true)
+                    putString(Constants.KEY_USER_ID, user._id)
+                    apply()
+                }
                 emit(Resource.success(user.parse()))
             } else {
                 emit(Resource.error(Constants.REQUEST_FAILED_MESSAGE))
             }
+        }
+    }
+
+    override fun getCurrentUser(): Flow<Resource<User>> {
+        return resourceFlow {
+            val userId = sp.getString(Constants.KEY_USER_ID, null)
+            if (userId.isNullOrEmpty()) {
+                emit(Resource.error("Invalid User ID!"))
+                return@resourceFlow
+            }
+
+            val user = db.userDao.get(userId)
+            if (user == null) {
+                emit(Resource.error("User Not Found!"))
+                return@resourceFlow
+            }
+
+            emit(Resource.success(user.parse()))
         }
     }
 

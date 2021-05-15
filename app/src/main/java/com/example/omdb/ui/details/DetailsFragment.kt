@@ -9,7 +9,6 @@ import android.transition.TransitionSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
@@ -31,9 +30,7 @@ import com.example.omdb.models.ShortData
 import com.example.omdb.models.Status
 import com.example.omdb.ui.HomeViewModel
 import com.example.omdb.util.Constants
-import com.example.omdb.util.extensions.glide
-import com.example.omdb.util.extensions.showShortSnackBar
-import com.example.omdb.util.extensions.visible
+import com.example.omdb.util.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -114,11 +111,10 @@ class DetailsFragment : BaseFragment() {
         binding.cardPoster.transitionName = data._id
         binding.imgPoster.transitionName = data.poster
 
-        glide.asBitmap().load(data.poster)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .placeholder(
-                AppCompatResources.getDrawable(requireContext(), R.drawable.placeholder_poster)
-            )
+        glide.asBitmap()
+            .load(data.poster)
+            .diskCacheStrategyAll()
+            .addPosterPlaceholder(requireContext())
             .listener(object : RequestListener<Bitmap> {
                 override fun onLoadFailed(
                     e: GlideException?,
@@ -163,9 +159,7 @@ class DetailsFragment : BaseFragment() {
             binding.imgPoster.transitionName = data.poster
             glide.asBitmap().load(data.poster)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(
-                    AppCompatResources.getDrawable(requireContext(), R.drawable.placeholder_poster)
-                )
+                .addPosterPlaceholder(requireContext())
                 .listener(object : RequestListener<Bitmap> {
                     override fun onLoadFailed(
                         e: GlideException?,
