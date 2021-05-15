@@ -1,5 +1,6 @@
 package com.example.omdb.data.repository.impl
 
+import android.content.SharedPreferences
 import androidx.room.withTransaction
 import com.example.omdb.BuildConfig.ApiKey
 import com.example.omdb.data.api.OMDbApi
@@ -35,6 +36,24 @@ class HomeRepositoryImpl constructor(
             } else {
                 emit(Resource.error(Constants.REQUEST_FAILED_MESSAGE))
             }
+        }
+    }
+
+    override fun getCurrentUser(): Flow<Resource<User>> {
+        return resourceFlow {
+            val userId = sp.getString(Constants.KEY_USER_ID, null)
+            if (userId.isNullOrEmpty()) {
+                emit(Resource.error("Invalid User ID!"))
+                return@resourceFlow
+            }
+
+            val user = db.userDao.get(userId)
+            if (user == null) {
+                emit(Resource.error("User Not Found!"))
+                return@resourceFlow
+            }
+
+            emit(Resource.success(user.parse()))
         }
     }
 

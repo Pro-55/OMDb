@@ -8,6 +8,8 @@ interface HomeRepository {
 
     fun signUp(user: EntityUser): Flow<Resource<User>>
 
+    fun getCurrentUser(): Flow<Resource<User>>
+
     fun searchMovies(searchString: String, page: Int): Flow<Resource<SearchResult>>
 
     fun searchSeries(searchString: String, page: Int): Flow<Resource<SearchResult>>

@@ -9,6 +9,60 @@
 		android:focusable="true"
 		android:focusableInTouchMode="true">
 
+		<ImageView
+			android:id="@+id/img_profile"
+			android:layout_width="@dimen/dimen_48dp"
+			android:layout_height="0dp"
+			android:layout_marginStart="@dimen/activity_default_margin"
+			android:layout_marginTop="@dimen/activity_default_margin"
+			android:src="@drawable/ic_profile_placeholder"
+			app:layout_constraintDimensionRatio="H,1:1"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<TextSwitcher
+			android:id="@+id/txt_switch_greeting"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginHorizontal="@dimen/activity_default_margin"
+			android:inAnimation="@anim/fade_in"
+			android:outAnimation="@anim/fade_out"
+			app:layout_constraintBottom_toBottomOf="@id/img_profile"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@id/img_profile"
+			app:layout_constraintTop_toTopOf="@id/img_profile"
+			app:layout_constraintVertical_bias="0.5">
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_gravity="center"
+				android:gravity="center_vertical"
+				android:paddingVertical="@dimen/dimen_8dp"
+				android:text="@string/label_greeting"
+				android:textColor="@color/color_primary_text"
+				android:textSize="@dimen/dimen_20sp"
+				android:textStyle="bold" />
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_gravity="center"
+				android:gravity="center_vertical"
+				android:paddingVertical="@dimen/dimen_8dp"
+				android:text="@string/label_greeting"
+				android:textColor="@color/color_primary_text"
+				android:textSize="@dimen/dimen_20sp"
+				android:textStyle="bold" />
+		</TextSwitcher>
+
+		<androidx.constraintlayout.widget.Barrier
+			android:id="@+id/barrier_profile_greeting"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			app:barrierDirection="bottom"
+			app:constraint_referenced_ids="img_profile,txt_switch_greeting" />
+
 		<androidx.cardview.widget.CardView
 			android:id="@+id/card_movies"
 			android:layout_width="0dp"
@@ -21,7 +75,7 @@
 			app:layout_constraintBottom_toTopOf="@id/card_series"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent">
+			app:layout_constraintTop_toBottomOf="@id/barrier_profile_greeting">
 
 			<androidx.constraintlayout.widget.ConstraintLayout
 				android:id="@+id/layout_movies"

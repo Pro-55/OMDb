@@ -20,6 +20,10 @@ object Constants {
     const val BULLET = "\u2022"
     const val GHOST_EMOJI = "\uD83D\uDC7B"
     const val THINKING_EMOJI = "\uD83E\uDD14"
+    const val RISING_SUN_EMOJI = "\uD83C\uDF04"
+    const val SUN_EMOJI = "\u26C5"
+    const val SETTING_SUN_EMOJI = "\uD83C\uDF06"
+    const val CRESCENT_MOON_EMOJI = "\uD83C\uDF19"
     const val NETWORK_ERROR_MESSAGE = "Oops, your connection seems off... $GHOST_EMOJI"
     const val REQUEST_FAILED_MESSAGE = "Something went wrong... $THINKING_EMOJI"
 }

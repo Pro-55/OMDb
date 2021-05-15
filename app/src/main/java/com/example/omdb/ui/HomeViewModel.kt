@@ -27,6 +27,8 @@ class HomeViewModel @Inject constructor(
 
     fun signUp(user: EntityUser) = repository.signUp(user).asLiveData()
 
+    fun getCurrentUser() = repository.getCurrentUser().asLiveData()
+
     fun searchMovies(searchText: String, size: Int) {
         if (size <= 0) movieResult = SearchResult()
         val page = if (size <= 0) 1 else size / PAGE_SIZE + 1
