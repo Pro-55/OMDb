@@ -19,7 +19,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentSearchBinding
 import com.example.omdb.framework.BaseFragment
@@ -276,10 +275,8 @@ class SearchFragment : BaseFragment() {
         binding.txtPeekTitleDate.text = titleDate
 
         glide.load(data.poster)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .placeholder(
-                AppCompatResources.getDrawable(requireContext(), R.drawable.placeholder_poster)
-            )
+            .diskCacheStrategyAll()
+            .addPosterPlaceholder(requireContext())
             .into(binding.imgPeekPoster)
 
     }

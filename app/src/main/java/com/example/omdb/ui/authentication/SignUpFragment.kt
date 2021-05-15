@@ -1,18 +1,15 @@
 package com.example.omdb.ui.authentication
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 import com.example.omdb.BuildConfig
 import com.example.omdb.R
@@ -270,10 +267,9 @@ class SignUpFragment : BaseFragment() {
         profileUrl = user.photoUrl?.toString()
 
         glide().load(profileUrl)
-            .transform(CircleCrop())
-            .placeholder(
-                ResourcesCompat.getDrawable(resources, R.drawable.ic_profile_placeholder, null)
-            )
+            .diskCacheStrategyAll()
+            .circleCrop()
+            .addProfilePlaceholder(requireContext())
             .apply(RequestOptions().override(200, 200))
             .into(binding.imgProfile)
     }
@@ -294,7 +290,7 @@ class SignUpFragment : BaseFragment() {
     }
 
     private fun stopLoading(isSuccess: Boolean, message: String?) {
-        showShortToast(message)
+        if (!isSuccess) showShortToast(message)
         binding.editFirstName.enable()
         binding.editLastName.enable()
         binding.editEmail.enable()

@@ -1,16 +1,17 @@
 package com.example.omdb.ui.home
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
@@ -23,10 +24,7 @@ import com.example.omdb.models.Type
 import com.example.omdb.models.User
 import com.example.omdb.ui.HomeViewModel
 import com.example.omdb.util.Constants
-import com.example.omdb.util.extensions.getPartOfDay
-import com.example.omdb.util.extensions.glide
-import com.example.omdb.util.extensions.showLongSnackBar
-import com.example.omdb.util.extensions.showShortSnackBar
+import com.example.omdb.util.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -108,11 +106,9 @@ class HomeFragment : BaseFragment() {
         updateGreetingMessage()
 
         glide.load(user.profileUrl)
-            .transform(CircleCrop())
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .placeholder(
-                AppCompatResources.getDrawable(requireContext(), R.drawable.placeholder_poster)
-            )
+            .diskCacheStrategyAll()
+            .circleCrop()
+            .addProfilePlaceholder(requireContext())
             .apply(RequestOptions().override(200, 200))
             .into(binding.imgProfile)
     }

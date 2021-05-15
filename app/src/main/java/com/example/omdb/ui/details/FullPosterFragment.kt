@@ -7,15 +7,15 @@ import android.transition.TransitionSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.databinding.DataBindingUtil
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentFullPosterBinding
 import com.example.omdb.framework.BaseFragment
+import com.example.omdb.util.extensions.addPosterPlaceholder
+import com.example.omdb.util.extensions.diskCacheStrategyAll
 import com.example.omdb.util.extensions.getDisplayMetrics
 import com.example.omdb.util.extensions.glide
 import com.example.omdb.util.listners.OnDragToDismissListener
@@ -56,10 +56,8 @@ class FullPosterFragment : BaseFragment() {
         binding.imgPoster.transitionName = url
 
         glide.load(url)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .placeholder(
-                AppCompatResources.getDrawable(requireContext(), R.drawable.placeholder_poster)
-            )
+            .diskCacheStrategyAll()
+            .addPosterPlaceholder(requireContext())
             .into(binding.imgPoster)
 
         return binding.root
