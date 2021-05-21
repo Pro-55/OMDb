@@ -10,7 +10,6 @@ open class BaseFragment : Fragment() {
 
     // Global
     private val TAG = BaseFragment::class.java.simpleName
-
     private lateinit var backPressedCallback: OnBackPressedCallback
 
     override fun onCreate(savedInstanceState: Bundle?) {
