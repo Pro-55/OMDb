@@ -143,12 +143,12 @@ dependencies {
     implementation("androidx.room:room-ktx:2.3.0")
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0-RC-native-mt")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0-RC-native-mt")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0-native-mt")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0-native-mt")
 
     // Hilt DI
-    implementation("com.google.dagger:hilt-android:2.35.1")
-    kapt("com.google.dagger:hilt-compiler:2.35.1")
+    implementation("com.google.dagger:hilt-android:2.37")
+    kapt("com.google.dagger:hilt-compiler:2.37")
 
     // Hilt ViewModel
     implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
@@ -166,7 +166,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:19.0.0")
 
     // Facebook
-    implementation("com.facebook.android:facebook-android-sdk:9.1.1")
+    implementation("com.facebook.android:facebook-android-sdk:11.0.0")
 
     // ProgressButton
     implementation("com.github.razir.progressbutton:progressbutton:2.1.0")
