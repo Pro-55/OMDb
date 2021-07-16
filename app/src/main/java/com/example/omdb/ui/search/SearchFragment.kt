@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.view.doOnPreDraw
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
@@ -115,6 +116,7 @@ class SearchFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
 
         setListeners()
 
@@ -182,6 +184,7 @@ class SearchFragment : BaseFragment() {
                 }
             }
         })
+        (binding.recyclerSearch.parent as? ViewGroup)?.doOnPreDraw { startPostponedEnterTransition() } // Data is loaded & parent is drawn so we’re ready to start our transition
 
     }
 
