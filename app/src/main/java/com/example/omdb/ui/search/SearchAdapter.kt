@@ -39,9 +39,6 @@ class SearchAdapter(
 
         fun bind(data: ShortData) = with(binding) {
 
-            var downTime: Long = -1
-            var isPeeking = false
-
             glide.load(data.poster)
                 .diskCacheStrategyAll()
                 .addPosterPlaceholder(root.context)

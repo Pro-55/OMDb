@@ -5,19 +5,17 @@ import android.content.Context
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
-import android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-import android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 import android.view.ViewGroup
-import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.databinding.DataBindingUtil
 import com.example.omdb.R
 import com.example.omdb.databinding.ActivityHomeBinding
-import com.example.omdb.util.transition.Scale
 import com.example.omdb.util.ConnectionLiveData
 import com.example.omdb.util.NotificationChannels
 import com.example.omdb.util.extensions.goneWithScaleFade
 import com.example.omdb.util.extensions.visibleWithScaleFade
+import com.example.omdb.util.transition.Scale
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -41,18 +39,9 @@ class HomeActivity : AppCompatActivity() {
                 }
             if (!isNightMode) {
                 val decorView = window.decorView
-                when {
-                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> decorView.windowInsetsController
-                        ?.setSystemBarsAppearance(
-                            APPEARANCE_LIGHT_STATUS_BARS,
-                            APPEARANCE_LIGHT_STATUS_BARS
-                        )
-                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> decorView.systemUiVisibility =
-                        SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> decorView.systemUiVisibility =
-                        SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                    else -> decorView.systemUiVisibility = SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                }
+                val controller = WindowInsetsControllerCompat(window, decorView)
+                controller.isAppearanceLightStatusBars = true
+                controller.isAppearanceLightNavigationBars = true
             }
         }
         super.onCreate(savedInstanceState)
