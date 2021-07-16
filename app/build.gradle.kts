@@ -92,11 +92,11 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.10")
-    implementation("androidx.core:core-ktx:1.5.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.21")
+    implementation("androidx.core:core-ktx:1.6.0")
 
     // Material Design Components
-    implementation("com.google.android.material:material:1.3.0")
+    implementation("com.google.android.material:material:1.4.0")
 
     // Architecture Components Lifecycle Extensions
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
@@ -104,6 +104,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
     implementation("androidx.lifecycle:lifecycle-common-java8:2.3.1")
+
+    // Fragment
+    implementation("androidx.fragment:fragment-ktx:1.3.5")
 
     // Navigation Component
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
@@ -143,8 +146,8 @@ dependencies {
     implementation("androidx.room:room-ktx:2.3.0")
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0-native-mt")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0-native-mt")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1")
 
     // Hilt DI
     implementation("com.google.dagger:hilt-android:2.37")
@@ -166,15 +169,15 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:19.0.0")
 
     // Facebook
-    implementation("com.facebook.android:facebook-android-sdk:11.0.0")
+    implementation("com.facebook.android:facebook-android-sdk:11.1.0")
 
     // ProgressButton
     implementation("com.github.razir.progressbutton:progressbutton:2.1.0")
 
     // Test
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test:runner:1.3.0")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
+    androidTestImplementation("androidx.test:runner:1.4.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 
 }
 
