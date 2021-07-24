@@ -116,7 +116,7 @@ class HomeRepositoryImpl constructor(
                         val dataResult = db.dataDao.insert(data)
                         val ratingsResult = db.ratingDao.insertAll(ratings)
                         return@withTransaction dataResult * ratingsResult
-                            .reduce { t, e -> t * e }
+                            .fold(0L) { t, e -> t * e }
                     }
 
                     when {
@@ -150,7 +150,7 @@ class HomeRepositoryImpl constructor(
                 if (network != null) {
                     val episodes = network.episodes.parse(id, season)
                     val insertResult = db.episodeDao.insertAll(episodes)
-                        .reduce { t, e -> t * e }
+                        .fold(0L) { t, e -> t * e }
 
                     when {
                         insertResult > -1 -> emit(Resource.success(Season(episodes = episodes.parse())))

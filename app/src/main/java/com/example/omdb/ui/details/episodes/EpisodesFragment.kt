@@ -14,7 +14,6 @@ import com.example.omdb.databinding.FragmentEpisodesBinding
 import com.example.omdb.framework.BaseFragment
 import com.example.omdb.models.*
 import com.example.omdb.ui.HomeViewModel
-import com.example.omdb.ui.details.DetailsFragment
 import com.example.omdb.util.extensions.showShortSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class EpisodesFragment : BaseFragment() {
 
     //Global
-    private val TAG = DetailsFragment::class.java.simpleName
+    private val TAG = EpisodesFragment::class.java.simpleName
     private lateinit var binding: FragmentEpisodesBinding
     private val args by navArgs<EpisodesFragmentArgs>()
     private val viewModel by viewModels<HomeViewModel>()

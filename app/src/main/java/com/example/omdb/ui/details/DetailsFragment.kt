@@ -53,10 +53,12 @@ class DetailsFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         shortData = args.shortData
         contentId = args.contentId
-        sharedElementEnterTransition = TransitionSet().apply {
-            addTransition(ChangeTransform())
-            addTransition(ChangeBounds())
-            interpolator = LinearOutSlowInInterpolator()
+        if (args.hasSharedElements) {
+            sharedElementEnterTransition = TransitionSet().apply {
+                addTransition(ChangeTransform())
+                addTransition(ChangeBounds())
+                interpolator = LinearOutSlowInInterpolator()
+            }
         }
     }
 
