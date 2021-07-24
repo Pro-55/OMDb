@@ -129,9 +129,10 @@ class SearchFragment : BaseFragment() {
     }
 
     private fun setListeners() {
-        binding.editSearch.doOnTextChanged { _, _, _, count ->
+        binding.editSearch.doOnTextChanged { _, _, _, _ ->
             binding.imgBtnCancel.apply {
                 val parent = this.parent as ViewGroup
+                val count = binding.editSearch.text?.toString()?.length ?: 0
                 if (count > 0) visibleWithFade(parent, 150) else {
                     goneWithFade(parent, 150)
                     bindSearchResult()
@@ -147,7 +148,6 @@ class SearchFragment : BaseFragment() {
         adapter = SearchAdapter(glide)
         adapter?.listener = object : SearchAdapter.Listener {
             override fun onClick(data: ShortData, sharedCard: View, sharedImage: View) {
-                hideKeyboard()
                 clearFocus()
                 val action = SearchFragmentDirections.navigateSearchToDetails()
                     .apply { shortData = data }
@@ -174,7 +174,7 @@ class SearchFragment : BaseFragment() {
         binding.recyclerSearch.adapter = adapter
         binding.recyclerSearch.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                hideKeyboard()
+                clearFocus()
                 val size = adapter?.itemCount ?: 0
                 if (!isLoading
                     && size < totalCount
@@ -184,8 +184,8 @@ class SearchFragment : BaseFragment() {
                 }
             }
         })
-        (binding.recyclerSearch.parent as? ViewGroup)?.doOnPreDraw { startPostponedEnterTransition() } // Data is loaded & parent is drawn so we’re ready to start our transition
 
+        (binding.recyclerSearch.parent as? ViewGroup)?.doOnPreDraw { startPostponedEnterTransition() } // Data is loaded & parent is drawn so we’re ready to start our transition
     }
 
     private fun setupSearch() {
@@ -209,7 +209,6 @@ class SearchFragment : BaseFragment() {
 
         binding.editSearch.setOnEditorActionListener { _, _, _ ->
             clearFocus()
-            hideKeyboard()
             val searchText = binding.editSearch.text?.toString()?.trim()
             if (!searchText.isNullOrEmpty()) fetchData(searchText)
             true
@@ -287,6 +286,7 @@ class SearchFragment : BaseFragment() {
 
     private fun clearFocus() {
         requireActivity().currentFocus?.clearFocus()
+        hideKeyboard()
     }
 
     private fun hideKeyboard() {
