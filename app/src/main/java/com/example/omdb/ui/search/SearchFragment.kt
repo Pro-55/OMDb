@@ -149,8 +149,10 @@ class SearchFragment : BaseFragment() {
         adapter?.listener = object : SearchAdapter.Listener {
             override fun onClick(data: ShortData, sharedCard: View, sharedImage: View) {
                 clearFocus()
-                val action = SearchFragmentDirections.navigateSearchToDetails()
-                    .apply { shortData = data }
+                val action = SearchFragmentDirections.navigateSearchToDetails().apply {
+                    shortData = data
+                    hasSharedElements = true
+                }
                 val extras = FragmentNavigatorExtras(
                     sharedCard to sharedCard.transitionName,
                     sharedImage to sharedImage.transitionName
