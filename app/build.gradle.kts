@@ -106,7 +106,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-common-java8:2.3.1")
 
     // Fragment
-    implementation("androidx.fragment:fragment-ktx:1.3.5")
+    implementation("androidx.fragment:fragment-ktx:1.3.6")
 
     // Navigation Component
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
@@ -150,8 +150,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1")
 
     // Hilt DI
-    implementation("com.google.dagger:hilt-android:2.37")
-    kapt("com.google.dagger:hilt-compiler:2.37")
+    implementation("com.google.dagger:hilt-android:2.38")
+    kapt("com.google.dagger:hilt-compiler:2.38")
 
     // Hilt ViewModel
     implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
@@ -166,10 +166,10 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging-ktx")
     // Authentication
     implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("com.google.android.gms:play-services-auth:19.0.0")
+    implementation("com.google.android.gms:play-services-auth:19.2.0")
 
     // Facebook
-    implementation("com.facebook.android:facebook-android-sdk:11.1.0")
+    implementation("com.facebook.android:facebook-android-sdk:11.1.1")
 
     // ProgressButton
     implementation("com.github.razir.progressbutton:progressbutton:2.1.0")
