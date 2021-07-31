@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -80,9 +81,13 @@ class FirebaseMessagingServiceClass : FirebaseMessagingService() {
 
             data.keys.forEach { key -> notificationIntent.putExtra(key, data[key]) }
 
-            val pendingIntent = PendingIntent.getActivity(
-                this, requestId, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT
-            )
+            val pendingIntentFlags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            } else {
+                PendingIntent.FLAG_UPDATE_CURRENT
+            }
+            val pendingIntent =
+                PendingIntent.getActivity(this, requestId, notificationIntent, pendingIntentFlags)
 
             buildNotification(requestId, data, pendingIntent)
         }
