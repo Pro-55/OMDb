@@ -92,7 +92,7 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.21")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.30")
     implementation("androidx.core:core-ktx:1.6.0")
 
     // Material Design Components
@@ -113,7 +113,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
 
     // Constraint Layout
-    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.0")
 
     // RecyclerView
     implementation("androidx.recyclerview:recyclerview:1.2.1")
@@ -169,7 +169,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:19.2.0")
 
     // Facebook
-    implementation("com.facebook.android:facebook-android-sdk:11.1.1")
+    implementation("com.facebook.android:facebook-android-sdk:11.2.0")
 
     // ProgressButton
     implementation("com.github.razir.progressbutton:progressbutton:2.1.0")
