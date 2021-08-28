@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ShortData(
+data class ShortContent(
     val _id: String,
     val title: String,
     val year: String,
@@ -13,7 +13,7 @@ data class ShortData(
 
     override fun equals(other: Any?): Boolean {
         if (javaClass != other?.javaClass) return false
-        other as ShortData?
+        other as ShortContent?
 
         if (_id != other._id) return false
         if (title != other.title) return false

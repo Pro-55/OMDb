@@ -2,16 +2,18 @@ package com.example.omdb.models.local
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import com.example.omdb.models.FullData
+import com.example.omdb.models.Content
 
-data class FullDataRelation(
+data class ContentRelation(
 
     @Embedded
-    val data: EntityFullData?,
+    val data: EntityContent?,
 
     @Relation(parentColumn = "_id", entityColumn = "content_id", entity = EntityRating::class)
     val ratings: List<EntityRating>?
 
 )
 
-fun FullDataRelation.parse(): FullData? = data?.parse(ratings)
+fun List<ContentRelation?>.parse(): List<Content> = mapNotNull { it?.parse() }
+
+fun ContentRelation.parse(): Content? = data?.parse(ratings)

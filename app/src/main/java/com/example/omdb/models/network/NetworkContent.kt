@@ -1,33 +1,35 @@
 package com.example.omdb.models.network
 
 import com.example.omdb.models.Type
-import com.example.omdb.models.local.EntityFullData
+import com.example.omdb.models.local.EntityContent
 import com.google.gson.annotations.SerializedName
 
-data class NetworkFullData(
+data class NetworkContent(
     @SerializedName("imdbID") val _id: String,
     @SerializedName("Type") val type: String,
-    @SerializedName("Poster") val poster: String,
+    @SerializedName("Poster") val poster: String?,
     @SerializedName("Title") val title: String,
-    @SerializedName("Year") val year: String,
-    @SerializedName("Rated") val rated: String,
-    @SerializedName("Runtime") val runtime: String,
-    @SerializedName("Genre") val genre: String,
-    @SerializedName("Director") val director: String,
-    @SerializedName("Writer") val writer: String,
-    @SerializedName("Actors") val actors: String,
-    @SerializedName("Plot") val plot: String,
-    @SerializedName("Language") val language: String,
-    @SerializedName("Ratings") val ratings: List<NetworkRating>,
+    @SerializedName("Year") val year: String?,
+    @SerializedName("Rated") val rated: String?,
+    @SerializedName("Runtime") val runtime: String?,
+    @SerializedName("Genre") val genre: String?,
+    @SerializedName("Director") val director: String?,
+    @SerializedName("Writer") val writer: String?,
+    @SerializedName("Actors") val actors: String?,
+    @SerializedName("Plot") val plot: String?,
+    @SerializedName("Language") val language: String?,
+    @SerializedName("Ratings") val ratings: List<NetworkRating?>?,
     @SerializedName("imdbRating") val imdbRating: String?,
     @SerializedName("Production") val production: String?,
     @SerializedName("totalSeasons") val seasons: String?
 )
 
-fun NetworkFullData.parse(isFavorite: Boolean): EntityFullData = EntityFullData(
+fun List<NetworkContent?>.parse(): List<EntityContent> = mapNotNull { it?.parse(false) }
+
+fun NetworkContent.parse(isFavorite: Boolean): EntityContent = EntityContent(
     _id = _id,
     type = when (type) {
-        "movie" -> Type.MOVIES
+        "movie" -> Type.MOVIE
         "series" -> Type.SERIES
         "episode" -> Type.EPISODES
         else -> null

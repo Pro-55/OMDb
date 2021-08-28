@@ -1,9 +1,9 @@
 package com.example.omdb.models
 
-data class FullData(
+data class Content(
     val _id: String,
-    val type: Type?,
-    val poster: String,
+    val type: Type,
+    val poster: String?,
     val title: String,
     val year: String,
     val rated: String,
@@ -21,3 +21,12 @@ data class FullData(
     fun isNotSeries(): Boolean = type != Type.SERIES
 
 }
+
+fun List<Content?>.toShortData(): List<ShortContent> = mapNotNull { it?.toShortData() }
+
+fun Content.toShortData(): ShortContent = ShortContent(
+    _id = _id,
+    title = title,
+    year = year,
+    poster = poster
+)
