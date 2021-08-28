@@ -24,10 +24,7 @@ import com.bumptech.glide.request.target.Target
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentDetailsBinding
 import com.example.omdb.framework.BaseFragment
-import com.example.omdb.models.FullData
-import com.example.omdb.models.Resource
-import com.example.omdb.models.ShortData
-import com.example.omdb.models.Status
+import com.example.omdb.models.*
 import com.example.omdb.ui.HomeViewModel
 import com.example.omdb.util.Constants
 import com.example.omdb.util.extensions.*
@@ -43,15 +40,15 @@ class DetailsFragment : BaseFragment() {
     private val viewModel by viewModels<HomeViewModel>()
     private val glide by lazy { glide() }
     private var adapter: SeasonsAdapter? = null
-    private var shortData: ShortData? = null
-    private var fullData: FullData? = null
+    private var shortContent: ShortContent? = null
+    private var content: Content? = null
     private var contentId: String? = null
     private var height = 4
     private var width = 3
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        shortData = args.shortData
+        shortContent = args.shortContent
         contentId = args.contentId
         if (args.hasSharedElements) {
             sharedElementEnterTransition = TransitionSet().apply {
@@ -73,7 +70,7 @@ class DetailsFragment : BaseFragment() {
 
         setupRecyclerview()
 
-        if (shortData != null) setShortData(shortData!!)
+        if (shortContent != null) setShortData(shortContent!!)
 
         return binding.root
     }
@@ -81,7 +78,7 @@ class DetailsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (fullData != null) bindDetails(fullData!!)
+        if (content != null) bindDetails(content!!)
         else if (!contentId.isNullOrEmpty()) viewModel.getDetails(contentId!!)
             .observe(viewLifecycleOwner, { bindDetailsResource(it) })
         else {
@@ -108,7 +105,7 @@ class DetailsFragment : BaseFragment() {
         binding.recyclerSeasons.adapter = adapter
     }
 
-    private fun setShortData(data: ShortData) {
+    private fun setShortData(data: ShortContent) {
         contentId = data._id
         binding.cardPoster.transitionName = data._id
         binding.imgPoster.transitionName = data.poster
@@ -144,7 +141,7 @@ class DetailsFragment : BaseFragment() {
         binding.txtTitle.text = data.title
     }
 
-    private fun bindDetailsResource(resource: Resource<FullData>) {
+    private fun bindDetailsResource(resource: Resource<Content>) {
         when (resource.status) {
             Status.LOADING -> Unit
             Status.ERROR -> showShortSnackBar(resource.message)
@@ -153,11 +150,9 @@ class DetailsFragment : BaseFragment() {
         }
     }
 
-    private fun bindDetails(data: FullData) {
-
-        fullData = data
-
-        if (shortData?.poster == null) {
+    private fun bindDetails(data: Content) {
+        content = data
+        if (shortContent?.poster == null) {
             binding.imgPoster.transitionName = data.poster
             glide.asBitmap().load(data.poster)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

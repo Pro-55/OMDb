@@ -68,7 +68,7 @@ class HomeFragment : BaseFragment() {
 
         binding.cardMovies.setOnClickListener {
             openSearch(
-                Type.MOVIES,
+                Type.MOVIE,
                 binding.layoutMovies,
                 binding.imgIconMovies,
                 binding.txtTitleMovies

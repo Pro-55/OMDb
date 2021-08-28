@@ -10,14 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.example.omdb.R
 import com.example.omdb.databinding.LayoutSearchItemBinding
-import com.example.omdb.models.ShortData
+import com.example.omdb.models.ShortContent
 import com.example.omdb.util.extensions.addPosterPlaceholder
 import com.example.omdb.util.extensions.diskCacheStrategyAll
 import com.example.omdb.util.listners.OnHoldListener
 
 class SearchAdapter(
     private val glide: RequestManager
-) : ListAdapter<ShortData, SearchAdapter.ViewHolder>(ShortDataDC()) {
+) : ListAdapter<ShortContent, SearchAdapter.ViewHolder>(ShortDataDC()) {
 
     // Global
     var listener: Listener? = null
@@ -31,21 +31,21 @@ class SearchAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
         holder.bind(getItem(position))
 
-    fun swapData(data: List<ShortData>) = submitList(data.toMutableList())
+    fun swapData(data: List<ShortContent>) = submitList(data.toMutableList())
 
     inner class ViewHolder(
         private val binding: LayoutSearchItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(data: ShortData) = with(binding) {
+        fun bind(content: ShortContent) = with(binding) {
 
-            glide.load(data.poster)
+            glide.load(content.poster)
                 .diskCacheStrategyAll()
                 .addPosterPlaceholder(root.context)
                 .into(imgPoster)
 
-            root.transitionName = data._id
-            imgPoster.transitionName = data.poster
+            root.transitionName = content._id
+            imgPoster.transitionName = content.poster
 
             root.setOnTouchListener(OnHoldListener(object : OnHoldListener.Listener {
                 override fun onClick() {
@@ -53,7 +53,7 @@ class SearchAdapter(
                 }
 
                 override fun onHold() {
-                    listener?.onHold(data)
+                    listener?.onHold(content)
                 }
 
                 override fun onRelease() {
@@ -61,27 +61,27 @@ class SearchAdapter(
                 }
             }))
 
-            root.setOnClickListener { listener?.onClick(data, root, imgPoster) }
+            root.setOnClickListener { listener?.onClick(content, root, imgPoster) }
 
         }
     }
 
 
-    private class ShortDataDC : DiffUtil.ItemCallback<ShortData>() {
+    private class ShortDataDC : DiffUtil.ItemCallback<ShortContent>() {
         override fun areItemsTheSame(
-            oldItem: ShortData,
-            newItem: ShortData
+            oldItem: ShortContent,
+            newItem: ShortContent
         ): Boolean = oldItem._id == newItem._id
 
         override fun areContentsTheSame(
-            oldItem: ShortData,
-            newItem: ShortData
+            oldItem: ShortContent,
+            newItem: ShortContent
         ): Boolean = oldItem == newItem
     }
 
     interface Listener {
-        fun onClick(data: ShortData, sharedCard: View, sharedImage: View)
-        fun onHold(data: ShortData)
+        fun onClick(content: ShortContent, sharedCard: View, sharedImage: View)
+        fun onHold(content: ShortContent)
         fun onRelease()
     }
 
