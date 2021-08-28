@@ -10,11 +10,9 @@ interface HomeRepository {
 
     fun getCurrentUser(): Flow<Resource<User>>
 
-    fun searchMovies(searchString: String, page: Int): Flow<Resource<SearchResult>>
+    fun searchContent(searchString: String, page: Int, type: Type): Flow<Resource<SearchResult>>
 
-    fun searchSeries(searchString: String, page: Int): Flow<Resource<SearchResult>>
-
-    fun getDetails(id: String, plot: String): Flow<Resource<FullData>>
+    fun getDetails(id: String, plot: String): Flow<Resource<Content>>
 
     fun getEpisodes(id: String, season: Int): Flow<Resource<Season>>
 }

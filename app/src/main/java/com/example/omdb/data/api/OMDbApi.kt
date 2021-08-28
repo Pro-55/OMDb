@@ -1,6 +1,6 @@
 package com.example.omdb.data.api
 
-import com.example.omdb.models.network.NetworkFullData
+import com.example.omdb.models.network.NetworkContent
 import com.example.omdb.models.network.NetworkSearchResult
 import com.example.omdb.models.network.NetworkSeason
 import retrofit2.Response
@@ -22,7 +22,7 @@ interface OMDbApi {
         @Query("apikey") apiKey: String,
         @Query("i") id: String,
         @Query("plot") plot: String
-    ): Response<NetworkFullData>
+    ): Response<NetworkContent>
 
     @GET("/")
     suspend fun getEpisodes(

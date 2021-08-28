@@ -66,9 +66,9 @@
 		android:label="fragment_details"
 		tools:layout="@layout/fragment_details">
 		<argument
-			android:name="shortData"
+			android:name="shortContent"
 			android:defaultValue="@null"
-			app:argType="com.example.omdb.models.ShortData"
+			app:argType="com.example.omdb.models.ShortContent"
 			app:nullable="true" />
 		<argument
 			android:name="contentId"
@@ -114,7 +114,8 @@
 		tools:layout="@layout/fragment_full_poster">
 		<argument
 			android:name="posterUrl"
-			app:argType="string" />
+			app:argType="string"
+			app:nullable="true"  />
 		<argument
 			android:name="height"
 			app:argType="integer" />

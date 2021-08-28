@@ -26,4 +26,5 @@ object Constants {
     const val CRESCENT_MOON_EMOJI = "\uD83C\uDF19"
     const val NETWORK_ERROR_MESSAGE = "Oops, your connection seems off... $GHOST_EMOJI"
     const val REQUEST_FAILED_MESSAGE = "Something went wrong... $THINKING_EMOJI"
+    const val NOT_AVAILABLE = "N/A"
 }
