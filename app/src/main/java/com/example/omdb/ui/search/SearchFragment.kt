@@ -71,7 +71,7 @@ class SearchFragment : BaseFragment() {
         val sharedIcon: Int
         val sharedTitle: Int
         when (category) {
-            Type.MOVIES -> {
+            Type.MOVIE -> {
                 hint = R.string.label_movies
                 icon = R.drawable.ic_movies
                 sharedContainer = R.string.shared_container_movies
@@ -147,10 +147,10 @@ class SearchFragment : BaseFragment() {
         val layoutManager = CustomGridLayoutManager(requireContext(), 2, VERTICAL, false)
         adapter = SearchAdapter(glide)
         adapter?.listener = object : SearchAdapter.Listener {
-            override fun onClick(data: ShortData, sharedCard: View, sharedImage: View) {
+            override fun onClick(content: ShortContent, sharedCard: View, sharedImage: View) {
                 clearFocus()
                 val action = SearchFragmentDirections.navigateSearchToDetails().apply {
-                    shortData = data
+                    shortContent = content
                     hasSharedElements = true
                 }
                 val extras = FragmentNavigatorExtras(
@@ -160,10 +160,10 @@ class SearchFragment : BaseFragment() {
                 findNavController().navigate(action, extras)
             }
 
-            override fun onHold(data: ShortData) {
+            override fun onHold(content: ShortContent) {
                 layoutManager.setScrollEnabled(false)
                 hideKeyboard()
-                showPeekView(data)
+                showPeekView(content)
             }
 
             override fun onRelease() {
@@ -219,7 +219,7 @@ class SearchFragment : BaseFragment() {
 
     private fun setupObserver() {
         val source = when (category) {
-            Type.MOVIES -> viewModel.movieSearch
+            Type.MOVIE -> viewModel.movieSearch
             Type.SERIES -> viewModel.seriesSearch
             else -> null
         }
@@ -229,7 +229,7 @@ class SearchFragment : BaseFragment() {
     private fun fetchData(searText: String, size: Int = 0) {
         currentText = searText
         when (category) {
-            Type.MOVIES -> viewModel.searchMovies(searText, size)
+            Type.MOVIE -> viewModel.searchMovies(searText, size)
             Type.SERIES -> viewModel.searchSeries(searText, size)
         }
     }
@@ -265,16 +265,15 @@ class SearchFragment : BaseFragment() {
         binding.recyclerSearch.visible()
     }
 
-    private fun showPeekView(data: ShortData) {
+    private fun showPeekView(content: ShortContent) {
         binding.layoutBlur.apply { visibleWithFade(parent as ViewGroup) }
         binding.cardPeekPoster.apply { visibleWithScaleFade(parent as ViewGroup) }
 
-
         val titleDate =
-            "${data.title} ${resources.getString(R.string.divider_bullet)} (${data.year})"
+            "${content.title} ${resources.getString(R.string.divider_bullet)} (${content.year})"
         binding.txtPeekTitleDate.text = titleDate
 
-        glide.load(data.poster)
+        glide.load(content.poster)
             .diskCacheStrategyAll()
             .addPosterPlaceholder(requireContext())
             .into(binding.imgPeekPoster)

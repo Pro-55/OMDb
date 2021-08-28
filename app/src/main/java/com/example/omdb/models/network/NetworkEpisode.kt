@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName
 
 data class NetworkEpisode(
     @SerializedName("imdbID") val _id: String,
-    @SerializedName("Title") val title: String,
-    @SerializedName("Episode") val episode: String,
-    @SerializedName("Released") val released: String
+    @SerializedName("Title") val title: String?,
+    @SerializedName("Episode") val episode: String?,
+    @SerializedName("Released") val released: String?
 )
 
 fun NetworkEpisode.parse(

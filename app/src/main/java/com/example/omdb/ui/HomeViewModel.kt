@@ -33,7 +33,7 @@ class HomeViewModel @Inject constructor(
         if (size <= 0) movieResult = SearchResult()
         val page = if (size <= 0) 1 else size / PAGE_SIZE + 1
 
-        repository.searchMovies(searchText, page).onEach { resource ->
+        repository.searchContent(searchText, page, Type.MOVIE).onEach { resource ->
             var newResource = resource
             if (resource.status == Status.SUCCESS) {
                 movieResult = movieResult.update(resource.data)
@@ -48,7 +48,7 @@ class HomeViewModel @Inject constructor(
         if (size <= 0) seriesResult = SearchResult()
         val page = if (size <= 0) 1 else size / PAGE_SIZE + 1
 
-        repository.searchSeries(searchText, page).onEach { resource ->
+        repository.searchContent(searchText, page, Type.SERIES).onEach { resource ->
             var newResource = resource
             if (resource.status == Status.SUCCESS) {
                 seriesResult = seriesResult.update(resource.data)
@@ -71,7 +71,7 @@ class HomeViewModel @Inject constructor(
         seriesResult = SearchResult()
 
         when (category) {
-            Type.MOVIES -> _movieSearch.postValue(blankResult)
+            Type.MOVIE -> _movieSearch.postValue(blankResult)
             Type.SERIES -> _seriesSearch.postValue(blankResult)
         }
     }

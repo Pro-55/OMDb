@@ -5,12 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.example.omdb.data.local.dao.ContentDao
 import com.example.omdb.data.local.dao.EpisodeDao
-import com.example.omdb.data.local.dao.FullDataDao
 import com.example.omdb.data.local.dao.RatingDao
 import com.example.omdb.data.local.dao.UserDao
+import com.example.omdb.models.local.EntityContent
 import com.example.omdb.models.local.EntityEpisode
-import com.example.omdb.models.local.EntityFullData
 import com.example.omdb.models.local.EntityRating
 import com.example.omdb.models.local.EntityUser
 import com.example.omdb.util.RoomTypeConverter
@@ -18,7 +18,7 @@ import com.example.omdb.util.RoomTypeConverter
 @Database(
     entities = [
         EntityEpisode::class,
-        EntityFullData::class,
+        EntityContent::class,
         EntityRating::class,
         EntityUser::class
     ],
@@ -28,7 +28,7 @@ import com.example.omdb.util.RoomTypeConverter
 abstract class AppDatabase : RoomDatabase() {
 
     abstract val episodeDao: EpisodeDao
-    abstract val dataDao: FullDataDao
+    abstract val contentDao: ContentDao
     abstract val ratingDao: RatingDao
     abstract val userDao: UserDao
 
@@ -62,15 +62,14 @@ abstract class AppDatabase : RoomDatabase() {
                 var instance = INSTANCE
                 // If instance is `null` make a new database instance.
                 if (instance == null) {
-                    instance =
-                        Room.databaseBuilder(
-                            context.applicationContext,
-                            AppDatabase::class.java,
-                            "omdb.db"
-                        )
-                            // Wipes and rebuilds instead of migrating if no Migration object.
-                            .fallbackToDestructiveMigration()
-                            .build()
+                    instance = Room.databaseBuilder(
+                        context.applicationContext,
+                        AppDatabase::class.java,
+                        "omdb.db"
+                    )
+                        // Wipes and rebuilds instead of migrating if no Migration object.
+                        .fallbackToDestructiveMigration()
+                        .build()
                     // Assign INSTANCE to the newly created database.
                     INSTANCE = instance
                 }

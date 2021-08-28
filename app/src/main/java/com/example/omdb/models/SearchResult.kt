@@ -1,7 +1,7 @@
 package com.example.omdb.models
 
 data class SearchResult(
-    val search: List<ShortData> = listOf(),
+    val search: List<ShortContent> = listOf(),
     val totalResults: String = "0"
 )
 
