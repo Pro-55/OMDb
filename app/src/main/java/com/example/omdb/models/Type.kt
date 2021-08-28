@@ -1,7 +1,11 @@
 package com.example.omdb.models
 
 enum class Type {
-    MOVIES,
+    MOVIE,
     SERIES,
-    EPISODES
+    EPISODES;
+
+    override fun toString(): String {
+        return super.toString().lowercase()
+    }
 }
