@@ -24,8 +24,6 @@ data class NetworkContent(
     @SerializedName("totalSeasons") val seasons: String?
 )
 
-fun List<NetworkContent?>.parse(): List<EntityContent> = mapNotNull { it?.parse(false) }
-
 fun NetworkContent.parse(isFavorite: Boolean): EntityContent = EntityContent(
     _id = _id,
     type = when (type) {

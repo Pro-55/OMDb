@@ -5,19 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.omdb.data.local.dao.ContentDao
-import com.example.omdb.data.local.dao.EpisodeDao
-import com.example.omdb.data.local.dao.RatingDao
-import com.example.omdb.data.local.dao.UserDao
-import com.example.omdb.models.local.EntityContent
-import com.example.omdb.models.local.EntityEpisode
-import com.example.omdb.models.local.EntityRating
-import com.example.omdb.models.local.EntityUser
+import com.example.omdb.data.local.dao.*
+import com.example.omdb.models.local.*
 import com.example.omdb.util.RoomTypeConverter
 
 @Database(
     entities = [
         EntityEpisode::class,
+        EntityShortContent::class,
         EntityContent::class,
         EntityRating::class,
         EntityUser::class
@@ -28,6 +23,7 @@ import com.example.omdb.util.RoomTypeConverter
 abstract class AppDatabase : RoomDatabase() {
 
     abstract val episodeDao: EpisodeDao
+    abstract val shortContentDao: ShortContentDao
     abstract val contentDao: ContentDao
     abstract val ratingDao: RatingDao
     abstract val userDao: UserDao
