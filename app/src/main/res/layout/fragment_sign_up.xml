@@ -1,188 +1,188 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-	<androidx.constraintlayout.widget.ConstraintLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:background="@color/color_background"
-		android:clickable="true"
-		android:focusable="true"
-		android:focusableInTouchMode="true">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
-		<ImageView
-			android:id="@+id/img_profile"
-			android:layout_width="0dp"
-			android:layout_height="@dimen/dimen_120dp"
-			android:layout_margin="@dimen/dimen_80dp"
-			android:contentDescription="@string/cd_profile"
-			android:scaleType="centerCrop"
-			android:src="@drawable/ic_profile_placeholder"
-			app:layout_constraintDimensionRatio="W,1:1"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/img_profile"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_120dp"
+            android:layout_margin="@dimen/dimen_80dp"
+            android:contentDescription="@string/cd_profile"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_profile_placeholder"
+            app:layout_constraintDimensionRatio="W,1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-		<androidx.constraintlayout.widget.Barrier
-			android:id="@+id/barrier_profile"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			app:barrierDirection="bottom"
-			app:constraint_referenced_ids="img_profile" />
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="img_profile" />
 
-		<com.google.android.material.textfield.TextInputLayout
-			android:id="@+id/til_first_name"
-			style="@style/TextInputLayoutStyle"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="@dimen/activity_default_margin"
-			android:layout_marginTop="@dimen/activity_default_margin"
-			android:layout_marginEnd="@dimen/dimen_4dp"
-			app:layout_constraintEnd_toStartOf="@id/til_last_name"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/barrier_profile">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_first_name"
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_default_margin"
+            android:layout_marginTop="@dimen/activity_default_margin"
+            android:layout_marginEnd="@dimen/dimen_4dp"
+            app:layout_constraintEnd_toStartOf="@id/til_last_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/barrier_profile">
 
-			<com.google.android.material.textfield.TextInputEditText
-				android:id="@+id/edit_first_name"
-				style="@style/NameTextInputStyle"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:hint="@string/hint_first_name" />
-		</com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_first_name"
+                style="@style/NameTextInputStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_first_name" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-		<com.google.android.material.textfield.TextInputLayout
-			android:id="@+id/til_last_name"
-			style="@style/TextInputLayoutStyle"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="@dimen/dimen_4dp"
-			android:layout_marginTop="@dimen/activity_default_margin"
-			android:layout_marginEnd="@dimen/activity_default_margin"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toEndOf="@id/til_first_name"
-			app:layout_constraintTop_toBottomOf="@id/barrier_profile">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_last_name"
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_4dp"
+            android:layout_marginTop="@dimen/activity_default_margin"
+            android:layout_marginEnd="@dimen/activity_default_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/til_first_name"
+            app:layout_constraintTop_toBottomOf="@id/barrier_profile">
 
-			<com.google.android.material.textfield.TextInputEditText
-				android:id="@+id/edit_last_name"
-				style="@style/NameTextInputStyle"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:hint="@string/hint_last_name" />
-		</com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_last_name"
+                style="@style/NameTextInputStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_last_name" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-		<androidx.constraintlayout.widget.Barrier
-			android:id="@+id/barrier_edit"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			app:barrierDirection="bottom"
-			app:constraint_referenced_ids="til_first_name,til_last_name" />
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="til_first_name,til_last_name" />
 
-		<com.google.android.material.textfield.TextInputLayout
-			android:id="@+id/til_email"
-			style="@style/TextInputLayoutStyle"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_margin="@dimen/activity_default_margin"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/barrier_edit">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_email"
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_default_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/barrier_edit">
 
-			<com.google.android.material.textfield.TextInputEditText
-				android:id="@+id/edit_email"
-				style="@style/EmailTextInputStyle"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:hint="@string/hint_email" />
-		</com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_email"
+                style="@style/EmailTextInputStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_email" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-		<View
-			android:id="@+id/divider_start"
-			android:layout_width="0dp"
-			android:layout_height="1dp"
-			android:layout_marginHorizontal="@dimen/activity_default_margin"
-			android:background="@color/color_secondary_text"
-			app:layout_constraintBottom_toBottomOf="@id/txt_or"
-			app:layout_constraintEnd_toStartOf="@id/txt_or"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="@id/txt_or" />
+        <View
+            android:id="@+id/divider_start"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="@dimen/activity_default_margin"
+            android:background="@color/color_secondary_text"
+            app:layout_constraintBottom_toBottomOf="@id/txt_or"
+            app:layout_constraintEnd_toStartOf="@id/txt_or"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txt_or" />
 
-		<TextView
-			android:id="@+id/txt_or"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginVertical="@dimen/activity_default_margin"
-			android:text="@string/label_or"
-			android:textColor="@color/color_secondary_text"
-			android:textSize="@dimen/dimen_20sp"
-			app:layout_constraintEnd_toStartOf="@id/divider_end"
-			app:layout_constraintStart_toEndOf="@id/divider_start"
-			app:layout_constraintTop_toBottomOf="@id/til_email" />
+        <TextView
+            android:id="@+id/txt_or"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/activity_default_margin"
+            android:text="@string/label_or"
+            android:textColor="@color/color_secondary_text"
+            android:textSize="@dimen/dimen_20sp"
+            app:layout_constraintEnd_toStartOf="@id/divider_end"
+            app:layout_constraintStart_toEndOf="@id/divider_start"
+            app:layout_constraintTop_toBottomOf="@id/til_email" />
 
-		<View
-			android:id="@+id/divider_end"
-			android:layout_width="0dp"
-			android:layout_height="1dp"
-			android:layout_marginHorizontal="@dimen/activity_default_margin"
-			android:background="@color/color_secondary_text"
-			app:layout_constraintBottom_toBottomOf="@id/txt_or"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toEndOf="@id/txt_or"
-			app:layout_constraintTop_toTopOf="@id/txt_or" />
+        <View
+            android:id="@+id/divider_end"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="@dimen/activity_default_margin"
+            android:background="@color/color_secondary_text"
+            app:layout_constraintBottom_toBottomOf="@id/txt_or"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/txt_or"
+            app:layout_constraintTop_toTopOf="@id/txt_or" />
 
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/btn_google"
-			style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_margin="@dimen/activity_default_margin"
-			android:padding="@dimen/activity_default_margin"
-			android:text="@string/btn_sign_up_with_google"
-			android:textAllCaps="false"
-			android:textColor="@color/color_primary_text"
-			android:textSize="@dimen/dimen_16sp"
-			app:cornerRadius="@dimen/dimen_4dp"
-			app:icon="@drawable/ic_google"
-			app:iconGravity="textStart"
-			app:iconTint="@null"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/txt_or"
-			app:rippleColor="@color/color_secondary_text" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_google"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_default_margin"
+            android:padding="@dimen/activity_default_margin"
+            android:text="@string/btn_sign_up_with_google"
+            android:textAllCaps="false"
+            android:textColor="@color/color_primary_text"
+            android:textSize="@dimen/dimen_16sp"
+            app:cornerRadius="@dimen/dimen_4dp"
+            app:icon="@drawable/ic_google"
+            app:iconGravity="textStart"
+            app:iconTint="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_or"
+            app:rippleColor="@color/color_secondary_text" />
 
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/btn_facebook"
-			style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_margin="@dimen/activity_default_margin"
-			android:padding="@dimen/activity_default_margin"
-			android:text="@string/btn_sign_up_facebook"
-			android:textAllCaps="false"
-			android:textColor="@color/color_primary_text"
-			android:textSize="@dimen/dimen_16sp"
-			app:cornerRadius="@dimen/dimen_4dp"
-			app:icon="@drawable/ic_facebook"
-			app:iconGravity="textStart"
-			app:iconPadding="@dimen/dimen_8dp"
-			app:iconTint="@null"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/btn_google"
-			app:rippleColor="@color/color_secondary_text" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_facebook"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_default_margin"
+            android:padding="@dimen/activity_default_margin"
+            android:text="@string/btn_sign_up_facebook"
+            android:textAllCaps="false"
+            android:textColor="@color/color_primary_text"
+            android:textSize="@dimen/dimen_16sp"
+            app:cornerRadius="@dimen/dimen_4dp"
+            app:icon="@drawable/ic_facebook"
+            app:iconGravity="textStart"
+            app:iconPadding="@dimen/dimen_8dp"
+            app:iconTint="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_google"
+            app:rippleColor="@color/color_secondary_text" />
 
-		<Button
-			android:id="@+id/btn_save"
-			style="@style/Widget.MaterialComponents.Button"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_margin="@dimen/activity_default_margin"
-			android:padding="@dimen/dimen_8dp"
-			android:text="@string/btn_save"
-			android:textAllCaps="false"
-			android:textColor="@color/color_primary_text"
-			android:textSize="@dimen/dimen_20sp"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/btn_facebook" />
+        <Button
+            android:id="@+id/btn_save"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_default_margin"
+            android:padding="@dimen/dimen_8dp"
+            android:text="@string/btn_save"
+            android:textAllCaps="false"
+            android:textColor="@color/color_primary_text"
+            android:textSize="@dimen/dimen_20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_facebook" />
 
-	</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="colorPrimary">#212121</color>
-	<color name="colorPrimaryLight">#484848</color>
-	<color name="colorPrimaryDark">#000000</color>
-	<color name="colorAccent">#F4511E</color>
+    <color name="colorPrimary">#212121</color>
+    <color name="colorPrimaryLight">#484848</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#F4511E</color>
 
-	<color name="color_primary_text">@android:color/white</color>
-	<color name="color_secondary_text">#C7C7C7</color>
-	<color name="color_profile_text">@android:color/black</color>
+    <color name="color_primary_text">@android:color/white</color>
+    <color name="color_secondary_text">#C7C7C7</color>
+    <color name="color_profile_text">@android:color/black</color>
 
-	<color name="color_error">#B00020</color>
+    <color name="color_error">#B00020</color>
 
-	<color name="color_category_movie">#C60000</color>
-	<color name="color_category_series">#3B5998</color>
-	<color name="color_category_episodes">#5BA525</color>
+    <color name="color_category_movie">#C60000</color>
+    <color name="color_category_series">#3B5998</color>
+    <color name="color_category_episodes">#5BA525</color>
 
-	<color name="color_blur_view">#80000000</color>
+    <color name="color_blur_view">#80000000</color>
 
-	<color name="color_background">@android:color/black</color>
+    <color name="color_background">@android:color/black</color>
 
-	<color name="color_card_background">#424242</color>
+    <color name="color_card_background">#424242</color>
 
 </resources>
