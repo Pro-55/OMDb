@@ -74,15 +74,15 @@ class HomeRepositoryImpl constructor(
 
         when {
             result == null -> {
-                val search = db.contentDao.searchForType(type, "$searchString%")
-                    ?.parse()?.toShortData() ?: listOf()
+                val search =
+                    db.shortContentDao.searchForType(type, "$searchString%")?.parse() ?: listOf()
                 val data = SearchResult(search = search, totalResults = search.size.toString())
                 emit(Resource.success(data))
             }
             result.isSuccessful -> {
                 val body = result.body()
-                val search = body?.search?.parse() ?: listOf()
-                db.contentDao.insert(search)
+                val search = body?.search?.parse(type) ?: listOf()
+                db.shortContentDao.insertAll(search)
                 val data = body?.parse(search) ?: SearchResult()
                 emit(Resource.success(data))
             }

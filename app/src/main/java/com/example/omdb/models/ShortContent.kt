@@ -30,5 +30,4 @@ data class ShortContent(
         result = 31 * result + (poster?.hashCode() ?: 0)
         return result
     }
-
 }
