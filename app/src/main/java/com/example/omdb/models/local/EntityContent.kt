@@ -46,8 +46,6 @@ data class EntityContent(
     val isFavorite: Boolean
 )
 
-fun List<EntityContent?>.parse(): List<Content> = mapNotNull { it?.parse(null) }
-
 fun EntityContent.parse(ratings: List<EntityRating>?): Content = Content(
     _id = _id,
     type = type ?: Type.MOVIE,
@@ -70,3 +68,5 @@ fun EntityContent.parse(ratings: List<EntityRating>?): Content = Content(
     seasons = seasons,
     isFavorite = isFavorite
 )
+
+fun List<EntityContent?>.parse(): List<Content> = mapNotNull { it?.parse(null) }

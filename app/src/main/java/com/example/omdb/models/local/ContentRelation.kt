@@ -14,6 +14,4 @@ data class ContentRelation(
 
 )
 
-fun List<ContentRelation?>.parse(): List<Content> = mapNotNull { it?.parse() }
-
 fun ContentRelation.parse(): Content? = data?.parse(ratings)

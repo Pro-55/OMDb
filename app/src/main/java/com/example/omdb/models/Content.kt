@@ -21,12 +21,3 @@ data class Content(
     fun isNotSeries(): Boolean = type != Type.SERIES
 
 }
-
-fun List<Content?>.toShortData(): List<ShortContent> = mapNotNull { it?.toShortData() }
-
-fun Content.toShortData(): ShortContent = ShortContent(
-    _id = _id,
-    title = title,
-    year = year,
-    poster = poster
-)
