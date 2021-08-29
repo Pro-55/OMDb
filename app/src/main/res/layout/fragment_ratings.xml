@@ -1,80 +1,80 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tool="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools">
 
-	<androidx.constraintlayout.widget.ConstraintLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:background="@color/color_background"
-		android:clickable="true"
-		android:focusable="true"
-		android:focusableInTouchMode="true">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
-		<androidx.cardview.widget.CardView
-			android:id="@+id/card_ratings_tool_bar"
-			android:layout_width="0dp"
-			android:layout_height="?attr/actionBarSize"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_ratings_tool_bar"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-			<androidx.constraintlayout.widget.ConstraintLayout
-				android:layout_width="match_parent"
-				android:layout_height="match_parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-				<ImageView
-					android:id="@+id/img_btn_back"
-					android:layout_width="0dp"
-					android:layout_height="match_parent"
-					android:background="?attr/selectableItemBackground"
-					android:contentDescription="@string/cd_back_button"
-					android:padding="@dimen/activity_default_margin"
-					android:src="@drawable/ic_back"
-					app:layout_constraintDimensionRatio="H,1:1"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:id="@+id/img_btn_back"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="@string/cd_back_button"
+                    android:padding="@dimen/activity_default_margin"
+                    android:src="@drawable/ic_back"
+                    app:layout_constraintDimensionRatio="H,1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-				<TextView
-					android:layout_width="0dp"
-					android:layout_height="match_parent"
-					android:gravity="center_vertical"
-					android:text="@string/label_ratings"
-					android:textColor="@color/color_primary_text"
-					android:textSize="@dimen/dimen_20sp"
-					android:textStyle="bold"
-					app:layout_constrainedWidth="true"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toEndOf="@id/img_btn_back" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/label_ratings"
+                    android:textColor="@color/color_primary_text"
+                    android:textSize="@dimen/dimen_20sp"
+                    android:textStyle="bold"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/img_btn_back" />
 
-			</androidx.constraintlayout.widget.ConstraintLayout>
-		</androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
-		<androidx.recyclerview.widget.RecyclerView
-			android:id="@+id/recycler_reviews"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:overScrollMode="never"
-			android:splitMotionEvents="false"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/card_ratings_tool_bar"
-			tool:listitem="@layout/layout_rating_item" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_reviews"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            android:splitMotionEvents="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_ratings_tool_bar"
+            tool:listitem="@layout/layout_rating_item" />
 
-		<TextView
-			android:id="@+id/txt_not_ratings"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:gravity="center"
-			android:text="@string/label_no_ratings"
-			android:textColor="@color/color_primary_text"
-			android:textSize="@dimen/dimen_20sp"
-			android:textStyle="bold"
-			android:visibility="gone"
-			app:layout_constrainedWidth="true"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/card_ratings_tool_bar" />
+        <TextView
+            android:id="@+id/txt_not_ratings"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/label_no_ratings"
+            android:textColor="@color/color_primary_text"
+            android:textSize="@dimen/dimen_20sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_ratings_tool_bar" />
 
-	</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

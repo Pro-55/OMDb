@@ -1,59 +1,59 @@
 <resources>
-	<string name="app_name">OMDb</string>
+    <string name="app_name">OMDb</string>
 
-	<string name="hint_search">Search</string>
-	<string name="label_movies">Movies</string>
-	<string name="label_series">Series</string>
-	<string name="label_episodes">Episodes</string>
-	<string name="label_plot">Plot</string>
-	<string name="label_cast">Cast</string>
-	<string name="label_crew">Crew</string>
-	<string name="label_director">Director</string>
-	<string name="label_production">Production</string>
-	<string name="label_seasons">Seasons</string>
-	<string name="label_ratings">Ratings</string>
-	<string name="label_team">Team</string>
-	<string name="label_no_ratings">No Ratings</string>
-	<string name="label_or">OR</string>
-	<string name="label_no_network_connection">No Network Connection</string>
-	<string name="label_greeting">Hello there!</string>
+    <string name="hint_search">Search</string>
+    <string name="label_movies">Movies</string>
+    <string name="label_series">Series</string>
+    <string name="label_episodes">Episodes</string>
+    <string name="label_plot">Plot</string>
+    <string name="label_cast">Cast</string>
+    <string name="label_crew">Crew</string>
+    <string name="label_director">Director</string>
+    <string name="label_production">Production</string>
+    <string name="label_seasons">Seasons</string>
+    <string name="label_ratings">Ratings</string>
+    <string name="label_team">Team</string>
+    <string name="label_no_ratings">No Ratings</string>
+    <string name="label_or">OR</string>
+    <string name="label_no_network_connection">No Network Connection</string>
+    <string name="label_greeting">Hello there!</string>
 
-	<string name="hint_first_name">First Name</string>
-	<string name="hint_last_name">Last Name</string>
-	<string name="hint_email">Email</string>
+    <string name="hint_first_name">First Name</string>
+    <string name="hint_last_name">Last Name</string>
+    <string name="hint_email">Email</string>
 
-	<string name="btn_save">Save</string>
-	<string name="btn_sign_up_with_google">Sign up with Google</string>
-	<string name="btn_sign_up_facebook">Sign up with Facebook</string>
-	<string name="btn_share">Share</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_sign_up_with_google">Sign up with Google</string>
+    <string name="btn_sign_up_facebook">Sign up with Facebook</string>
+    <string name="btn_share">Share</string>
 
-	<string name="divider_bullet">•</string>
+    <string name="divider_bullet">•</string>
 
-	<string name="shared_container_movies">shared_container_movies</string>
-	<string name="shared_icon_movies">shared_icon_movies</string>
-	<string name="shared_title_movies">shared_title_movies</string>
+    <string name="shared_container_movies">shared_container_movies</string>
+    <string name="shared_icon_movies">shared_icon_movies</string>
+    <string name="shared_title_movies">shared_title_movies</string>
 
-	<string name="shared_container_series">shared_container_series</string>
-	<string name="shared_icon_series">shared_icon_series</string>
-	<string name="shared_title_series">shared_title_series</string>
+    <string name="shared_container_series">shared_container_series</string>
+    <string name="shared_icon_series">shared_icon_series</string>
+    <string name="shared_title_series">shared_title_series</string>
 
-	<string name="shared_container_episodes">shared_container_episodes</string>
-	<string name="shared_icon_episodes">shared_icon_episodes</string>
-	<string name="shared_title_episodes">shared_title_episodes</string>
+    <string name="shared_container_episodes">shared_container_episodes</string>
+    <string name="shared_icon_episodes">shared_icon_episodes</string>
+    <string name="shared_title_episodes">shared_title_episodes</string>
 
-	<string name="cd_search">Search</string>
-	<string name="cd_cancel">Cancel</string>
-	<string name="cd_big_poster">Big Poster</string>
-	<string name="cd_poster">Poster</string>
-	<string name="cd_back_button">Back Button</string>
-	<string name="cd_movies">Movies</string>
-	<string name="cd_series">Series</string>
-	<string name="cd_profile">Profile</string>
-	<string name="cd_share_button">Share Button</string>
+    <string name="cd_search">Search</string>
+    <string name="cd_cancel">Cancel</string>
+    <string name="cd_big_poster">Big Poster</string>
+    <string name="cd_poster">Poster</string>
+    <string name="cd_back_button">Back Button</string>
+    <string name="cd_movies">Movies</string>
+    <string name="cd_series">Series</string>
+    <string name="cd_profile">Profile</string>
+    <string name="cd_share_button">Share Button</string>
 
-	<string name="channel_notification_default">Others</string>
-	<string name="default_notification_channel_id">channel_default</string>
+    <string name="channel_notification_default">Others</string>
+    <string name="default_notification_channel_id">channel_default</string>
 
-	<string name="facebook_app_id">1156562811345077</string>
-	<string name="fb_login_protocol_scheme">fb1156562811345077</string>
+    <string name="facebook_app_id">1156562811345077</string>
+    <string name="fb_login_protocol_scheme">fb1156562811345077</string>
 </resources>
