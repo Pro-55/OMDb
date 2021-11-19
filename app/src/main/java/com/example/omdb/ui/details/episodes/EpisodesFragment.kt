@@ -78,8 +78,7 @@ class EpisodesFragment : BaseFragment() {
                 episodes.clear()
                 episodes.addAll(resource.data?.episodes!!)
                 adapter?.swapData(episodes)
-            } else
-                showShortSnackBar(resource.message)
+            } else showShortSnackBar(resource.message)
         }
     }
 
