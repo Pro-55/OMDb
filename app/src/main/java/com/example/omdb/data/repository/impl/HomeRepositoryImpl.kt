@@ -148,7 +148,7 @@ class HomeRepositoryImpl constructor(
     ): Flow<Resource<Season>> = resourceFlow {
         var isSuccess = false
         val local = db.episodeDao.get(id, season)
-        if (local != null) {
+        if (!local.isNullOrEmpty()) {
             isSuccess = true
             emit(Resource.success(Season(episodes = local.parse())))
         }
