@@ -91,7 +91,7 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.31")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.10")
     implementation("androidx.core:core-ktx:1.7.0")
 
     // Material Design Components
@@ -138,15 +138,15 @@ dependencies {
     kapt("com.github.bumptech.glide:compiler:4.12.0")
 
     // Room
-    implementation("androidx.room:room-runtime:2.3.0")
-    kapt("androidx.room:room-compiler:2.3.0")
+    implementation("androidx.room:room-runtime:2.4.0")
+    kapt("androidx.room:room-compiler:2.4.0")
 
     // Kotlin Extensions and Coroutines support for Room
-    implementation("androidx.room:room-ktx:2.3.0")
+    implementation("androidx.room:room-ktx:2.4.0")
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
 
     // Hilt DI
     implementation("com.google.dagger:hilt-android:2.38.1")
@@ -165,7 +165,7 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging-ktx")
     // Authentication
     implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("com.google.android.gms:play-services-auth:19.2.0")
+    implementation("com.google.android.gms:play-services-auth:20.0.0")
 
     // Facebook
     implementation("com.facebook.android:facebook-android-sdk:11.2.0")
