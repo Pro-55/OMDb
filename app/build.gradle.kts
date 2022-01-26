@@ -95,7 +95,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.7.0")
 
     // Material Design Components
-    implementation("com.google.android.material:material:1.4.0")
+    implementation("com.google.android.material:material:1.5.0")
 
     // Architecture Components Lifecycle Extensions
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
@@ -112,7 +112,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
 
     // Constraint Layout
-    implementation("androidx.constraintlayout:constraintlayout:2.1.2")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.3")
 
     // RecyclerView
     implementation("androidx.recyclerview:recyclerview:1.2.1")
@@ -138,11 +138,11 @@ dependencies {
     kapt("com.github.bumptech.glide:compiler:4.12.0")
 
     // Room
-    implementation("androidx.room:room-runtime:2.4.0")
-    kapt("androidx.room:room-compiler:2.4.0")
+    implementation("androidx.room:room-runtime:2.4.1")
+    kapt("androidx.room:room-compiler:2.4.1")
 
     // Kotlin Extensions and Coroutines support for Room
-    implementation("androidx.room:room-ktx:2.4.0")
+    implementation("androidx.room:room-ktx:2.4.1")
 
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
@@ -165,7 +165,7 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging-ktx")
     // Authentication
     implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("com.google.android.gms:play-services-auth:20.0.0")
+    implementation("com.google.android.gms:play-services-auth:20.0.1")
 
     // Facebook
     implementation("com.facebook.android:facebook-android-sdk:11.2.0")
