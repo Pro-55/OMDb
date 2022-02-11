@@ -223,7 +223,7 @@ class SearchFragment : BaseFragment() {
             Type.SERIES -> viewModel.seriesSearch
             else -> null
         }
-        source?.observe(viewLifecycleOwner, { bindResource(it) })
+        source?.observe(viewLifecycleOwner) { bindResource(it) }
     }
 
     private fun fetchData(searText: String, size: Int = 0) {

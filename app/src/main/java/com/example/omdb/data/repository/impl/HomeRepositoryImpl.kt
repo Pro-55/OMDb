@@ -7,7 +7,8 @@ import com.example.omdb.data.api.OMDbApi
 import com.example.omdb.data.local.AppDatabase
 import com.example.omdb.data.repository.contract.HomeRepository
 import com.example.omdb.models.*
-import com.example.omdb.models.local.*
+import com.example.omdb.models.local.EntityUser
+import com.example.omdb.models.local.parse
 import com.example.omdb.models.network.parse
 import com.example.omdb.util.Constants
 import com.example.omdb.util.extensions.isSuccessful

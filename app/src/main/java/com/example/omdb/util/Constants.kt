@@ -10,7 +10,7 @@ object Constants {
     const val KEY_NOTIFICATION_ID = "notification_id"
     const val KEY_NOTIFICATION_TITLE = "title"
     const val KEY_NOTIFICATION_BODY = "body"
-    const val KEY_NOTIFICATION_CHANEL_ID = "channel_id"
+    const val KEY_NOTIFICATION_CHANNEL_ID = "channel_id"
     const val KEY_NOTIFICATION_COLOR = "color"
 
     const val NOTIFICATION_INTENT_FILTER = "FIREBASE_MESSAGING_EVENT"

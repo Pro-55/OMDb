@@ -24,7 +24,10 @@ import com.bumptech.glide.request.target.Target
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentDetailsBinding
 import com.example.omdb.framework.BaseFragment
-import com.example.omdb.models.*
+import com.example.omdb.models.Content
+import com.example.omdb.models.Resource
+import com.example.omdb.models.ShortContent
+import com.example.omdb.models.Status
 import com.example.omdb.ui.HomeViewModel
 import com.example.omdb.util.Constants
 import com.example.omdb.util.extensions.*
@@ -80,7 +83,7 @@ class DetailsFragment : BaseFragment() {
 
         if (content != null) bindDetails(content!!)
         else if (!contentId.isNullOrEmpty()) viewModel.getDetails(contentId!!)
-            .observe(viewLifecycleOwner, { bindDetailsResource(it) })
+            .observe(viewLifecycleOwner) { bindDetailsResource(it) }
         else {
             requireActivity().showShortSnackBar(Constants.REQUEST_FAILED_MESSAGE)
             onBackPressed()

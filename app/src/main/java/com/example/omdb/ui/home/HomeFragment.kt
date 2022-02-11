@@ -87,12 +87,12 @@ class HomeFragment : BaseFragment() {
 
     private fun getUser() {
         viewModel.getCurrentUser()
-            .observe(viewLifecycleOwner, { resource ->
+            .observe(viewLifecycleOwner) { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> setUser(resource.data)
                     Status.ERROR -> showShortSnackBar(resource.message)
                 }
-            })
+            }
     }
 
     private fun setUser(user: User?) {
