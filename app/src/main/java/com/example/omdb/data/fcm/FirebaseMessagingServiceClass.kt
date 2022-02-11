@@ -113,7 +113,7 @@ class FirebaseMessagingServiceClass : FirebaseMessagingService() {
     ) {
         val builder = NotificationCompat.Builder(
             this,
-            data[Constants.KEY_NOTIFICATION_CHANEL_ID]
+            data[Constants.KEY_NOTIFICATION_CHANNEL_ID]
                 ?: resources.getString(R.string.default_notification_channel_id)
         )
 

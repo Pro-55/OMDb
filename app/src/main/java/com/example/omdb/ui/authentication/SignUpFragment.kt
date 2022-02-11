@@ -91,7 +91,7 @@ class SignUpFragment : BaseFragment() {
                         profileUrl = profileUrl
                     )
                     viewModel.signUp(user)
-                        .observe(viewLifecycleOwner, { resource ->
+                        .observe(viewLifecycleOwner) { resource ->
                             when (resource.status) {
                                 Status.LOADING -> startLoading()
                                 Status.SUCCESS -> {
@@ -101,8 +101,7 @@ class SignUpFragment : BaseFragment() {
                                 }
                                 Status.ERROR -> stopLoading(false, resource.message)
                             }
-                        })
-
+                        }
                 }
             }
         }

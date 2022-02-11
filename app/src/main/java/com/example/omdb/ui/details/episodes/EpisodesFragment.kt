@@ -45,7 +45,7 @@ class EpisodesFragment : BaseFragment() {
 
         if (episodes.isNotEmpty()) adapter?.swapData(episodes)
         else viewModel.getEpisodes(args.id, args.season)
-            .observe(viewLifecycleOwner, { bindResource(it) })
+            .observe(viewLifecycleOwner) { bindResource(it) }
 
     }
 

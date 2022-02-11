@@ -46,7 +46,7 @@ class HomeActivity : AppCompatActivity() {
         }
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
-        ConnectionLiveData(this).observe(this, { isNetworkAvailable ->
+        ConnectionLiveData(this).observe(this) { isNetworkAvailable ->
             binding.txtNetworkStatus.apply {
                 val parent = this.parent as ViewGroup
                 val direction = Scale.Direction.DOWN
@@ -55,7 +55,7 @@ class HomeActivity : AppCompatActivity() {
                 else
                     goneWithScaleFade(parent = parent, direction = direction)
             }
-        })
+        }
 
         NotificationChannels.create(manager, resources)
     }
