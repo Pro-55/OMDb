@@ -47,6 +47,7 @@ android {
                 "GCP_CLIENT_ID",
                 project.property("DEV_CLIENT_ID") as String
             )
+            isDebuggable = true
             isMinifyEnabled = false
             isShrinkResources = false
             proguardFiles(
@@ -70,6 +71,7 @@ android {
                 "GCP_CLIENT_ID",
                 project.property("PROD_CLIENT_ID") as String
             )
+            isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
