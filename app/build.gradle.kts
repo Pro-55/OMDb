@@ -110,8 +110,8 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.4.1")
 
     // Navigation Component
-    implementation("androidx.navigation:navigation-fragment-ktx:2.4.1")
-    implementation("androidx.navigation:navigation-ui-ktx:2.4.1")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.4.2")
+    implementation("androidx.navigation:navigation-ui-ktx:2.4.2")
 
     // Constraint Layout
     implementation("androidx.constraintlayout:constraintlayout:2.1.3")
@@ -167,7 +167,7 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging-ktx")
     // Authentication
     implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("com.google.android.gms:play-services-auth:20.1.0")
+    implementation("com.google.android.gms:play-services-auth:20.2.0")
 
     // Facebook
     implementation("com.facebook.android:facebook-android-sdk:11.2.0")
