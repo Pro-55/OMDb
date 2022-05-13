@@ -97,7 +97,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.7.0")
 
     // Material Design Components
-    implementation("com.google.android.material:material:1.5.0")
+    implementation("com.google.android.material:material:1.6.0")
 
     // Architecture Components Lifecycle Extensions
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
@@ -151,8 +151,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
 
     // Hilt DI
-    implementation("com.google.dagger:hilt-android:2.38.1")
-    kapt("com.google.dagger:hilt-compiler:2.38.1")
+    implementation("com.google.dagger:hilt-android:2.40.1")
+    kapt("com.google.dagger:hilt-compiler:2.40.1")
 
     // Hilt ViewModel
     implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
