@@ -2,26 +2,28 @@ package com.example.omdb.models.network
 
 import com.example.omdb.models.Type
 import com.example.omdb.models.local.EntityContent
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class NetworkContent(
-    @SerializedName("imdbID") val _id: String,
-    @SerializedName("Type") val type: String,
-    @SerializedName("Poster") val poster: String?,
-    @SerializedName("Title") val title: String,
-    @SerializedName("Year") val year: String?,
-    @SerializedName("Rated") val rated: String?,
-    @SerializedName("Runtime") val runtime: String?,
-    @SerializedName("Genre") val genre: String?,
-    @SerializedName("Director") val director: String?,
-    @SerializedName("Writer") val writer: String?,
-    @SerializedName("Actors") val actors: String?,
-    @SerializedName("Plot") val plot: String?,
-    @SerializedName("Language") val language: String?,
-    @SerializedName("Ratings") val ratings: List<NetworkRating?>?,
-    @SerializedName("imdbRating") val imdbRating: String?,
-    @SerializedName("Production") val production: String?,
-    @SerializedName("totalSeasons") val seasons: String?
+    @SerialName("imdbID") val _id: String,
+    @SerialName("Type") val type: String,
+    @SerialName("Poster") val poster: String? = null,
+    @SerialName("Title") val title: String,
+    @SerialName("Year") val year: String? = null,
+    @SerialName("Rated") val rated: String? = null,
+    @SerialName("Runtime") val runtime: String? = null,
+    @SerialName("Genre") val genre: String? = null,
+    @SerialName("Director") val director: String? = null,
+    @SerialName("Writer") val writer: String? = null,
+    @SerialName("Actors") val actors: String? = null,
+    @SerialName("Plot") val plot: String? = null,
+    @SerialName("Language") val language: String? = null,
+    @SerialName("Ratings") val ratings: List<NetworkRating?>? = null,
+    @SerialName("imdbRating") val imdbRating: String? = null,
+    @SerialName("Production") val production: String? = null,
+    @SerialName("totalSeasons") val seasons: String? = null
 )
 
 fun NetworkContent.parse(isFavorite: Boolean): EntityContent = EntityContent(

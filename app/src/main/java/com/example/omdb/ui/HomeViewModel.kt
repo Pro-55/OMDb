@@ -1,7 +1,7 @@
 package com.example.omdb.ui
 
 import androidx.lifecycle.*
-import com.example.omdb.data.repository.impl.HomeRepositoryImpl
+import com.example.omdb.data.repository.contract.HomeRepository
 import com.example.omdb.models.*
 import com.example.omdb.models.local.EntityUser
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +12,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val repository: HomeRepositoryImpl
+    private val repository: HomeRepository
 ) : ViewModel() {
 
     // Global

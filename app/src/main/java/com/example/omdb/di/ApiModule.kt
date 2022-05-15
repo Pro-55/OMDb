@@ -1,11 +1,12 @@
 package com.example.omdb.di
 
-import com.example.omdb.data.api.OMDbApi
+import com.example.omdb.data.api.contract.OMDbApi
+import com.example.omdb.data.api.impl.OMDbApiImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
+import io.ktor.client.*
 import javax.inject.Singleton
 
 @Module
@@ -14,8 +15,6 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideOMDbApi(retrofit: Retrofit): OMDbApi {
-        return retrofit.create(OMDbApi::class.java)
-    }
+    fun provideOMDbApi(client: HttpClient): OMDbApi = OMDbApiImpl(client)
 
 }

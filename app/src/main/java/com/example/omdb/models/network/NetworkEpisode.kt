@@ -1,13 +1,15 @@
 package com.example.omdb.models.network
 
 import com.example.omdb.models.local.EntityEpisode
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class NetworkEpisode(
-    @SerializedName("imdbID") val _id: String,
-    @SerializedName("Title") val title: String?,
-    @SerializedName("Episode") val episode: String?,
-    @SerializedName("Released") val released: String?
+    @SerialName("imdbID") val _id: String,
+    @SerialName("Title") val title: String? = null,
+    @SerialName("Episode") val episode: String? = null,
+    @SerialName("Released") val released: String? = null
 )
 
 fun NetworkEpisode.parse(

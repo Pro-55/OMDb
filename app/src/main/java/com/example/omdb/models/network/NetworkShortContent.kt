@@ -2,13 +2,15 @@ package com.example.omdb.models.network
 
 import com.example.omdb.models.Type
 import com.example.omdb.models.local.EntityShortContent
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class NetworkShortContent(
-    @SerializedName("imdbID") val _id: String,
-    @SerializedName("Title") val title: String,
-    @SerializedName("Year") val year: String,
-    @SerializedName("Poster") val poster: String?
+    @SerialName("imdbID") val _id: String,
+    @SerialName("Title") val title: String,
+    @SerialName("Year") val year: String,
+    @SerialName("Poster") val poster: String? = null
 )
 
 fun NetworkShortContent.parse(type: Type): EntityShortContent = EntityShortContent(
