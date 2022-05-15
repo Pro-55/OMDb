@@ -15,6 +15,4 @@ fun <T> ioFlow(
 fun <T> resourceFlow(
     doRetry: Boolean = false,
     block: suspend FlowCollector<Resource<T>>.() -> Unit
-): Flow<Resource<T>> {
-    return flow(block).asResourceFlow(doRetry)
-}
+): Flow<Resource<T>> = flow(block).asResourceFlow(doRetry)

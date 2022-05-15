@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentEpisodesBinding
 import com.example.omdb.framework.BaseFragment
-import com.example.omdb.models.*
+import com.example.omdb.models.Episode
+import com.example.omdb.models.Resource
+import com.example.omdb.models.Season
+import com.example.omdb.models.ShortContent
 import com.example.omdb.ui.HomeViewModel
 import com.example.omdb.util.extensions.showShortSnackBar
 import dagger.hilt.android.AndroidEntryPoint
@@ -71,14 +74,14 @@ class EpisodesFragment : BaseFragment() {
     }
 
     private fun bindResource(resource: Resource<Season>) {
-        when (resource.status) {
-            Status.LOADING -> Unit
-            Status.ERROR -> showShortSnackBar(resource.message)
-            Status.SUCCESS -> if (!resource.data?.episodes.isNullOrEmpty()) {
+        when (resource) {
+            is Resource.Loading -> Unit
+            is Resource.Error -> showShortSnackBar(resource.msg)
+            is Resource.Success -> if (!resource.data?.episodes.isNullOrEmpty()) {
                 episodes.clear()
                 episodes.addAll(resource.data?.episodes!!)
                 adapter?.swapData(episodes)
-            } else showShortSnackBar(resource.message)
+            } else showShortSnackBar(null)
         }
     }
 

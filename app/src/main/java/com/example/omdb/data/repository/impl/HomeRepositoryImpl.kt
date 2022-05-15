@@ -32,26 +32,26 @@ class HomeRepositoryImpl constructor(
                 putString(Constants.KEY_USER_ID, user._id)
                 apply()
             }
-            emit(Resource.success(user.parse()))
+            emit(Resource.Success(user.parse()))
         } else {
-            emit(Resource.error(Constants.REQUEST_FAILED_MESSAGE))
+            emit(Resource.Error(Constants.REQUEST_FAILED_MESSAGE))
         }
     }
 
     override fun getCurrentUser(): Flow<Resource<User>> = resourceFlow {
         val userId = sp.getString(Constants.KEY_USER_ID, null)
         if (userId.isNullOrEmpty()) {
-            emit(Resource.error("Invalid User ID!"))
+            emit(Resource.Error("Invalid User ID!"))
             return@resourceFlow
         }
 
         val user = db.userDao.get(userId)
         if (user == null) {
-            emit(Resource.error("User Not Found!"))
+            emit(Resource.Error("User Not Found!"))
             return@resourceFlow
         }
 
-        emit(Resource.success(user.parse()))
+        emit(Resource.Success(user.parse()))
     }
 
     override fun searchContent(
@@ -70,17 +70,17 @@ class HomeRepositoryImpl constructor(
                 val search = body?.search?.parse(type) ?: listOf()
                 db.shortContentDao.insertAll(search)
                 val data = body?.parse(search) ?: SearchResult()
-                emit(Resource.success(data))
+                emit(Resource.Success(data))
             }
             is Response.UnknownHostException -> {
                 val search =
                     db.shortContentDao.searchForType(type, "$searchString%")?.parse() ?: listOf()
                 val data = SearchResult(search = search, totalResults = search.size.toString())
-                emit(Resource.success(data))
+                emit(Resource.Success(data))
             }
             else -> {
                 val msg = result.msg ?: Constants.REQUEST_FAILED_MESSAGE
-                emit(Resource.error(msg))
+                emit(Resource.Error(msg))
             }
         }
     }
@@ -111,7 +111,7 @@ class HomeRepositoryImpl constructor(
                     }
 
                     if (dbSuccess) {
-                        emit(Resource.success(data.parse(ratings)))
+                        emit(Resource.Success(data.parse(ratings)))
                         return@resourceFlow
                     }
                 }
@@ -119,14 +119,14 @@ class HomeRepositoryImpl constructor(
             }
             is Response.UnknownHostException -> {
                 if (local != null) {
-                    emit(Resource.success(local.parse()))
+                    emit(Resource.Success(local.parse()))
                     return@resourceFlow
                 }
                 null
             }
             else -> result.msg
         }
-        emit(Resource.error(msg ?: Constants.REQUEST_FAILED_MESSAGE))
+        emit(Resource.Error(msg ?: Constants.REQUEST_FAILED_MESSAGE))
     }
 
     override fun getEpisodes(
@@ -145,7 +145,7 @@ class HomeRepositoryImpl constructor(
                     val episodes = network.episodes?.parse(id, season) ?: listOf()
                     val dbSuccess = db.episodeDao.insertAll(episodes).isSuccessful()
                     if (dbSuccess) {
-                        emit(Resource.success(Season(episodes = episodes.parse())))
+                        emit(Resource.Success(Season(episodes = episodes.parse())))
                         return@resourceFlow
                     }
                 }
@@ -154,13 +154,13 @@ class HomeRepositoryImpl constructor(
             is Response.UnknownHostException -> {
                 val local = db.episodeDao.get(id, season)
                 if (!local.isNullOrEmpty()) {
-                    emit(Resource.success(Season(episodes = local.parse())))
+                    emit(Resource.Success(Season(episodes = local.parse())))
                     return@resourceFlow
                 }
                 null
             }
             else -> result.msg
         }
-        emit(Resource.error(msg ?: Constants.REQUEST_FAILED_MESSAGE))
+        emit(Resource.Error(msg ?: Constants.REQUEST_FAILED_MESSAGE))
     }
 }

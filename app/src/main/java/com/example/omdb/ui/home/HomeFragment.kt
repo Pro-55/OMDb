@@ -15,7 +15,7 @@ import com.example.omdb.R
 import com.example.omdb.databinding.FragmentHomeBinding
 import com.example.omdb.framework.BaseFragment
 import com.example.omdb.models.DayPart
-import com.example.omdb.models.Status
+import com.example.omdb.models.Resource
 import com.example.omdb.models.Type
 import com.example.omdb.models.User
 import com.example.omdb.ui.HomeViewModel
@@ -88,9 +88,10 @@ class HomeFragment : BaseFragment() {
     private fun getUser() {
         viewModel.getCurrentUser()
             .observe(viewLifecycleOwner) { resource ->
-                when (resource.status) {
-                    Status.SUCCESS -> setUser(resource.data)
-                    Status.ERROR -> showShortSnackBar(resource.message)
+                when (resource) {
+                    is Resource.Loading -> Unit
+                    is Resource.Success -> setUser(resource.data)
+                    is Resource.Error -> showShortSnackBar(resource.msg)
                 }
             }
     }

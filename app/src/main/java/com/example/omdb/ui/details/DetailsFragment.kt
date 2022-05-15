@@ -27,7 +27,6 @@ import com.example.omdb.framework.BaseFragment
 import com.example.omdb.models.Content
 import com.example.omdb.models.Resource
 import com.example.omdb.models.ShortContent
-import com.example.omdb.models.Status
 import com.example.omdb.ui.HomeViewModel
 import com.example.omdb.util.Constants
 import com.example.omdb.util.extensions.*
@@ -145,11 +144,11 @@ class DetailsFragment : BaseFragment() {
     }
 
     private fun bindDetailsResource(resource: Resource<Content>) {
-        when (resource.status) {
-            Status.LOADING -> Unit
-            Status.ERROR -> showShortSnackBar(resource.message)
-            Status.SUCCESS -> if (resource.data != null) bindDetails(resource.data)
-            else showShortSnackBar(resource.message)
+        when (resource) {
+            is Resource.Loading -> Unit
+            is Resource.Error -> showShortSnackBar(resource.msg)
+            is Resource.Success ->
+                if (resource.data != null) bindDetails(resource.data) else showShortSnackBar(null)
         }
     }
 
