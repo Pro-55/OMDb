@@ -3,7 +3,8 @@ plugins {
         id("com.android.application")
         kotlin("android")
         kotlin("kapt")
-        id("org.jetbrains.kotlin.plugin.parcelize")
+        kotlin("plugin.serialization")
+        kotlin("plugin.parcelize")
         id("androidx.navigation.safeargs")
         id("com.google.gms.google-services")
         id("com.google.firebase.crashlytics")
@@ -125,15 +126,15 @@ dependencies {
     // RxTextViewChange
     implementation("com.jakewharton.rxbinding:rxbinding:1.0.1")
 
-    // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    // Kotlinx Serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
 
-    // Retrofit GSON conversion
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-
-    // OkHttp
-    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.2")
-    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2")
+    // Ktor
+    implementation("io.ktor:ktor-client-core:1.6.3")
+    implementation("io.ktor:ktor-client-cio:1.6.3")
+    implementation("io.ktor:ktor-client-serialization:1.6.3")
+    implementation("io.ktor:ktor-client-logging:1.6.3")
+    implementation("ch.qos.logback:logback-classic:1.2.3")
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.12.0")
