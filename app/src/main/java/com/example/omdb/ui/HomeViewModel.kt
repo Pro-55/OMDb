@@ -2,8 +2,11 @@ package com.example.omdb.ui
 
 import androidx.lifecycle.*
 import com.example.omdb.data.repository.contract.HomeRepository
-import com.example.omdb.models.*
+import com.example.omdb.models.Resource
+import com.example.omdb.models.SearchResult
+import com.example.omdb.models.Type
 import com.example.omdb.models.local.EntityUser
+import com.example.omdb.models.update
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -35,9 +38,9 @@ class HomeViewModel @Inject constructor(
 
         repository.searchContent(searchText, page, Type.MOVIE).onEach { resource ->
             var newResource = resource
-            if (resource.status == Status.SUCCESS) {
+            if (resource is Resource.Success) {
                 movieResult = movieResult.update(resource.data)
-                newResource = resource.copy(data = movieResult)
+                newResource = Resource.Success(data = movieResult)
             }
             _movieSearch.postValue(newResource)
         }
@@ -50,9 +53,9 @@ class HomeViewModel @Inject constructor(
 
         repository.searchContent(searchText, page, Type.SERIES).onEach { resource ->
             var newResource = resource
-            if (resource.status == Status.SUCCESS) {
+            if (resource is Resource.Success) {
                 seriesResult = seriesResult.update(resource.data)
-                newResource = resource.copy(data = seriesResult)
+                newResource = Resource.Success(data = seriesResult)
             }
             _seriesSearch.postValue(newResource)
         }
@@ -66,13 +69,14 @@ class HomeViewModel @Inject constructor(
 
     fun clearSearchData(category: Type) {
 
-        val blankResult = Resource.loading(SearchResult())
+        val blankResult = Resource.Loading<SearchResult>()
         movieResult = SearchResult()
         seriesResult = SearchResult()
 
         when (category) {
             Type.MOVIE -> _movieSearch.postValue(blankResult)
             Type.SERIES -> _seriesSearch.postValue(blankResult)
+            else -> Unit
         }
     }
 

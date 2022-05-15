@@ -15,7 +15,7 @@ import com.example.omdb.BuildConfig
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentSignUpBinding
 import com.example.omdb.framework.BaseFragment
-import com.example.omdb.models.Status
+import com.example.omdb.models.Resource
 import com.example.omdb.models.local.EntityUser
 import com.example.omdb.ui.HomeViewModel
 import com.example.omdb.util.Constants
@@ -44,8 +44,12 @@ class SignUpFragment : BaseFragment() {
 
     //Global
     private val TAG = SignUpFragment::class.java.simpleName
-    @Inject lateinit var auth: FirebaseAuth
-    @Inject lateinit var crashlytics: FirebaseCrashlytics
+
+    @Inject
+    lateinit var auth: FirebaseAuth
+
+    @Inject
+    lateinit var crashlytics: FirebaseCrashlytics
     private lateinit var binding: FragmentSignUpBinding
     private val viewModel by viewModels<HomeViewModel>()
     private val fbCallbackManager: CallbackManager by lazy { CallbackManager.Factory.create() }
@@ -92,14 +96,14 @@ class SignUpFragment : BaseFragment() {
                     )
                     viewModel.signUp(user)
                         .observe(viewLifecycleOwner) { resource ->
-                            when (resource.status) {
-                                Status.LOADING -> startLoading()
-                                Status.SUCCESS -> {
-                                    stopLoading(true, resource.message)
+                            when (resource) {
+                                is Resource.Loading -> startLoading()
+                                is Resource.Success -> {
+                                    stopLoading(true)
                                     val action = SignUpFragmentDirections.navigateSignUpToHome()
                                     findNavController().navigate(action)
                                 }
-                                Status.ERROR -> stopLoading(false, resource.message)
+                                is Resource.Error -> stopLoading(false, resource.msg)
                             }
                         }
                 }
@@ -288,7 +292,7 @@ class SignUpFragment : BaseFragment() {
         }
     }
 
-    private fun stopLoading(isSuccess: Boolean, message: String?) {
+    private fun stopLoading(isSuccess: Boolean, message: String? = null) {
         if (!isSuccess) showShortToast(message)
         binding.editFirstName.enable()
         binding.editLastName.enable()

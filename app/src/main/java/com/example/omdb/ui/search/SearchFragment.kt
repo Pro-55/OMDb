@@ -22,7 +22,10 @@ import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentSearchBinding
 import com.example.omdb.framework.BaseFragment
-import com.example.omdb.models.*
+import com.example.omdb.models.Resource
+import com.example.omdb.models.SearchResult
+import com.example.omdb.models.ShortContent
+import com.example.omdb.models.Type
 import com.example.omdb.ui.HomeViewModel
 import com.example.omdb.util.extensions.*
 import com.example.omdb.views.CustomGridLayoutManager
@@ -231,22 +234,23 @@ class SearchFragment : BaseFragment() {
         when (category) {
             Type.MOVIE -> viewModel.searchMovies(searText, size)
             Type.SERIES -> viewModel.searchSeries(searText, size)
+            else -> Unit
         }
     }
 
     private fun bindResource(resource: Resource<SearchResult>) {
-        when (resource.status) {
-            Status.LOADING -> isLoading = true
-            Status.ERROR -> {
-                isLoading = false
-                showShortToast(resource.message)
+        when (resource) {
+            is Resource.Loading -> if (!isLoading) isLoading = true
+            is Resource.Error -> {
+                if (isLoading) isLoading = false
+                showShortToast(resource.msg)
             }
-            Status.SUCCESS -> bindSearchResult(resource.data)
+            is Resource.Success -> bindSearchResult(resource.data)
         }
     }
 
     private fun bindSearchResult(result: SearchResult? = null) {
-        isLoading = false
+        if (isLoading) isLoading = false
         totalCount = result?.totalResults?.toInt() ?: 0
         val list = result?.search ?: listOf()
         if (list.isNotEmpty()) hidePlaceholders() else showPlaceholders()
