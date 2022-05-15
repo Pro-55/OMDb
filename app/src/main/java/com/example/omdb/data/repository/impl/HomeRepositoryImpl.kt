@@ -2,18 +2,17 @@ package com.example.omdb.data.repository.impl
 
 import android.content.SharedPreferences
 import androidx.room.withTransaction
-import com.example.omdb.BuildConfig.ApiKey
-import com.example.omdb.data.api.OMDbApi
+import com.example.omdb.data.api.contract.OMDbApi
 import com.example.omdb.data.local.AppDatabase
 import com.example.omdb.data.repository.contract.HomeRepository
 import com.example.omdb.models.*
 import com.example.omdb.models.local.EntityUser
 import com.example.omdb.models.local.parse
+import com.example.omdb.models.network.Response
 import com.example.omdb.models.network.parse
 import com.example.omdb.util.Constants
 import com.example.omdb.util.extensions.isSuccessful
-import com.example.omdb.util.extensions.resourceFlow
-import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.example.omdb.util.wrappers.resourceFlow
 import kotlinx.coroutines.flow.Flow
 
 class HomeRepositoryImpl constructor(
@@ -60,35 +59,27 @@ class HomeRepositoryImpl constructor(
         page: Int,
         type: Type
     ): Flow<Resource<SearchResult>> = resourceFlow {
-        val result = try {
-            api.searchContent(
-                apiKey = ApiKey,
-                title = searchString,
-                type = type.toString(),
-                page = page
-            )
-        } catch (e: Exception) {
-            e.printStackTrace()
-            FirebaseCrashlytics.getInstance().recordException(e)
-            null
-        }
-
-        when {
-            result == null -> {
-                val search =
-                    db.shortContentDao.searchForType(type, "$searchString%")?.parse() ?: listOf()
-                val data = SearchResult(search = search, totalResults = search.size.toString())
-                emit(Resource.success(data))
-            }
-            result.isSuccessful -> {
-                val body = result.body()
+        val result = api.searchContent(
+            title = searchString,
+            page = page,
+            type = type
+        )
+        when (result) {
+            is Response.Success -> {
+                val body = result.data
                 val search = body?.search?.parse(type) ?: listOf()
                 db.shortContentDao.insertAll(search)
                 val data = body?.parse(search) ?: SearchResult()
                 emit(Resource.success(data))
             }
+            is Response.UnknownHostException -> {
+                val search =
+                    db.shortContentDao.searchForType(type, "$searchString%")?.parse() ?: listOf()
+                val data = SearchResult(search = search, totalResults = search.size.toString())
+                emit(Resource.success(data))
+            }
             else -> {
-                val msg = result.message() ?: Constants.REQUEST_FAILED_MESSAGE
+                val msg = result.msg ?: Constants.REQUEST_FAILED_MESSAGE
                 emit(Resource.error(msg))
             }
         }
@@ -98,89 +89,78 @@ class HomeRepositoryImpl constructor(
         id: String,
         plot: String
     ): Flow<Resource<Content>> = resourceFlow {
-        var isSuccess = false
         val local = db.contentDao.get(id)
-        if (local != null) {
-            isSuccess = true
-            emit(Resource.success(local.parse()))
-        }
 
-        val result = try {
-            api.getDetails(
-                apiKey = ApiKey,
-                id = id,
-                plot = plot
-            )
-        } catch (e: Exception) {
-            e.printStackTrace()
-            FirebaseCrashlytics.getInstance().recordException(e)
-            null
-        }
+        val result = api.getDetails(
+            id = id,
+            plot = plot
+        )
 
-        if (result?.isSuccessful == true) {
-            val network = result.body()
-            if (network != null) {
-                val isFavorite = local?.data?.isFavorite ?: false
-                val data = network.parse(isFavorite)
-                val ratings = network.ratings?.parse(id) ?: listOf()
+        val msg = when (result) {
+            is Response.Success -> {
+                val network = result.data
+                if (network != null) {
+                    val isFavorite = local?.data?.isFavorite ?: false
+                    val data = network.parse(isFavorite)
+                    val ratings = network.ratings?.parse(id) ?: listOf()
 
-                val dbSuccess = db.withTransaction {
-                    val dataResult = db.contentDao.insert(data).isSuccessful()
-                    val ratingsResult = db.ratingDao.insertAll(ratings).isSuccessful()
-                    return@withTransaction dataResult && ratingsResult
+                    val dbSuccess = db.withTransaction {
+                        val dataResult = db.contentDao.insert(data).isSuccessful()
+                        val ratingsResult = db.ratingDao.insertAll(ratings).isSuccessful()
+                        return@withTransaction dataResult && ratingsResult
+                    }
+
+                    if (dbSuccess) {
+                        emit(Resource.success(data.parse(ratings)))
+                        return@resourceFlow
+                    }
                 }
-
-                if (dbSuccess) {
-                    if (!isSuccess) isSuccess = true
-                    emit(Resource.success(data.parse(ratings)))
-                }
+                null
             }
+            is Response.UnknownHostException -> {
+                if (local != null) {
+                    emit(Resource.success(local.parse()))
+                    return@resourceFlow
+                }
+                null
+            }
+            else -> result.msg
         }
-
-        if (!isSuccess) {
-            val msg = result?.message() ?: Constants.REQUEST_FAILED_MESSAGE
-            emit(Resource.error(msg))
-        }
+        emit(Resource.error(msg ?: Constants.REQUEST_FAILED_MESSAGE))
     }
 
     override fun getEpisodes(
         id: String,
         season: Int
     ): Flow<Resource<Season>> = resourceFlow {
-        var isSuccess = false
-        val local = db.episodeDao.get(id, season)
-        if (!local.isNullOrEmpty()) {
-            isSuccess = true
-            emit(Resource.success(Season(episodes = local.parse())))
-        }
+        val result = api.getEpisodes(
+            id = id,
+            season = season
+        )
 
-        val result = try {
-            api.getEpisodes(
-                apiKey = ApiKey,
-                id = id,
-                season = season
-            )
-        } catch (e: Exception) {
-            e.printStackTrace()
-            FirebaseCrashlytics.getInstance().recordException(e)
-            null
-        }
-
-        if (result?.isSuccessful == true) {
-            val network = result.body()
-            if (network != null) {
-                val episodes = network.episodes?.parse(id, season) ?: listOf()
-                val dbSuccess = db.episodeDao.insertAll(episodes).isSuccessful()
-                if (dbSuccess) {
-                    if (!isSuccess) isSuccess = true
-                    emit(Resource.success(Season(episodes = episodes.parse())))
+        val msg = when (result) {
+            is Response.Success -> {
+                val network = result.data
+                if (network != null) {
+                    val episodes = network.episodes?.parse(id, season) ?: listOf()
+                    val dbSuccess = db.episodeDao.insertAll(episodes).isSuccessful()
+                    if (dbSuccess) {
+                        emit(Resource.success(Season(episodes = episodes.parse())))
+                        return@resourceFlow
+                    }
                 }
+                null
             }
+            is Response.UnknownHostException -> {
+                val local = db.episodeDao.get(id, season)
+                if (!local.isNullOrEmpty()) {
+                    emit(Resource.success(Season(episodes = local.parse())))
+                    return@resourceFlow
+                }
+                null
+            }
+            else -> result.msg
         }
-
-        if (!isSuccess) {
-            val msg = result?.message() ?: Constants.REQUEST_FAILED_MESSAGE
-            emit(Resource.error(msg))
-        }
+        emit(Resource.error(msg ?: Constants.REQUEST_FAILED_MESSAGE))
     }
 }
