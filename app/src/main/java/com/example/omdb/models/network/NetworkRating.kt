@@ -2,11 +2,13 @@ package com.example.omdb.models.network
 
 import com.example.omdb.models.local.EntityRating
 import com.example.omdb.util.Constants
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class NetworkRating(
-    @SerializedName("Source") val source: String?,
-    @SerializedName("Value") val value: String?
+    @SerialName("Source") val source: String? = null,
+    @SerialName("Value") val value: String? = null
 )
 
 fun NetworkRating.parse(contentId: String): EntityRating = EntityRating(
