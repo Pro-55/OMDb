@@ -8,11 +8,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 
-fun <T> ioFlow(
-    doRetry: Boolean = false,
-    block: suspend FlowCollector<T>.() -> Unit
-): Flow<T> = flow(block).asIoFlow(doRetry)
-
 fun <T> Flow<T>.asIoFlow(doRetry: Boolean = false): Flow<T> {
     return this
         .distinctUntilChanged()
@@ -33,13 +28,6 @@ fun <T> Flow<T>.asIoFlow(doRetry: Boolean = false): Flow<T> {
             }
         }
         .flowOn(Dispatchers.IO)
-}
-
-fun <T> resourceFlow(
-    doRetry: Boolean = false,
-    block: suspend FlowCollector<Resource<T>>.() -> Unit
-): Flow<Resource<T>> {
-    return flow(block).asResourceFlow(doRetry)
 }
 
 fun <T> Flow<Resource<T>>.asResourceFlow(doRetry: Boolean = false): Flow<Resource<T>> {
