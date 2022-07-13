@@ -13,10 +13,9 @@ OMDb is a demo app which allows user to search any movie or show. It uses OMDb A
 
 <br>
 
-<img src="assets/app-demo.gif" align="right" width="32%"/>
+<img src="assets/app-demo.gif" align="right" width="40%"/>
 
 ## Built with
-
 - Minimum SDK level 21
 - [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) +
   [Flow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/)
@@ -43,7 +42,6 @@ OMDb is a demo app which allows user to search any movie or show. It uses OMDb A
 <br>
 
 # License
-
 ```xml
 Designed and developed by 2020 pro-55 (Pranit B. Rane)
 
