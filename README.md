@@ -31,7 +31,7 @@ OMDb is a demo app which allows user to search any movie or show. It uses OMDb A
 - Architecture
     - MVVM Architecture (View - DataBinding - ViewModel - Model)
     - Repository pattern
-- [Retrofit](https://github.com/square/retrofit) - De-facto Network library for Android
+- [Ktor](https://github.com/ktorio/ktor)
 - [GSON](https://github.com/google/gson) - Java serialization/deserialization library to convert
   Java Objects into JSON and back
 - [Glide](https://github.com/bumptech/glide) - Image downloading and caching library
