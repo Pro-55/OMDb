@@ -94,7 +94,7 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.21")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.0")
     implementation("androidx.core:core-ktx:1.8.0")
 
     // Material Design Components
@@ -102,17 +102,17 @@ dependencies {
 
     // Architecture Components Lifecycle Extensions
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.0")
-    implementation("androidx.lifecycle:lifecycle-common-java8:2.5.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
+    implementation("androidx.lifecycle:lifecycle-common-java8:2.5.1")
 
     // Fragment
-    implementation("androidx.fragment:fragment-ktx:1.5.0")
+    implementation("androidx.fragment:fragment-ktx:1.5.1")
 
     // Navigation Component
-    implementation("androidx.navigation:navigation-fragment-ktx:2.5.0")
-    implementation("androidx.navigation:navigation-ui-ktx:2.5.0")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.5.1")
+    implementation("androidx.navigation:navigation-ui-ktx:2.5.1")
 
     // Constraint Layout
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
@@ -141,11 +141,11 @@ dependencies {
     kapt("com.github.bumptech.glide:compiler:4.12.0")
 
     // Room
-    implementation("androidx.room:room-runtime:2.4.2")
-    kapt("androidx.room:room-compiler:2.4.2")
+    implementation("androidx.room:room-runtime:2.4.3")
+    kapt("androidx.room:room-compiler:2.4.3")
 
     // Kotlin Extensions and Coroutines support for Room
-    implementation("androidx.room:room-ktx:2.4.2")
+    implementation("androidx.room:room-ktx:2.4.3")
 
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
