@@ -44,12 +44,8 @@ class SignUpFragment : BaseFragment() {
 
     //Global
     private val TAG = SignUpFragment::class.java.simpleName
-
-    @Inject
-    lateinit var auth: FirebaseAuth
-
-    @Inject
-    lateinit var crashlytics: FirebaseCrashlytics
+    @Inject lateinit var auth: FirebaseAuth
+    @Inject lateinit var crashlytics: FirebaseCrashlytics
     private lateinit var binding: FragmentSignUpBinding
     private val viewModel by viewModels<HomeViewModel>()
     private val fbCallbackManager: CallbackManager by lazy { CallbackManager.Factory.create() }
