@@ -13,14 +13,14 @@ plugins {
 }
 
 android {
-    compileSdk = 31
+    compileSdk = 33
     buildFeatures {
         dataBinding = true
     }
     defaultConfig {
         applicationId = "com.example.omdb"
         minSdk = 21
-        targetSdk = 31
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -108,7 +108,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-common-java8:2.5.1")
 
     // Fragment
-    implementation("androidx.fragment:fragment-ktx:1.5.1")
+    implementation("androidx.fragment:fragment-ktx:1.5.2")
 
     // Navigation Component
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.1")
