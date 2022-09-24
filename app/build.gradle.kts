@@ -94,8 +94,8 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.0")
-    implementation("androidx.core:core-ktx:1.8.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.10")
+    implementation("androidx.core:core-ktx:1.9.0")
 
     // Material Design Components
     implementation("com.google.android.material:material:1.6.1")
@@ -108,11 +108,11 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-common-java8:2.5.1")
 
     // Fragment
-    implementation("androidx.fragment:fragment-ktx:1.5.2")
+    implementation("androidx.fragment:fragment-ktx:1.5.3")
 
     // Navigation Component
-    implementation("androidx.navigation:navigation-fragment-ktx:2.5.1")
-    implementation("androidx.navigation:navigation-ui-ktx:2.5.1")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.5.2")
+    implementation("androidx.navigation:navigation-ui-ktx:2.5.2")
 
     // Constraint Layout
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
@@ -148,15 +148,12 @@ dependencies {
     implementation("androidx.room:room-ktx:2.4.3")
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
     // Hilt DI
-    implementation("com.google.dagger:hilt-android:2.40.1")
-    kapt("com.google.dagger:hilt-compiler:2.40.1")
-
-    // Hilt ViewModel
-    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
+    implementation("com.google.dagger:hilt-android:2.43.2")
+    kapt("com.google.dagger:hilt-compiler:2.43.2")
 
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:26.5.0"))
@@ -168,7 +165,7 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging-ktx")
     // Authentication
     implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("com.google.android.gms:play-services-auth:20.2.0")
+    implementation("com.google.android.gms:play-services-auth:20.3.0")
 
     // Facebook
     implementation("com.facebook.android:facebook-android-sdk:11.2.0")
