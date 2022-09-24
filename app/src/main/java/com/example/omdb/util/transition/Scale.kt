@@ -102,6 +102,7 @@ class Scale : Visibility {
                 view.pivotX = pivotX
                 view.pivotY = pivotY
             }
+            else -> {}
         }
 
         val animator = TransitionUtil.mergeAnimators(
