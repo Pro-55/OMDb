@@ -22,7 +22,7 @@ class OMDbApiImpl(
         type: Type
     ): Response<NetworkSearchResult> = safeCall {
         val response = client.get<NetworkSearchResult> {
-            url("${BuildConfig.BaseUrl}/")
+            url(BuildConfig.BaseUrl)
             parameter("apiKey", ApiKey)
             parameter("s", title)
             parameter("type", type)
@@ -33,7 +33,7 @@ class OMDbApiImpl(
 
     override suspend fun getDetails(id: String, plot: String): Response<NetworkContent> = safeCall {
         val response = client.get<NetworkContent> {
-            url("${BuildConfig.BaseUrl}/")
+            url(BuildConfig.BaseUrl)
             parameter("apiKey", ApiKey)
             parameter("i", id)
             parameter("plot", plot)
@@ -43,7 +43,7 @@ class OMDbApiImpl(
 
     override suspend fun getEpisodes(id: String, season: Int): Response<NetworkSeason> = safeCall {
         val response = client.get<NetworkSeason> {
-            url("${BuildConfig.BaseUrl}/")
+            url(BuildConfig.BaseUrl)
             parameter("apiKey", ApiKey)
             parameter("i", id)
             parameter("season", season)

@@ -1,82 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	package="com.example.omdb">
+    xmlns:tools="http://schemas.android.com/tools">
 
-	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
-	<application
-		android:name=".framework.BaseApplication"
-		android:allowBackup="false"
-		android:icon="@mipmap/ic_launcher"
-		android:label="@string/app_name"
-		android:roundIcon="@mipmap/ic_launcher_round"
-		android:supportsRtl="false"
-		android:theme="@style/AppTheme"
-		tools:ignore="GoogleAppIndexingWarning"
-		tools:replace="android:supportsRtl">
+    <application
+        android:name=".framework.BaseApplication"
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:theme="@style/AppTheme"
+        tools:targetApi="s">
 
-		<activity
-			android:name=".ui.HomeActivity"
-			android:exported="true"
-			android:screenOrientation="portrait"
-			android:theme="@style/SplashTheme"
-			android:windowSoftInputMode="adjustPan"
-			tools:ignore="LockedOrientationActivity">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
+        <activity
+            android:name=".ui.HomeActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme"
+            android:windowSoftInputMode="adjustPan"
+            tools:ignore="LockedOrientationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-			<nav-graph android:value="@navigation/navigation_graph" />
-		</activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <nav-graph android:value="@navigation/navigation_graph" />
+        </activity>
 
-		<!--Meta Data Start-->
-		<meta-data
-			android:name="com.google.firebase.messaging.default_notification_icon"
-			android:resource="@drawable/ic_notification_badge" />
-		<meta-data
-			android:name="com.google.firebase.messaging.default_notification_color"
-			android:resource="@color/colorAccent" />
-		<meta-data
-			android:name="com.google.firebase.messaging.default_notification_channel_id"
-			android:value="@string/default_notification_channel_id" />
+        <!--Meta Data Start-->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notification_badge" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
 
-		<meta-data
-			android:name="com.facebook.sdk.AutoLogAppEventsEnabled"
-			android:value="false" />
+        <meta-data
+            android:name="com.facebook.sdk.AutoLogAppEventsEnabled"
+            android:value="false" />
 
-		<meta-data
-			android:name="com.facebook.sdk.ApplicationId"
-			android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
-		<activity
-			android:name="com.facebook.FacebookActivity"
-			android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" />
-		<activity
-			android:name="com.facebook.CustomTabActivity"
-			android:exported="true">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW" />
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-				<category android:name="android.intent.category.DEFAULT" />
-				<category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-				<data android:scheme="@string/fb_login_protocol_scheme" />
-			</intent-filter>
-		</activity>
-		<!--Meta Data End-->
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+        <!--Meta Data End-->
 
-		<!--Service Start-->
-		<service
-			android:name=".data.fcm.FirebaseMessagingServiceClass"
-			android:exported="false">
-			<intent-filter>
-				<action android:name="com.google.firebase.MESSAGING_EVENT" />
-			</intent-filter>
-		</service>
-		<!--Service End-->
+        <!--Service Start-->
+        <service
+            android:name=".data.fcm.FirebaseMessagingServiceClass"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <!--Service End-->
 
-	</application>
+    </application>
 </manifest>
