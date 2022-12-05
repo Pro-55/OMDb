@@ -94,7 +94,7 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.10")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.20")
     implementation("androidx.core:core-ktx:1.9.0")
 
     // Material Design Components
@@ -165,7 +165,7 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging-ktx")
     // Authentication
     implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("com.google.android.gms:play-services-auth:20.3.0")
+    implementation("com.google.android.gms:play-services-auth:20.4.0")
 
     // Facebook
     implementation("com.facebook.android:facebook-android-sdk:11.2.0")
@@ -175,8 +175,8 @@ dependencies {
 
     // Test
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test:runner:1.4.0")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    androidTestImplementation("androidx.test:runner:1.5.1")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0")
 
 }
 
