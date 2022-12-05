@@ -13,12 +13,12 @@ plugins {
 }
 
 android {
+    namespace = "com.example.omdb"
     compileSdk = 33
     buildFeatures {
         dataBinding = true
     }
     defaultConfig {
-        applicationId = "com.example.omdb"
         minSdk = 21
         targetSdk = 33
         versionCode = 1
