@@ -108,7 +108,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-common-java8:2.5.1")
 
     // Fragment
-    implementation("androidx.fragment:fragment-ktx:1.5.4")
+    implementation("androidx.fragment:fragment-ktx:1.5.5")
 
     // Navigation Component
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
