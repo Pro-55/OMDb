@@ -14,13 +14,13 @@ plugins {
 
 android {
     namespace = "com.example.omdb"
-    compileSdk = 33
+    compileSdk = 34
     dataBinding {
         enable = true
     }
     defaultConfig {
         minSdk = 21
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -108,7 +108,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-common-java8:2.6.1")
 
     // Fragment
-    implementation("androidx.fragment:fragment-ktx:1.6.0")
+    implementation("androidx.fragment:fragment-ktx:1.6.1")
 
     // Navigation Component
     implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
@@ -118,7 +118,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     // RecyclerView
-    implementation("androidx.recyclerview:recyclerview:1.3.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.1")
 
     // RxAndroid implementation
     implementation("io.reactivex:rxandroid:1.2.1")
@@ -141,11 +141,11 @@ dependencies {
     kapt("com.github.bumptech.glide:compiler:4.12.0")
 
     // Room
-    implementation("androidx.room:room-runtime:2.5.1")
-    kapt("androidx.room:room-compiler:2.5.1")
+    implementation("androidx.room:room-runtime:2.5.2")
+    kapt("androidx.room:room-compiler:2.5.2")
 
     // Kotlin Extensions and Coroutines support for Room
-    implementation("androidx.room:room-ktx:2.5.1")
+    implementation("androidx.room:room-ktx:2.5.2")
 
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
@@ -156,7 +156,7 @@ dependencies {
     kapt("com.google.dagger:hilt-compiler:2.43.2")
 
     // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:26.5.0"))
+    implementation(platform("com.google.firebase:firebase-bom:32.2.0"))
     // Google Analytics
     implementation("com.google.firebase:firebase-analytics-ktx")
     // Crashlytics
@@ -165,7 +165,7 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging-ktx")
     // Authentication
     implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("com.google.android.gms:play-services-auth:20.5.0")
+    implementation("com.google.android.gms:play-services-auth:20.6.0")
 
     // Facebook
     implementation("com.facebook.android:facebook-android-sdk:11.2.0")
