@@ -1,37 +1,36 @@
 plugins {
-    apply {
-        id("com.android.application")
-        kotlin("android")
-        kotlin("kapt")
-        kotlin("plugin.serialization")
-        kotlin("plugin.parcelize")
-        id("androidx.navigation.safeargs")
-        id("com.google.gms.google-services")
-        id("com.google.firebase.crashlytics")
-        id("dagger.hilt.android.plugin")
-    }
+    alias(libs.plugins.android.gradle)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.navigation.safeargs)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
+    alias(libs.plugins.hilt)
 }
 
 android {
     namespace = "com.example.omdb"
-    compileSdk = 34
+    compileSdk = libs.versions.compileSdk.get().toInt()
+    defaultConfig {
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
+        versionCode = getVersionCode()
+        versionName = getVersionName()
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
+        }
+    }
     dataBinding {
         enable = true
     }
-    defaultConfig {
-        minSdk = 21
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments["room.schemaLocation"] = "$projectDir/schemas"
-            }
-        }
+    buildFeatures {
+        buildConfig = true
     }
     buildTypes {
-        getByName("debug") {
+        debug {
             applicationIdSuffix = ".debug"
             buildConfigField(
                 "String",
@@ -56,7 +55,7 @@ android {
                 "proguard-rules.pro"
             )
         }
-        getByName("release") {
+        release {
             buildConfigField(
                 "String",
                 "BaseUrl",
@@ -82,11 +81,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = getJavaVersion()
+        targetCompatibility = getJavaVersion()
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+        jvmTarget = getJavaVersion().toString()
     }
 }
 
@@ -94,92 +93,103 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.21")
-    implementation("androidx.core:core-ktx:1.10.1")
+    implementation(libs.kotlin.stdlib.jdk7)
+    implementation(libs.androidx.core)
 
     // Material Design Components
-    implementation("com.google.android.material:material:1.9.0")
+    implementation(libs.material)
 
     // Architecture Components Lifecycle Extensions
-    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-common-java8:2.6.1")
+    implementation(libs.androidx.lifecycle.extensions)
+    implementation(libs.androidx.lifecycle.runtime)
+    implementation(libs.androidx.lifecycle.viewmodel)
+    implementation(libs.androidx.lifecycle.livedata)
+    implementation(libs.androidx.lifecycle.common.java8)
 
     // Fragment
-    implementation("androidx.fragment:fragment-ktx:1.6.1")
+    implementation(libs.androidx.fragment)
 
     // Navigation Component
-    implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
-    implementation("androidx.navigation:navigation-ui-ktx:2.6.0")
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
 
     // Constraint Layout
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation(libs.androidx.constraintlayout)
 
     // RecyclerView
-    implementation("androidx.recyclerview:recyclerview:1.3.1")
+    implementation(libs.androidx.recyclerview)
 
     // RxAndroid implementation
-    implementation("io.reactivex:rxandroid:1.2.1")
+    implementation(libs.rxAndroid)
 
     // RxTextViewChange
-    implementation("com.jakewharton.rxbinding:rxbinding:1.0.1")
+    implementation(libs.rxBinding)
 
     // Kotlinx Serialization
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+    implementation(libs.kotlinx.serialization)
 
     // Ktor
-    implementation("io.ktor:ktor-client-core:1.6.3")
-    implementation("io.ktor:ktor-client-cio:1.6.3")
-    implementation("io.ktor:ktor-client-serialization:1.6.3")
-    implementation("io.ktor:ktor-client-logging:1.6.3")
-    implementation("ch.qos.logback:logback-classic:1.2.3")
+    implementation(libs.ktor.core)
+    implementation(libs.ktor.okhttp)
+    implementation(libs.ktor.content.negotiation)
+    implementation(libs.ktor.serialization)
+    implementation(libs.ktor.logging)
 
     // Glide
-    implementation("com.github.bumptech.glide:glide:4.12.0")
-    kapt("com.github.bumptech.glide:compiler:4.12.0")
+    implementation(libs.glide)
+    ksp(libs.glide.compiler)
 
     // Room
-    implementation("androidx.room:room-runtime:2.5.2")
-    kapt("androidx.room:room-compiler:2.5.2")
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
 
     // Kotlin Extensions and Coroutines support for Room
-    implementation("androidx.room:room-ktx:2.5.2")
+    implementation(libs.androidx.room)
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 
     // Hilt DI
-    implementation("com.google.dagger:hilt-android:2.43.2")
-    kapt("com.google.dagger:hilt-compiler:2.43.2")
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
 
     // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:32.2.0"))
+    implementation(platform(libs.firebase.bom))
     // Google Analytics
-    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation(libs.firebase.analytics)
     // Crashlytics
-    implementation("com.google.firebase:firebase-crashlytics-ktx")
+    implementation(libs.firebase.crashlytics)
     // Cloud Messaging
-    implementation("com.google.firebase:firebase-messaging-ktx")
+    implementation(libs.firebase.messaging)
     // Authentication
-    implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("com.google.android.gms:play-services-auth:20.6.0")
+    implementation(libs.firebase.auth)
+    implementation(libs.play.services.auth)
 
     // Facebook
-    implementation("com.facebook.android:facebook-android-sdk:11.2.0")
+    implementation(libs.facebook.android.sdk)
 
     // ProgressButton
-    implementation("com.github.razir.progressbutton:progressbutton:2.1.0")
+    implementation(libs.progressbutton)
 
     // Test
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test:runner:1.5.2")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.runner)
+    androidTestImplementation(libs.androidx.espresso.core)
 }
 
-kapt {
-    correctErrorTypes = true
+fun getVersionCode(): Int {
+    val major = libs.versions.major.get().toInt() * 100000
+    val minor = libs.versions.minor.get().toInt() * 100
+    val hotfix = libs.versions.hotfix.get().toInt()
+    return 100000000 + major + minor + hotfix
 }
+
+fun getVersionName(): String {
+    val major = libs.versions.major.get()
+    val minor = libs.versions.minor.get()
+    val hotfix = libs.versions.hotfix.get()
+    return "$major.$minor.$hotfix"
+}
+
+fun getJavaVersion(): JavaVersion = JavaVersion.VERSION_17
