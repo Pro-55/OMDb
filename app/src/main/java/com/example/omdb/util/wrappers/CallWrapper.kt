@@ -2,7 +2,9 @@ package com.example.omdb.util.wrappers
 
 import com.example.omdb.models.network.Response
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import io.ktor.client.features.*
+import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.plugins.RedirectResponseException
+import io.ktor.client.plugins.ServerResponseException
 import java.net.UnknownHostException
 
 suspend fun <T> safeCall(block: suspend () -> Response<T>): Response<T> {
