@@ -8,5 +8,8 @@ sealed class Response<T>(val msg: String? = null, val data: T? = null) {
     class InvalidPathException<T> : Response<T>(msg = Constants.ERROR_MESSAGE_INVALID_PATH)
     class InvalidRequestException<T> : Response<T>(msg = Constants.ERROR_MESSAGE_INVALID_REQUEST)
     class ServerException<T> : Response<T>(msg = Constants.ERROR_MESSAGE_SERVER_EXCEPTION)
+    class RequestTimeoutException<T> :
+        Response<T>(msg = Constants.ERROR_MESSAGE_REQUEST_TIMEOUT_EXCEPTION)
+
     class UnknownException<T> : Response<T>(msg = Constants.ERROR_MESSAGE_UNKNOWN)
 }

@@ -13,9 +13,7 @@ data class Episode(
         if (_id != other._id) return false
         if (episode != other.episode) return false
         if (title != other.title) return false
-        if (released != other.released) return false
-
-        return true
+        return released == other.released
     }
 
     override fun hashCode(): Int {

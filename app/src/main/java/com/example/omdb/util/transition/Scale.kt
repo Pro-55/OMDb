@@ -11,7 +11,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.omdb.util.TransitionUtil
 
-class Scale : Visibility {
+class Scale @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    minScale: Float = 0F,
+    direction: Direction? = null,
+    pivotX: Float = 0F,
+    pivotY: Float = 0F
+) : Visibility(context, attrs) {
 
     companion object {
         private const val SCALE_X = "scale:scaleX"
@@ -32,18 +39,16 @@ class Scale : Visibility {
     private var pivotY = 0F
     private var direction: Direction? = null
 
-    constructor(context: Context, attrs: AttributeSet? = null) : super(context, attrs)
-
-    constructor(
-        minScale: Float = 0F,
-        direction: Direction? = null,
-        pivotX: Float = 0F,
-        pivotY: Float = 0F
-    ) {
+    init {
         setValues(minScale, direction, pivotX, pivotY)
     }
 
-    private fun setValues(minScale: Float, direction: Direction?, pivotX: Float, pivotY: Float) {
+    private fun setValues(
+        minScale: Float,
+        direction: Direction?,
+        pivotX: Float,
+        pivotY: Float
+    ) {
         require(minScale >= 0F) { "Min Scale can not be less than Zero" }
         this.minScale = minScale
         this.direction = direction
