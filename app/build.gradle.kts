@@ -29,9 +29,18 @@ android {
     buildFeatures {
         buildConfig = true
     }
+    signingConfigs {
+        create("config") {
+            storeFile = file(project.property("STORE_PATH") as String)
+            storePassword = project.property("STORE_PASSWORD") as String
+            keyAlias = project.property("KEY_ALIAS") as String
+            keyPassword = project.property("KEY_PASSWORD") as String
+        }
+    }
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
+            signingConfig = signingConfigs.getByName("config")
             buildConfigField(
                 "String",
                 "BaseUrl",
@@ -56,6 +65,7 @@ android {
             )
         }
         release {
+            signingConfig = signingConfigs.getByName("config")
             buildConfigField(
                 "String",
                 "BaseUrl",

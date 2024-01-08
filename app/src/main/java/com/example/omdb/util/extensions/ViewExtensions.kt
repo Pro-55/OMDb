@@ -60,6 +60,7 @@ fun View.visibleWithScaleFade(
     val transitionSet = TransitionSet().apply {
         addTransition(
             Scale(
+                context = context,
                 minScale = minScale,
                 direction = direction,
                 pivotX = pivotX,
@@ -85,6 +86,7 @@ fun View.goneWithScaleFade(
     val transitionSet = TransitionSet().apply {
         addTransition(
             Scale(
+                context = context,
                 minScale = minScale,
                 direction = direction,
                 pivotX = pivotX,
@@ -110,6 +112,7 @@ fun View.invisibleWithScaleFade(
     val transitionSet = TransitionSet().apply {
         addTransition(
             Scale(
+                context = context,
                 minScale = minScale,
                 direction = direction,
                 pivotX = pivotX,

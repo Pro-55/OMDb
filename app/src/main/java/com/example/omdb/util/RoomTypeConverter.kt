@@ -7,7 +7,7 @@ class RoomTypeConverter {
 
     @TypeConverter
     fun fromContentType(value: Int?): Type {
-        return Type.values()[value ?: 0]
+        return Type.entries[value ?: 0]
     }
 
     @TypeConverter

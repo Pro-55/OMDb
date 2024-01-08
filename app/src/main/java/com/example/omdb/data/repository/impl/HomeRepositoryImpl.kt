@@ -5,7 +5,12 @@ import androidx.room.withTransaction
 import com.example.omdb.data.api.contract.OMDbApi
 import com.example.omdb.data.local.AppDatabase
 import com.example.omdb.data.repository.contract.HomeRepository
-import com.example.omdb.models.*
+import com.example.omdb.models.Content
+import com.example.omdb.models.Resource
+import com.example.omdb.models.SearchResult
+import com.example.omdb.models.Season
+import com.example.omdb.models.Type
+import com.example.omdb.models.User
 import com.example.omdb.models.local.EntityUser
 import com.example.omdb.models.local.parse
 import com.example.omdb.models.network.Response
@@ -15,7 +20,7 @@ import com.example.omdb.util.extensions.isSuccessful
 import com.example.omdb.util.wrappers.resourceFlow
 import kotlinx.coroutines.flow.Flow
 
-class HomeRepositoryImpl constructor(
+class HomeRepositoryImpl(
     private val api: OMDbApi,
     private val db: AppDatabase,
     private val sp: SharedPreferences

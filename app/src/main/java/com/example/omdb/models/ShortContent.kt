@@ -18,9 +18,7 @@ data class ShortContent(
         if (_id != other._id) return false
         if (title != other.title) return false
         if (year != other.year) return false
-        if (poster != other.poster) return false
-
-        return true
+        return poster == other.poster
     }
 
     override fun hashCode(): Int {
