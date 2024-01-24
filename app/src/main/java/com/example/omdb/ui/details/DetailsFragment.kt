@@ -29,7 +29,11 @@ import com.example.omdb.models.Resource
 import com.example.omdb.models.ShortContent
 import com.example.omdb.ui.HomeViewModel
 import com.example.omdb.util.Constants
-import com.example.omdb.util.extensions.*
+import com.example.omdb.util.extensions.addPosterPlaceholder
+import com.example.omdb.util.extensions.diskCacheStrategyAll
+import com.example.omdb.util.extensions.glide
+import com.example.omdb.util.extensions.showShortSnackBar
+import com.example.omdb.util.extensions.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -120,19 +124,19 @@ class DetailsFragment : BaseFragment() {
                 override fun onLoadFailed(
                     e: GlideException?,
                     model: Any?,
-                    target: Target<Bitmap>?,
+                    target: Target<Bitmap>,
                     isFirstResource: Boolean
                 ): Boolean = false
 
                 override fun onResourceReady(
-                    resource: Bitmap?,
-                    model: Any?,
+                    resource: Bitmap,
+                    model: Any,
                     target: Target<Bitmap>?,
-                    dataSource: DataSource?,
+                    dataSource: DataSource,
                     isFirstResource: Boolean
                 ): Boolean {
-                    val bitmapHeight = resource?.height ?: 0
-                    val bitmapWidth = resource?.width ?: 0
+                    val bitmapHeight = resource.height
+                    val bitmapWidth = resource.width
                     if (bitmapHeight > 0) height = bitmapHeight
                     if (bitmapWidth > 0) width = bitmapWidth
                     return false
@@ -163,19 +167,19 @@ class DetailsFragment : BaseFragment() {
                     override fun onLoadFailed(
                         e: GlideException?,
                         model: Any?,
-                        target: Target<Bitmap>?,
+                        target: Target<Bitmap>,
                         isFirstResource: Boolean
                     ): Boolean = false
 
                     override fun onResourceReady(
-                        resource: Bitmap?,
-                        model: Any?,
+                        resource: Bitmap,
+                        model: Any,
                         target: Target<Bitmap>?,
-                        dataSource: DataSource?,
+                        dataSource: DataSource,
                         isFirstResource: Boolean
                     ): Boolean {
-                        val bitmapHeight = resource?.height ?: 0
-                        val bitmapWidth = resource?.width ?: 0
+                        val bitmapHeight = resource.height
+                        val bitmapWidth = resource.width
                         if (bitmapHeight > 0) height = bitmapHeight
                         if (bitmapWidth > 0) width = bitmapWidth
                         return false

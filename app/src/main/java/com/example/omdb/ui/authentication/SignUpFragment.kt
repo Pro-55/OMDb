@@ -176,9 +176,9 @@ class SignUpFragment : BaseFragment() {
                 Log.e(TAG, "TestLog: Facebook sign in canceled!")
             }
 
-            override fun onError(e: FacebookException) {
-                Log.e(TAG, "TestLog: Facebook sign in failed: $e")
-                crashlytics.recordException(e)
+            override fun onError(error: FacebookException) {
+                Log.e(TAG, "TestLog: Facebook sign in failed: $error")
+                crashlytics.recordException(error)
                 showShortSnackBar(Constants.REQUEST_FAILED_MESSAGE)
             }
 
