@@ -1,7 +1,7 @@
 package com.example.omdb.util
 
 import androidx.room.TypeConverter
-import com.example.omdb.models.Type
+import com.example.omdb.domain.model.Type
 
 class RoomTypeConverter {
 

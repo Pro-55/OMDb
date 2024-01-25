@@ -21,13 +21,23 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentSearchBinding
+import com.example.omdb.domain.model.Resource
+import com.example.omdb.domain.model.SearchResult
+import com.example.omdb.domain.model.ShortContent
+import com.example.omdb.domain.model.Type
 import com.example.omdb.framework.BaseFragment
-import com.example.omdb.models.Resource
-import com.example.omdb.models.SearchResult
-import com.example.omdb.models.ShortContent
-import com.example.omdb.models.Type
-import com.example.omdb.ui.HomeViewModel
-import com.example.omdb.util.extensions.*
+import com.example.omdb.ui.home.HomeViewModel
+import com.example.omdb.util.extensions.addPosterPlaceholder
+import com.example.omdb.util.extensions.diskCacheStrategyAll
+import com.example.omdb.util.extensions.glide
+import com.example.omdb.util.extensions.gone
+import com.example.omdb.util.extensions.goneWithFade
+import com.example.omdb.util.extensions.goneWithScaleFade
+import com.example.omdb.util.extensions.hideKeyboard
+import com.example.omdb.util.extensions.showShortToast
+import com.example.omdb.util.extensions.visible
+import com.example.omdb.util.extensions.visibleWithFade
+import com.example.omdb.util.extensions.visibleWithScaleFade
 import com.example.omdb.views.CustomGridLayoutManager
 import com.jakewharton.rxbinding.widget.RxTextView
 import dagger.hilt.android.AndroidEntryPoint
@@ -152,10 +162,8 @@ class SearchFragment : BaseFragment() {
         adapter?.listener = object : SearchAdapter.Listener {
             override fun onClick(content: ShortContent, sharedCard: View, sharedImage: View) {
                 clearFocus()
-                val action = SearchFragmentDirections.navigateSearchToDetails().apply {
-                    shortContent = content
-                    hasSharedElements = true
-                }
+                val action = SearchFragmentDirections.navigateSearchToDetails(content)
+                    .apply { hasSharedElements = true }
                 val extras = FragmentNavigatorExtras(
                     sharedCard to sharedCard.transitionName,
                     sharedImage to sharedImage.transitionName

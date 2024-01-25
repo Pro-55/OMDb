@@ -13,12 +13,13 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavDeepLinkBuilder
 import com.example.omdb.R
-import com.example.omdb.ui.HomeActivity
+import com.example.omdb.framework.HomeActivity
 import com.example.omdb.util.Constants
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 class FirebaseMessagingServiceClass : FirebaseMessagingService() {
 

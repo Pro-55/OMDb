@@ -1,7 +1,7 @@
 package com.example.omdb.util.extensions
 
-import com.example.omdb.models.DayPart
-import java.util.*
+import com.example.omdb.domain.model.DayPart
+import java.util.Calendar
 
 fun Calendar.getPartOfDay(): DayPart {
     val half = get(Calendar.AM_PM)

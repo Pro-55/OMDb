@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.omdb.models.local.ContentRelation
-import com.example.omdb.models.local.EntityContent
+import com.example.omdb.data.local.model.ContentRelation
+import com.example.omdb.data.local.model.EntityContent
 
 @Dao
 interface ContentDao {

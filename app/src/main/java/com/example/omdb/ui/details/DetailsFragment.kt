@@ -23,11 +23,11 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentDetailsBinding
+import com.example.omdb.domain.model.Content
+import com.example.omdb.domain.model.Resource
+import com.example.omdb.domain.model.ShortContent
 import com.example.omdb.framework.BaseFragment
-import com.example.omdb.models.Content
-import com.example.omdb.models.Resource
-import com.example.omdb.models.ShortContent
-import com.example.omdb.ui.HomeViewModel
+import com.example.omdb.ui.home.HomeViewModel
 import com.example.omdb.util.Constants
 import com.example.omdb.util.extensions.addPosterPlaceholder
 import com.example.omdb.util.extensions.diskCacheStrategyAll

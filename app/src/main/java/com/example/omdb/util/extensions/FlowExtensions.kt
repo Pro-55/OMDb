@@ -1,12 +1,17 @@
 package com.example.omdb.util.extensions
 
 import android.util.Log
-import com.example.omdb.models.Resource
+import com.example.omdb.domain.model.Resource
 import com.example.omdb.util.Constants
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.retryWhen
 
 fun <T> Flow<T>.asIoFlow(
     doRetry: Boolean = false

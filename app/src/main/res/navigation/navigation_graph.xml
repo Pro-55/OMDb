@@ -6,7 +6,7 @@
     app:startDestination="@id/mainFragment">
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.omdb.ui.MainFragment"
+        android:name="com.example.omdb.ui.router.MainFragment"
         android:label="MainFragment"
         tools:layout="@layout/fragment_main">
         <action
@@ -55,7 +55,7 @@
         tools:layout="@layout/fragment_search">
         <argument
             android:name="category"
-            app:argType="com.example.omdb.models.Type" />
+            app:argType="com.example.omdb.domain.model.Type" />
         <action
             android:id="@+id/navigateSearchToDetails"
             app:destination="@id/detailsFragment" />
@@ -67,8 +67,7 @@
         tools:layout="@layout/fragment_details">
         <argument
             android:name="shortContent"
-            android:defaultValue="@null"
-            app:argType="com.example.omdb.models.ShortContent"
+            app:argType="com.example.omdb.domain.model.ShortContent"
             app:nullable="true" />
         <argument
             android:name="contentId"
@@ -125,12 +124,12 @@
     </fragment>
     <fragment
         android:id="@+id/teamDetailsFragment"
-        android:name="com.example.omdb.ui.details.teamdetails.TeamDetailsFragment"
+        android:name="com.example.omdb.ui.details.team_details.TeamDetailsFragment"
         android:label="TeamDetailsFragment"
         tools:layout="@layout/fragment_team_details">
         <argument
             android:name="teamDetails"
-            app:argType="com.example.omdb.models.TeamDetails" />
+            app:argType="com.example.omdb.domain.model.TeamDetails" />
     </fragment>
     <fragment
         android:id="@+id/ratingsFragment"
@@ -139,7 +138,7 @@
         tools:layout="@layout/fragment_ratings">
         <argument
             android:name="ratings"
-            app:argType="com.example.omdb.models.Rating[]" />
+            app:argType="com.example.omdb.domain.model.Rating[]" />
     </fragment>
     <fragment
         android:id="@+id/episodesFragment"

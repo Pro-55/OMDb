@@ -11,12 +11,12 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentEpisodesBinding
+import com.example.omdb.domain.model.Episode
+import com.example.omdb.domain.model.Resource
+import com.example.omdb.domain.model.Season
+import com.example.omdb.domain.model.ShortContent
 import com.example.omdb.framework.BaseFragment
-import com.example.omdb.models.Episode
-import com.example.omdb.models.Resource
-import com.example.omdb.models.Season
-import com.example.omdb.models.ShortContent
-import com.example.omdb.ui.HomeViewModel
+import com.example.omdb.ui.home.HomeViewModel
 import com.example.omdb.util.extensions.showShortSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -62,8 +62,7 @@ class EpisodesFragment : BaseFragment() {
                     year = episode.released,
                     poster = null
                 )
-                val action = EpisodesFragmentDirections.navigateEpisodesToDetails()
-                    .apply { this.shortContent = shortContent }
+                val action = EpisodesFragmentDirections.navigateEpisodesToDetails(shortContent)
                 findNavController().navigate(action)
             }
         }

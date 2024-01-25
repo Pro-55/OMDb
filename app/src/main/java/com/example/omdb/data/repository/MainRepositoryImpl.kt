@@ -1,4 +1,4 @@
-package com.example.omdb.data.repository.impl
+package com.example.omdb.data.repository
 
 import android.content.SharedPreferences
 import androidx.room.withTransaction
@@ -8,26 +8,26 @@ import com.example.omdb.data.local.model.parse
 import com.example.omdb.data.network.api.contract.OMDbApi
 import com.example.omdb.data.network.model.Response
 import com.example.omdb.data.network.model.parse
-import com.example.omdb.data.repository.contract.HomeRepository
 import com.example.omdb.domain.model.Content
 import com.example.omdb.domain.model.Resource
 import com.example.omdb.domain.model.SearchResult
 import com.example.omdb.domain.model.Season
 import com.example.omdb.domain.model.Type
 import com.example.omdb.domain.model.User
+import com.example.omdb.domain.repository.MainRepository
 import com.example.omdb.util.Constants
 import com.example.omdb.util.extensions.isSuccessful
 import com.example.omdb.util.wrappers.resourceFlow
 import kotlinx.coroutines.flow.Flow
 
-class HomeRepositoryImpl(
+class MainRepositoryImpl(
     private val api: OMDbApi,
     private val db: AppDatabase,
     private val sp: SharedPreferences
-) : HomeRepository {
+) : MainRepository {
 
     // Global
-    private val TAG = HomeRepositoryImpl::class.java.simpleName
+    private val TAG = MainRepositoryImpl::class.java.simpleName
 
     override fun signUp(user: EntityUser): Flow<Resource<User>> = resourceFlow {
         val insertResult = db.userDao.insert(user)

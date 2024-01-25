@@ -13,18 +13,22 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.request.RequestOptions
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentHomeBinding
+import com.example.omdb.domain.model.DayPart
+import com.example.omdb.domain.model.Resource
+import com.example.omdb.domain.model.Type
+import com.example.omdb.domain.model.User
 import com.example.omdb.framework.BaseFragment
-import com.example.omdb.models.DayPart
-import com.example.omdb.models.Resource
-import com.example.omdb.models.Type
-import com.example.omdb.models.User
-import com.example.omdb.ui.HomeViewModel
 import com.example.omdb.util.Constants
-import com.example.omdb.util.extensions.*
+import com.example.omdb.util.extensions.addProfilePlaceholder
+import com.example.omdb.util.extensions.diskCacheStrategyAll
+import com.example.omdb.util.extensions.getPartOfDay
+import com.example.omdb.util.extensions.glide
+import com.example.omdb.util.extensions.showLongSnackBar
+import com.example.omdb.util.extensions.showShortSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import java.util.*
+import java.util.Calendar
 import kotlin.properties.Delegates
 
 @AndroidEntryPoint

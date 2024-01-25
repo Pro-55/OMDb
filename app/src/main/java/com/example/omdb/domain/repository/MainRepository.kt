@@ -1,4 +1,4 @@
-package com.example.omdb.data.repository.contract
+package com.example.omdb.domain.repository
 
 import com.example.omdb.data.local.model.EntityUser
 import com.example.omdb.domain.model.Content
@@ -9,7 +9,7 @@ import com.example.omdb.domain.model.Type
 import com.example.omdb.domain.model.User
 import kotlinx.coroutines.flow.Flow
 
-interface HomeRepository {
+interface MainRepository {
 
     fun signUp(user: EntityUser): Flow<Resource<User>>
 

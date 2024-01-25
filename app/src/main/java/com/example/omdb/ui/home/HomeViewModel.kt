@@ -1,4 +1,4 @@
-package com.example.omdb.ui
+package com.example.omdb.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

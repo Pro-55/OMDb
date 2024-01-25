@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.omdb.R
 import com.example.omdb.databinding.LayoutRatingItemBinding
-import com.example.omdb.models.Rating
+import com.example.omdb.domain.model.Rating
 
 class RatingsAdapter : ListAdapter<Rating, RatingsAdapter.ViewHolder>(RatingDC()) {
 

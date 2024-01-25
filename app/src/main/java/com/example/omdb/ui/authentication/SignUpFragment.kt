@@ -13,14 +13,22 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.request.RequestOptions
 import com.example.omdb.BuildConfig
 import com.example.omdb.R
+import com.example.omdb.data.local.model.EntityUser
 import com.example.omdb.databinding.FragmentSignUpBinding
+import com.example.omdb.domain.model.Resource
 import com.example.omdb.framework.BaseFragment
-import com.example.omdb.models.Resource
-import com.example.omdb.models.local.EntityUser
-import com.example.omdb.ui.HomeViewModel
+import com.example.omdb.ui.home.HomeViewModel
 import com.example.omdb.util.Constants
 import com.example.omdb.util.Constants.REQUEST_GOOGLE_SIGN_IN
-import com.example.omdb.util.extensions.*
+import com.example.omdb.util.extensions.addProfilePlaceholder
+import com.example.omdb.util.extensions.disable
+import com.example.omdb.util.extensions.diskCacheStrategyAll
+import com.example.omdb.util.extensions.enable
+import com.example.omdb.util.extensions.glide
+import com.example.omdb.util.extensions.hideKeyboard
+import com.example.omdb.util.extensions.isValidEmail
+import com.example.omdb.util.extensions.showShortSnackBar
+import com.example.omdb.util.extensions.showShortToast
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -33,10 +41,14 @@ import com.github.razir.progressbutton.showProgress
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.*
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.FacebookAuthProvider
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
+import java.util.UUID
 import javax.inject.Inject
 
 @AndroidEntryPoint
