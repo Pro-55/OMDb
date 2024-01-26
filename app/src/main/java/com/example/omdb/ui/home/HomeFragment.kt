@@ -60,10 +60,11 @@ class HomeFragment : BaseFragment() {
 
         setupView()
 
-        getUser()
+        viewModel.getCurrentUser()
 
         startGreetingJob()
 
+        setObservers()
     }
 
     private fun setupView() {
@@ -89,15 +90,14 @@ class HomeFragment : BaseFragment() {
         }
     }
 
-    private fun getUser() {
-        viewModel.getCurrentUser()
-            .observe(viewLifecycleOwner) { resource ->
-                when (resource) {
-                    is Resource.Loading -> Unit
-                    is Resource.Success -> setUser(resource.data)
-                    is Resource.Error -> showShortSnackBar(resource.msg)
-                }
+    private fun setObservers() {
+        viewModel.user.observe(viewLifecycleOwner) { resource ->
+            when (resource) {
+                is Resource.Loading -> Unit
+                is Resource.Success -> setUser(resource.data)
+                is Resource.Error -> showShortSnackBar(resource.msg)
             }
+        }
     }
 
     private fun setUser(user: User?) {

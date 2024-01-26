@@ -26,7 +26,6 @@ import com.example.omdb.domain.model.SearchResult
 import com.example.omdb.domain.model.ShortContent
 import com.example.omdb.domain.model.Type
 import com.example.omdb.framework.BaseFragment
-import com.example.omdb.ui.home.HomeViewModel
 import com.example.omdb.util.extensions.addPosterPlaceholder
 import com.example.omdb.util.extensions.diskCacheStrategyAll
 import com.example.omdb.util.extensions.glide
@@ -53,7 +52,7 @@ class SearchFragment : BaseFragment() {
     private val TAG = SearchFragment::class.java.simpleName
     private lateinit var binding: FragmentSearchBinding
     private val args by navArgs<SearchFragmentArgs>()
-    private val viewModel by viewModels<HomeViewModel>()
+    private val viewModel by viewModels<SearchViewModel>()
     private val glide by lazy { glide() }
     private val category by lazy { args.category }
     private var isLoading = false

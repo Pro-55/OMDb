@@ -27,7 +27,6 @@ import com.example.omdb.domain.model.Content
 import com.example.omdb.domain.model.Resource
 import com.example.omdb.domain.model.ShortContent
 import com.example.omdb.framework.BaseFragment
-import com.example.omdb.ui.home.HomeViewModel
 import com.example.omdb.util.Constants
 import com.example.omdb.util.extensions.addPosterPlaceholder
 import com.example.omdb.util.extensions.diskCacheStrategyAll
@@ -43,7 +42,7 @@ class DetailsFragment : BaseFragment() {
     private val TAG = DetailsFragment::class.java.simpleName
     private lateinit var binding: FragmentDetailsBinding
     private val args by navArgs<DetailsFragmentArgs>()
-    private val viewModel by viewModels<HomeViewModel>()
+    private val viewModel by viewModels<DetailsViewModel>()
     private val glide by lazy { glide() }
     private var adapter: SeasonsAdapter? = null
     private var shortContent: ShortContent? = null
@@ -78,6 +77,8 @@ class DetailsFragment : BaseFragment() {
 
         if (shortContent != null) setShortData(shortContent!!)
 
+        setObservers()
+
         return binding.root
     }
 
@@ -86,7 +87,6 @@ class DetailsFragment : BaseFragment() {
 
         if (content != null) bindDetails(content!!)
         else if (!contentId.isNullOrEmpty()) viewModel.getDetails(contentId!!)
-            .observe(viewLifecycleOwner) { bindDetailsResource(it) }
         else {
             requireActivity().showShortSnackBar(Constants.REQUEST_FAILED_MESSAGE)
             onBackPressed()
@@ -95,6 +95,10 @@ class DetailsFragment : BaseFragment() {
 
     private fun setListeners() {
         binding.efabShare.setOnClickListener { showShareIntent() }
+    }
+
+    private fun setObservers() {
+        viewModel.content.observe(viewLifecycleOwner) { bindDetailsResource(it) }
     }
 
     private fun setupRecyclerview() {
