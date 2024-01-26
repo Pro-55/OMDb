@@ -18,18 +18,51 @@ import com.example.omdb.domain.repository.MainRepository
 import com.example.omdb.util.Constants
 import com.example.omdb.util.extensions.isSuccessful
 import com.example.omdb.util.wrappers.resourceFlow
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.tasks.await
+import java.util.UUID
 
 class MainRepositoryImpl(
     private val api: OMDbApi,
     private val db: AppDatabase,
-    private val sp: SharedPreferences
+    private val sp: SharedPreferences,
+    private val auth: FirebaseAuth
 ) : MainRepository {
 
     // Global
     private val TAG = MainRepositoryImpl::class.java.simpleName
 
-    override fun signUp(user: EntityUser): Flow<Resource<User>> = resourceFlow {
+    override fun fetchFirebaseUser(
+        credential: AuthCredential
+    ): Flow<Resource<FirebaseUser>> = resourceFlow {
+        val user = auth.signInWithCredential(credential)
+            .await()
+            ?.user
+
+        if (user == null) {
+            emit(Resource.Error(msg = Constants.ERROR_MESSAGE_UNKNOWN))
+            return@resourceFlow
+        }
+
+        emit(Resource.Success(data = user))
+    }
+
+    override fun signUp(
+        firstName: String,
+        lastName: String,
+        email: String,
+        profileUrl: String?
+    ): Flow<Resource<User>> = resourceFlow {
+        val user = EntityUser(
+            _id = auth.currentUser?.uid ?: UUID.randomUUID().toString(),
+            firstName = firstName,
+            lastName = lastName,
+            email = email,
+            profileUrl = profileUrl
+        )
         val insertResult = db.userDao.insert(user)
         if (insertResult > -1) {
             with(sp.edit()) {
