@@ -1,6 +1,6 @@
 package com.example.omdb.util.wrappers
 
-import com.example.omdb.models.network.Response
+import com.example.omdb.data.network.model.Response
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.HttpRequestTimeoutException

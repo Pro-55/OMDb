@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.example.omdb.R
 import com.example.omdb.databinding.LayoutSearchItemBinding
-import com.example.omdb.models.ShortContent
+import com.example.omdb.domain.model.ShortContent
 import com.example.omdb.util.extensions.addPosterPlaceholder
 import com.example.omdb.util.extensions.diskCacheStrategyAll
 import com.example.omdb.util.listners.OnHoldListener

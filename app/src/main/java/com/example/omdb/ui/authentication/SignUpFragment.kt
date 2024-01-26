@@ -14,13 +14,19 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.omdb.BuildConfig
 import com.example.omdb.R
 import com.example.omdb.databinding.FragmentSignUpBinding
+import com.example.omdb.domain.model.Resource
 import com.example.omdb.framework.BaseFragment
-import com.example.omdb.models.Resource
-import com.example.omdb.models.local.EntityUser
-import com.example.omdb.ui.HomeViewModel
 import com.example.omdb.util.Constants
 import com.example.omdb.util.Constants.REQUEST_GOOGLE_SIGN_IN
-import com.example.omdb.util.extensions.*
+import com.example.omdb.util.extensions.addProfilePlaceholder
+import com.example.omdb.util.extensions.disable
+import com.example.omdb.util.extensions.diskCacheStrategyAll
+import com.example.omdb.util.extensions.enable
+import com.example.omdb.util.extensions.glide
+import com.example.omdb.util.extensions.hideKeyboard
+import com.example.omdb.util.extensions.isValidEmail
+import com.example.omdb.util.extensions.showShortSnackBar
+import com.example.omdb.util.extensions.showShortToast
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -33,10 +39,11 @@ import com.github.razir.progressbutton.showProgress
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.*
+import com.google.firebase.auth.FacebookAuthProvider
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -44,10 +51,9 @@ class SignUpFragment : BaseFragment() {
 
     //Global
     private val TAG = SignUpFragment::class.java.simpleName
-    @Inject lateinit var auth: FirebaseAuth
     @Inject lateinit var crashlytics: FirebaseCrashlytics
     private lateinit var binding: FragmentSignUpBinding
-    private val viewModel by viewModels<HomeViewModel>()
+    private val viewModel by viewModels<SignUpViewModel>()
     private val fbCallbackManager: CallbackManager by lazy { CallbackManager.Factory.create() }
     private var profileUrl: String? = null
 
@@ -65,6 +71,7 @@ class SignUpFragment : BaseFragment() {
 
         setListeners()
 
+        setObservers()
     }
 
     private fun setListeners() {
@@ -82,26 +89,12 @@ class SignUpFragment : BaseFragment() {
                 val lastName = binding.editLastName.text?.toString()?.trim()
                 val email = binding.editEmail.text?.toString()?.trim()
                 if (isValid(firstName, lastName, email)) {
-                    val id = auth.currentUser?.uid ?: UUID.randomUUID().toString()
-                    val user = EntityUser(
-                        _id = id,
+                    viewModel.signUp(
                         firstName = firstName ?: "",
                         lastName = lastName ?: "",
                         email = email ?: "",
                         profileUrl = profileUrl
                     )
-                    viewModel.signUp(user)
-                        .observe(viewLifecycleOwner) { resource ->
-                            when (resource) {
-                                is Resource.Loading -> startLoading()
-                                is Resource.Success -> {
-                                    stopLoading(true)
-                                    val action = SignUpFragmentDirections.navigateSignUpToHome()
-                                    findNavController().navigate(action)
-                                }
-                                is Resource.Error -> stopLoading(false, resource.msg)
-                            }
-                        }
                 }
             }
         }
@@ -140,6 +133,25 @@ class SignUpFragment : BaseFragment() {
         }
     }
 
+    private fun setObservers() {
+        viewModel.firebaseUser.observe(viewLifecycleOwner) {
+            if (it !is Resource.Success) return@observe
+            setFirebaseUser(user = it.data!!)
+        }
+
+        viewModel.user.observe(viewLifecycleOwner) {
+            when (it) {
+                is Resource.Loading -> startLoading()
+                is Resource.Success -> {
+                    stopLoading(true)
+                    val action = SignUpFragmentDirections.navigateSignUpToHome()
+                    findNavController().navigate(action)
+                }
+                is Resource.Error -> stopLoading(false, it.msg)
+            }
+        }
+    }
+
     private fun hitLoginGoogle() {
         // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -162,14 +174,14 @@ class SignUpFragment : BaseFragment() {
         val fbParams = listOf("email", "public_profile")
 
         // Set Read permission for fields
-        fbLoginManager.logInWithReadPermissions(this@SignUpFragment, fbParams)
+        fbLoginManager.logInWithReadPermissions(this@SignUpFragment, fbCallbackManager, fbParams)
 
         // Facebook callback for retrieving Access Token
         fbLoginManager.registerCallback(fbCallbackManager, object : FacebookCallback<LoginResult> {
 
             override fun onSuccess(result: LoginResult) {
                 val credential = FacebookAuthProvider.getCredential(result.accessToken.token)
-                firebaseAuth(credential)
+                viewModel.fetchFirebaseUser(credential)
             }
 
             override fun onCancel() {
@@ -207,12 +219,6 @@ class SignUpFragment : BaseFragment() {
         return isValid
     }
 
-    override fun onStart() {
-        super.onStart()
-        val user = auth.currentUser ?: return
-        setFirebaseUser(user)
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // Facebook Callback for Sign In
         fbCallbackManager.onActivityResult(requestCode, resultCode, data)
@@ -225,7 +231,7 @@ class SignUpFragment : BaseFragment() {
                     val account = task.getResult(ApiException::class.java)
                     if (account != null) {
                         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-                        firebaseAuth(credential)
+                        viewModel.fetchFirebaseUser(credential)
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -235,20 +241,6 @@ class SignUpFragment : BaseFragment() {
                 }
             }
         }
-    }
-
-    private fun firebaseAuth(credential: AuthCredential) {
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(requireActivity()) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    val user = auth.currentUser ?: return@addOnCompleteListener
-                    setFirebaseUser(user)
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.e(TAG, "TestLog: signInWithCredential failed: ${task.exception}")
-                }
-            }
     }
 
     private fun setFirebaseUser(user: FirebaseUser) {

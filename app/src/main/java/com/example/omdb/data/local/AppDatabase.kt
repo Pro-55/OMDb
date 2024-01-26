@@ -5,8 +5,16 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.omdb.data.local.dao.*
-import com.example.omdb.models.local.*
+import com.example.omdb.data.local.dao.ContentDao
+import com.example.omdb.data.local.dao.EpisodeDao
+import com.example.omdb.data.local.dao.RatingDao
+import com.example.omdb.data.local.dao.ShortContentDao
+import com.example.omdb.data.local.dao.UserDao
+import com.example.omdb.data.local.model.EntityContent
+import com.example.omdb.data.local.model.EntityEpisode
+import com.example.omdb.data.local.model.EntityRating
+import com.example.omdb.data.local.model.EntityShortContent
+import com.example.omdb.data.local.model.EntityUser
 import com.example.omdb.util.RoomTypeConverter
 
 @Database(

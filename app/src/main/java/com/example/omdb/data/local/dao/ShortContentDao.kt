@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.omdb.models.Type
-import com.example.omdb.models.local.EntityShortContent
+import com.example.omdb.data.local.model.EntityShortContent
+import com.example.omdb.domain.model.Type
 
 @Dao
 interface ShortContentDao {

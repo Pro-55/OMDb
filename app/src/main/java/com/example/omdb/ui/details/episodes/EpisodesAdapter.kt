@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.omdb.R
 import com.example.omdb.databinding.LayoutEpisodeItemBinding
-import com.example.omdb.models.Episode
+import com.example.omdb.domain.model.Episode
 
 class EpisodesAdapter(
     private val season: Int

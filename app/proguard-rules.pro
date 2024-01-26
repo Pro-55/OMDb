@@ -1,5 +1,7 @@
 ### Classes
--keep class com.example.omdb.models.** { *; }
+-keep class com.example.omdb.domain.model.** { *; }
+-keep class com.example.omdb.data.local.model.** { *; }
+-keep class com.example.omdb.data.network.model.** { *; }
 -keepnames class com.example.omdb.util.** { *; }
 -keepnames class **.*Fragment*
 
