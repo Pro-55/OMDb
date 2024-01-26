@@ -116,10 +116,11 @@ class MainRepositoryImpl(
                 val data = SearchResult(search = search, totalResults = search.size.toString())
                 emit(Resource.Success(data))
             }
-            else -> {
-                val msg = result.msg ?: Constants.REQUEST_FAILED_MESSAGE
-                emit(Resource.Error(msg))
-            }
+            is Response.InvalidPathException -> emit(Resource.Error(msg = result.msg))
+            is Response.InvalidRequestException -> emit(Resource.Error(msg = result.msg))
+            is Response.RequestTimeoutException -> emit(Resource.Error(msg = result.msg))
+            is Response.ServerException -> emit(Resource.Error(msg = result.msg))
+            is Response.UnknownException -> emit(Resource.Error(msg = result.msg))
         }
     }
 
@@ -162,7 +163,11 @@ class MainRepositoryImpl(
                 }
                 null
             }
-            else -> result.msg
+            is Response.InvalidPathException -> result.msg
+            is Response.InvalidRequestException -> result.msg
+            is Response.RequestTimeoutException -> result.msg
+            is Response.ServerException -> result.msg
+            is Response.UnknownException -> result.msg
         }
         emit(Resource.Error(msg ?: Constants.REQUEST_FAILED_MESSAGE))
     }
@@ -197,7 +202,11 @@ class MainRepositoryImpl(
                 }
                 null
             }
-            else -> result.msg
+            is Response.InvalidPathException -> result.msg
+            is Response.InvalidRequestException -> result.msg
+            is Response.RequestTimeoutException -> result.msg
+            is Response.ServerException -> result.msg
+            is Response.UnknownException -> result.msg
         }
         emit(Resource.Error(msg ?: Constants.REQUEST_FAILED_MESSAGE))
     }
