@@ -7,6 +7,7 @@ import androidx.navigation.compose.navigation
 import com.example.omdb.framework.navigation.Route
 import com.example.omdb.framework.navigation.Screen
 import com.example.omdb.ui.router.RouterScreen
+import com.example.omdb.util.extensions.navigateWithPopUpTo
 
 fun NavGraphBuilder.routerNavGraph(navController: NavController) {
     navigation(
@@ -16,7 +17,20 @@ fun NavGraphBuilder.routerNavGraph(navController: NavController) {
         composable(
             route = Screen.Router.route
         ) {
-            RouterScreen()
+            RouterScreen(
+                navigateRouterToSignUp = {
+                    navController.navigateWithPopUpTo(
+                        route = Route.Auth.name,
+                        popUpTo = Route.Router.name
+                    )
+                },
+                navigateRouterToHome = {
+                    navController.navigateWithPopUpTo(
+                        route = Route.App.name,
+                        popUpTo = Route.Router.name
+                    )
+                }
+            )
         }
     }
 }
