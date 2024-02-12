@@ -1,4 +1,4 @@
-package com.example.omdb.data.fcm
+package com.example.omdb.data.firebase.fcm
 
 import android.app.PendingIntent
 import android.content.Context
@@ -13,7 +13,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavDeepLinkBuilder
 import com.example.omdb.R
-import com.example.omdb.framework.HomeActivity
+import com.example.omdb.ui.MainActivity
 import com.example.omdb.util.Constants
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -66,7 +66,7 @@ class FirebaseMessagingServiceClass : FirebaseMessagingService() {
         // Check if message contains a data payload.
         data.isNotEmpty().let {
 
-            val notificationIntent = Intent(this, HomeActivity::class.java).apply {
+            val notificationIntent = Intent(this, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
 

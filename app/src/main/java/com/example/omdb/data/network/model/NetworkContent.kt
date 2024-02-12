@@ -47,9 +47,9 @@ fun NetworkContent.parse(isFavorite: Boolean): EntityContent = EntityContent(
     plot = plot,
     language = language,
     rating = try {
-        imdbRating?.toFloat() ?: 0F
+        imdbRating?.toFloat() ?: 0.0F
     } catch (e: Exception) {
-        0F
+        0.0F
     } / 2,
     seasons = try {
         seasons?.toInt() ?: 0

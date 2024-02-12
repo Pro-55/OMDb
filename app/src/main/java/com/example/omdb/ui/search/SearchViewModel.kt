@@ -36,7 +36,7 @@ class SearchViewModel @Inject constructor(
         val page = if (size <= 0) 1 else size / PAGE_SIZE + 1
 
         searchContentUseCase(
-            searchString = searchText,
+            query = searchText,
             page = page,
             type = Type.MOVIE
         )
@@ -56,7 +56,7 @@ class SearchViewModel @Inject constructor(
         val page = if (size <= 0) 1 else size / PAGE_SIZE + 1
 
         searchContentUseCase(
-            searchString = searchText,
+            query = searchText,
             page = page,
             type = Type.SERIES
         )

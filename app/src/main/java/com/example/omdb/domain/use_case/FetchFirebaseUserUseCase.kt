@@ -10,6 +10,6 @@ class FetchFirebaseUserUseCase(
     private val repository: MainRepository
 ) {
     operator fun invoke(
-        credential: AuthCredential
+        credential: AuthCredential?
     ): Flow<Resource<FirebaseUser>> = repository.fetchFirebaseUser(credential = credential)
 }

@@ -14,5 +14,6 @@ data class NetworkSearchResult(
 
 fun NetworkSearchResult.parse(results: List<EntityShortContent>): SearchResult = SearchResult(
     search = results.parse(),
-    totalResults = totalResults ?: "0"
+    totalResults = totalResults ?: "0",
+    total = totalResults?.toIntOrNull() ?: 0
 )
