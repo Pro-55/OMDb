@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.example.omdb.domain.model.ShortContent
 import com.example.omdb.domain.model.Type
 import com.example.omdb.framework.navigation.Route
 import com.example.omdb.framework.navigation.Screen
@@ -116,7 +117,23 @@ fun NavGraphBuilder.appNavGraph(navController: NavController) {
             route = Screen.Episodes.getPath(),
             arguments = Screen.Episodes.arguments
         ) {
-            EpisodesScreen()
+            EpisodesScreen(
+                onBack = {
+                    navController.popBackStack()
+                },
+                navigateEpisodesToDetails = {
+                    navController.navigate(
+                        route = Screen.Details.getPath(
+                            shortContent = ShortContent(
+                                _id = it._id,
+                                title = it.title,
+                                year = it.released,
+                                poster = null
+                            )
+                        )
+                    )
+                }
+            )
         }
     }
 }
