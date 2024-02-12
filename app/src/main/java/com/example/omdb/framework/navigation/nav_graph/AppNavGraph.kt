@@ -86,7 +86,11 @@ fun NavGraphBuilder.appNavGraph(navController: NavController) {
             route = Screen.FullPoster.getPath(),
             arguments = Screen.FullPoster.arguments
         ) {
-            FullPosterScreen()
+            FullPosterScreen(
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
         }
         composable(
             route = Screen.Ratings.getPath(),
