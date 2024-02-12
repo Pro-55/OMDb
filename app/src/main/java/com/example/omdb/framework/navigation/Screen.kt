@@ -1,6 +1,9 @@
 package com.example.omdb.framework.navigation
 
 import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
+import com.example.omdb.domain.model.Type
 
 sealed class Screen(
     val route: String,
@@ -23,8 +26,20 @@ sealed class Screen(
 
     data object Search : Screen(
         route = "screen_search",
-        arguments = emptyList()
-    )
+        arguments = listOf(
+            navArgument(name = "category") {
+                type = NavType.EnumType(Type::class.java)
+            }
+        )
+    ) {
+        fun getPath(
+            category: Type? = null
+        ): String = StringBuilder(route)
+            .append("?")
+            .append("category=")
+            .append(category ?: "{category}")
+            .toString()
+    }
 
     data object Details : Screen(
         route = "screen_details",

@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.example.omdb.domain.model.Type
 import com.example.omdb.framework.navigation.Route
 import com.example.omdb.framework.navigation.Screen
 import com.example.omdb.ui.details.DetailsScreen
@@ -23,10 +24,21 @@ fun NavGraphBuilder.appNavGraph(navController: NavController) {
             route = Screen.Home.route,
             arguments = Screen.Home.arguments
         ) {
-            HomeScreen()
+            HomeScreen(
+                navigateHomeToSearchMovies = {
+                    navController.navigate(
+                        route = Screen.Search.getPath(category = Type.MOVIE)
+                    )
+                },
+                navigateHomeToSearchSeries = {
+                    navController.navigate(
+                        route = Screen.Search.getPath(category = Type.SERIES)
+                    )
+                }
+            )
         }
         composable(
-            route = Screen.Search.route,
+            route = Screen.Search.getPath(),
             arguments = Screen.Search.arguments
         ) {
             SearchScreen()

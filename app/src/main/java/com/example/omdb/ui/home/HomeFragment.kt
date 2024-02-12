@@ -60,8 +60,6 @@ class HomeFragment : BaseFragment() {
 
         setupView()
 
-        viewModel.getCurrentUser()
-
         startGreetingJob()
 
         setObservers()
