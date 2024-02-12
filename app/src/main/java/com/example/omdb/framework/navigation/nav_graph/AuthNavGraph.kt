@@ -7,6 +7,7 @@ import androidx.navigation.compose.navigation
 import com.example.omdb.framework.navigation.Route
 import com.example.omdb.framework.navigation.Screen
 import com.example.omdb.ui.authentication.SignUpScreen
+import com.example.omdb.util.extensions.navigateWithPopUpTo
 
 fun NavGraphBuilder.authNavGraph(navController: NavController) {
     navigation(
@@ -17,7 +18,14 @@ fun NavGraphBuilder.authNavGraph(navController: NavController) {
             route = Screen.SignUp.route,
             arguments = Screen.SignUp.arguments
         ) {
-            SignUpScreen()
+            SignUpScreen(
+                navigateSignUpToHome = {
+                    navController.navigateWithPopUpTo(
+                        route = Route.App.name,
+                        popUpTo = Route.Auth.name
+                    )
+                }
+            )
         }
     }
 }
