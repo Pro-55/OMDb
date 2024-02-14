@@ -1,9 +1,12 @@
 package com.example.omdb.framework.navigation
 
+import android.net.Uri
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import com.example.omdb.domain.model.ShortContent
 import com.example.omdb.domain.model.Type
+import com.google.gson.Gson
 
 sealed class Screen(
     val route: String,
@@ -43,8 +46,40 @@ sealed class Screen(
 
     data object Details : Screen(
         route = "screen_details",
-        arguments = emptyList()
-    )
+        arguments = listOf(
+            navArgument(name = "shortContent") {
+                type = NavType.StringType
+                nullable = true
+            },
+            navArgument(name = "contentId") {
+                type = NavType.StringType
+                nullable = true
+            }
+        )
+    ) {
+        fun getPath(
+            shortContent: ShortContent? = null,
+            contentId: String? = null
+        ): String = StringBuilder(route)
+            .append("?")
+            .apply {
+                when {
+                    shortContent == null && contentId == null -> append("shortContent={shortContent}")
+                        .append("&")
+                        .append("contentId={contentId}")
+                    shortContent != null -> {
+                        val content = Uri.encode(Gson().toJson(shortContent))
+                        append("shortContent=$content")
+                            .append("&")
+                            .append("contentId=null")
+                    }
+                    else -> append("contentId=$contentId")
+                        .append("&")
+                        .append("shortContent=null")
+                }
+            }
+            .toString()
+    }
 
     data object FullPoster : Screen(
         route = "screen_full_poster",

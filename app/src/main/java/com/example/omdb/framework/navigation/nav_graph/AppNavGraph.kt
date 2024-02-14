@@ -41,10 +41,16 @@ fun NavGraphBuilder.appNavGraph(navController: NavController) {
             route = Screen.Search.getPath(),
             arguments = Screen.Search.arguments
         ) {
-            SearchScreen()
+            SearchScreen(
+                navigateSearchToDetails = {
+                    navController.navigate(
+                        route = Screen.Details.getPath(shortContent = it)
+                    )
+                }
+            )
         }
         composable(
-            route = Screen.Details.route,
+            route = Screen.Details.getPath(),
             arguments = Screen.Details.arguments
         ) {
             DetailsScreen()

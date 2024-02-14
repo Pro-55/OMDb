@@ -51,6 +51,7 @@
     <string name="cd_back_button">Back Button</string>
     <string name="cd_movies">Movies</string>
     <string name="cd_series">Series</string>
+    <string name="cd_episodes">Episodes</string>
     <string name="cd_profile">Profile</string>
     <string name="cd_share_button">Share Button</string>
 
