@@ -96,7 +96,11 @@ fun NavGraphBuilder.appNavGraph(navController: NavController) {
             route = Screen.Ratings.getPath(),
             arguments = Screen.Ratings.arguments
         ) {
-            RatingsScreen()
+            RatingsScreen(
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
         }
         composable(
             route = Screen.TeamDetails.getPath(),
