@@ -13,6 +13,7 @@
     <string name="label_seasons">Seasons</string>
     <string name="label_ratings">Ratings</string>
     <string name="label_team">Team</string>
+    <string name="label_details">Details</string>
     <string name="label_no_ratings">No Ratings</string>
     <string name="label_or">OR</string>
     <string name="label_no_network_connection">No Network Connection</string>

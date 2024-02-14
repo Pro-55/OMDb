@@ -53,28 +53,55 @@ fun NavGraphBuilder.appNavGraph(navController: NavController) {
             route = Screen.Details.getPath(),
             arguments = Screen.Details.arguments
         ) {
-            DetailsScreen()
+            DetailsScreen(
+                onBack = {
+                    navController.popBackStack()
+                },
+                navigateDetailsToFullPoster = {
+                    navController.navigate(
+                        route = Screen.FullPoster.getPath(posterUrl = it ?: "")
+                    )
+                },
+                navigateDetailsToRatings = {
+                    navController.navigate(
+                        route = Screen.Ratings.getPath(ratings = it)
+                    )
+                },
+                navigateDetailsToTeamDetails = {
+                    navController.navigate(
+                        route = Screen.TeamDetails.getPath(team = it)
+                    )
+                },
+                navigateDetailsToEpisodes = { contentId, season ->
+                    navController.navigate(
+                        route = Screen.Episodes.getPath(
+                            contentId = contentId,
+                            season = season
+                        )
+                    )
+                }
+            )
         }
         composable(
-            route = Screen.FullPoster.route,
+            route = Screen.FullPoster.getPath(),
             arguments = Screen.FullPoster.arguments
         ) {
             FullPosterScreen()
         }
         composable(
-            route = Screen.Ratings.route,
+            route = Screen.Ratings.getPath(),
             arguments = Screen.Ratings.arguments
         ) {
             RatingsScreen()
         }
         composable(
-            route = Screen.TeamDetails.route,
+            route = Screen.TeamDetails.getPath(),
             arguments = Screen.TeamDetails.arguments
         ) {
             TeamDetailsScreen()
         }
         composable(
-            route = Screen.Episodes.route,
+            route = Screen.Episodes.getPath(),
             arguments = Screen.Episodes.arguments
         ) {
             EpisodesScreen()
