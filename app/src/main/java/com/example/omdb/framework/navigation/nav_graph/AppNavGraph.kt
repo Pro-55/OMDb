@@ -106,7 +106,11 @@ fun NavGraphBuilder.appNavGraph(navController: NavController) {
             route = Screen.TeamDetails.getPath(),
             arguments = Screen.TeamDetails.arguments
         ) {
-            TeamDetailsScreen()
+            TeamDetailsScreen(
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
         }
         composable(
             route = Screen.Episodes.getPath(),
