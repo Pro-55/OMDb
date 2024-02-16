@@ -6,7 +6,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.omdb.domain.model.Resource
-import com.example.omdb.domain.model.User
 import com.example.omdb.domain.state.HomeScreenState
 import com.example.omdb.domain.use_case.GetCurrentUserUseCase
 import com.example.omdb.domain.use_case.GetGreetingUseCase
@@ -21,15 +20,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val getGreetingUseCase: GetGreetingUseCase
 ) : ViewModel() {
 
     // Global
     private val TAG = HomeViewModel::class.java.simpleName
-    private val _user = MutableLiveData<Resource<User>>() // *
-    val user: LiveData<Resource<User>> = _user // *
     private var stateValue = HomeScreenState()
     private val _state = MutableLiveData(stateValue)
     val state: LiveData<HomeScreenState> = _state

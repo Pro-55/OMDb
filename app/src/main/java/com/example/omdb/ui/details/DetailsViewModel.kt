@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.omdb.domain.model.Content
 import com.example.omdb.domain.model.Resource
 import com.example.omdb.domain.model.ShortContent
 import com.example.omdb.domain.state.DetailsScreenState
@@ -28,8 +27,6 @@ class DetailsViewModel @Inject constructor(
 
     // Global
     private val TAG = DetailsViewModel::class.java.simpleName
-    private val _content = MutableLiveData<Resource<Content>>() // *
-    val content: LiveData<Resource<Content>> = _content // *
     private var stateValue = DetailsScreenState()
     private val _state = MutableLiveData(stateValue)
     val state: LiveData<DetailsScreenState> = _state
@@ -39,23 +36,23 @@ class DetailsViewModel @Inject constructor(
         private set
 
     init {
-        val _id = savedStateHandle.get<String?>("contentId")
+        val id = savedStateHandle.get<String?>("contentId")
         val shortContent = savedStateHandle.get<String?>("shortContent")
             ?.toObject<ShortContent>()
 
-        if (_id.isNullOrEmpty() && shortContent == null) {
+        if (id.isNullOrEmpty() && shortContent == null) {
             error = Constants.ERROR_MESSAGE_INVALID_REQUEST
         } else {
             stateValue = stateValue.copy(
-                _id = _id,
+                _id = id,
                 shortContent = shortContent
             )
             _state.value = stateValue
-            getDetails(id = _id ?: shortContent?._id!!)
+            getDetails(id = id ?: shortContent?._id!!)
         }
     }
 
-    fun getDetails(
+    private fun getDetails(
         id: String,
         plot: String = "short"
     ) {

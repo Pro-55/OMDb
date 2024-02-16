@@ -52,8 +52,7 @@ class FirebaseMessagingServiceClass : FirebaseMessagingService() {
             data.keys.forEach { key -> args.putString(key, data[key]) }
 
             val pendingIntent = NavDeepLinkBuilder(this)
-                .setGraph(R.navigation.navigation_graph)
-                .setDestination(R.id.detailsFragment)
+                .setComponentName(MainActivity::class.java)
                 .setArguments(args)
                 .createPendingIntent()
 
@@ -111,7 +110,7 @@ class FirebaseMessagingServiceClass : FirebaseMessagingService() {
         builder.setSmallIcon(R.drawable.ic_notification_badge)
         val color = data[Constants.KEY_NOTIFICATION_COLOR]
         builder.color = if (color != null) Color.parseColor(color)
-        else ResourcesCompat.getColor(resources, R.color.colorAccent, null)
+        else ResourcesCompat.getColor(resources, android.R.color.black, null)
 
         builder.apply {
             setContentTitle(data[Constants.KEY_NOTIFICATION_TITLE])
