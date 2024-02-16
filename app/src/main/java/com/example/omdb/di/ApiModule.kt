@@ -15,6 +15,8 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideOMDbApi(client: HttpClient): OMDbApi = OMDbApiImpl(client)
+    fun provideOMDbApi(
+        client: HttpClient
+    ): OMDbApi = OMDbApiImpl(client = client)
 
 }

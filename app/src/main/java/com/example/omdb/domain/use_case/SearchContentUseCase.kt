@@ -10,11 +10,11 @@ class SearchContentUseCase(
     private val repository: MainRepository
 ) {
     operator fun invoke(
-        searchString: String,
+        query: String,
         page: Int,
         type: Type
     ): Flow<Resource<SearchResult>> = repository.searchContent(
-        searchString = searchString,
+        query = query,
         page = page,
         type = type
     )

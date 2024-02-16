@@ -108,7 +108,7 @@
     </fragment>
     <fragment
         android:id="@+id/fullPosterFragment"
-        android:name="com.example.omdb.ui.details.FullPosterFragment"
+        android:name="com.example.omdb.ui.details.full_poster.FullPosterFragment"
         android:label="FullPosterFragment"
         tools:layout="@layout/fragment_full_poster">
         <argument

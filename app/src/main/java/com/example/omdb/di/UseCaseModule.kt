@@ -5,6 +5,8 @@ import com.example.omdb.domain.use_case.FetchFirebaseUserUseCase
 import com.example.omdb.domain.use_case.GetCurrentUserUseCase
 import com.example.omdb.domain.use_case.GetDetailsUseCase
 import com.example.omdb.domain.use_case.GetEpisodesUseCase
+import com.example.omdb.domain.use_case.GetGreetingUseCase
+import com.example.omdb.domain.use_case.GetSignUpStatusUseCase
 import com.example.omdb.domain.use_case.SearchContentUseCase
 import com.example.omdb.domain.use_case.SignUpUseCase
 import dagger.Module
@@ -16,6 +18,12 @@ import dagger.hilt.android.scopes.ViewModelScoped
 @Module
 @InstallIn(ViewModelComponent::class)
 object UseCaseModule {
+
+    @ViewModelScoped
+    @Provides
+    fun provideGetSignUpStatusUseCase(
+        repository: MainRepository
+    ): GetSignUpStatusUseCase = GetSignUpStatusUseCase(repository = repository)
 
     @ViewModelScoped
     @Provides
@@ -34,6 +42,12 @@ object UseCaseModule {
     fun provideGetCurrentUserUseCase(
         repository: MainRepository
     ): GetCurrentUserUseCase = GetCurrentUserUseCase(repository = repository)
+
+    @ViewModelScoped
+    @Provides
+    fun provideGetGreetingUseCase(
+        repository: MainRepository
+    ): GetGreetingUseCase = GetGreetingUseCase(repository = repository)
 
     @ViewModelScoped
     @Provides

@@ -1,4 +1,4 @@
-package com.example.omdb.ui.details
+package com.example.omdb.ui.details.full_poster
 
 import android.os.Bundle
 import android.transition.ChangeBounds

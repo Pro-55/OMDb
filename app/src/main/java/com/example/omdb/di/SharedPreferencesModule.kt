@@ -16,7 +16,11 @@ object SharedPreferencesModule {
 
     @Singleton
     @Provides
-    fun provideSharedPreferences(application: Application): SharedPreferences =
-        application.getSharedPreferences(Constants.OMDB_SHARED_PREFS, Context.MODE_PRIVATE)
+    fun provideSharedPreferences(
+        application: Application
+    ): SharedPreferences = application.getSharedPreferences(
+        Constants.OMDB_SHARED_PREFS,
+        Context.MODE_PRIVATE
+    )
 
 }
