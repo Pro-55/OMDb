@@ -14,14 +14,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.omdb.data.firebase.sso.GoogleAuthHelper
 import com.example.omdb.data.firebase.sso.MetaAuthHelper
 import com.example.omdb.domain.model.Resource
-import com.example.omdb.domain.model.User
 import com.example.omdb.domain.state.SignUpScreenState
 import com.example.omdb.domain.state.TextFieldState
 import com.example.omdb.domain.use_case.FetchFirebaseUserUseCase
 import com.example.omdb.domain.use_case.SignUpUseCase
 import com.example.omdb.util.extensions.isValidEmail
 import com.google.firebase.auth.AuthCredential
-import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -29,7 +27,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
     private val googleAuthHelper: GoogleAuthHelper,
     private val metaAuthHelper: MetaAuthHelper,
     private val fetchFirebaseUserUseCase: FetchFirebaseUserUseCase,
@@ -38,10 +36,6 @@ class SignUpViewModel @Inject constructor(
 
     // Global
     private val TAG = SignUpViewModel::class.java.simpleName
-    private val _firebaseUser = MutableLiveData<Resource<FirebaseUser>>() // *
-    val firebaseUser: LiveData<Resource<FirebaseUser>> = _firebaseUser // *
-    private val _user = MutableLiveData<Resource<User>>() // *
-    val user: LiveData<Resource<User>> = _user // *
     private var stateValue = SignUpScreenState()
     private val _state = MutableLiveData(stateValue)
     val state: LiveData<SignUpScreenState> = _state
@@ -89,32 +83,6 @@ class SignUpViewModel @Inject constructor(
         fetchFirebaseUser(credential)
     }
 
-    fun fetchFirebaseUser(credential: AuthCredential?) {
-        fetchFirebaseUserUseCase(credential = credential)
-            .onEach {
-                when (it) {
-                    is Resource.Loading -> isLoading = true
-                    is Resource.Success -> {
-                        isLoading = false
-                        val user = it.data!!
-                        val names = user.displayName?.split(" ")
-                        stateValue = stateValue.copy(
-                            firstName = TextFieldState(names?.firstOrNull() ?: ""),
-                            lastName = TextFieldState(text = names?.lastOrNull() ?: ""),
-                            email = TextFieldState(text = user.email ?: ""),
-                            profileUrl = user.photoUrl?.toString()
-                        )
-                        _state.value = stateValue
-                    }
-                    is Resource.Error -> {
-                        error = it.msg
-                        isLoading = false
-                    }
-                }
-            }
-            .launchIn(viewModelScope)
-    }
-
     fun signUp() {
         if (isInvalid()) return
         signUpUseCase(
@@ -140,19 +108,29 @@ class SignUpViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun signUp(
-        firstName: String,
-        lastName: String,
-        email: String,
-        profileUrl: String?
-    ) {
-        signUpUseCase(
-            firstName = firstName,
-            lastName = lastName,
-            email = email,
-            profileUrl = profileUrl
-        )
-            .onEach { _user.postValue(it) }
+    private fun fetchFirebaseUser(credential: AuthCredential?) {
+        fetchFirebaseUserUseCase(credential = credential)
+            .onEach {
+                when (it) {
+                    is Resource.Loading -> isLoading = true
+                    is Resource.Success -> {
+                        isLoading = false
+                        val user = it.data!!
+                        val names = user.displayName?.split(" ")
+                        stateValue = stateValue.copy(
+                            firstName = TextFieldState(names?.firstOrNull() ?: ""),
+                            lastName = TextFieldState(text = names?.lastOrNull() ?: ""),
+                            email = TextFieldState(text = user.email ?: ""),
+                            profileUrl = user.photoUrl?.toString()
+                        )
+                        _state.value = stateValue
+                    }
+                    is Resource.Error -> {
+                        error = it.msg
+                        isLoading = false
+                    }
+                }
+            }
             .launchIn(viewModelScope)
     }
 

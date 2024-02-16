@@ -18,31 +18,22 @@ hilt = "2.50"
 hiltNavigationCompose = "1.1.0"
 kotlin = "1.9.22"
 ksp = "1.9.22-1.0.17"
-safeargs = "2.7.6"
 
 # Dependencies
 androidXActivity = "1.8.2"
-androidXConstraintLayout = "2.1.4"
 androidXCore = "1.12.0"
-androidXFragment = "1.6.2"
 androidXLifecycle = "2.7.0"
 androidXLifecycleExtensions = "2.2.0"
 androidXNavigation = "2.7.6"
-androidXRecyclerView = "1.3.2"
 coil = "2.5.0"
 composeBom = "2024.01.00"
 facebookAndroidSdk = "16.3.0"
 firebaseBom = "32.7.1"
-glide = "4.16.0"
 kotlinX = "1.7.3"
 kotlinXSerialization = "1.6.2"
 ktor = "2.3.7"
-material = "1.11.0"
 playServiceAuth = "20.7.0"
-progressbutton = "2.1.0"
 room = "2.6.1"
-rxAndroid = "1.2.1"
-rxBinding = "1.0.1"
 
 espresso = "3.5.1"
 junit = "4.13.2"
@@ -53,19 +44,10 @@ androidx-activity-compose = { module = "androidx.activity:activity-compose", ver
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidXCore" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidXNavigation" }
 
-androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidXConstraintLayout" }
-androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidXRecyclerView" }
-
-androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "androidXFragment" }
-androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidXNavigation" }
-androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidXNavigation" }
-
 androidx-lifecycle-common-java8 = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "androidXLifecycle" }
 androidx-lifecycle-extensions = { module = "androidx.lifecycle:lifecycle-extensions", version.ref = "androidXLifecycleExtensions" }
 androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidXLifecycle" }
-androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidXLifecycle" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidXLifecycle" }
-androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidXLifecycle" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidXLifecycle" }
 
 androidx-room = { module = "androidx.room:room-ktx", version.ref = "room" }
@@ -93,16 +75,11 @@ firebase-auth = { module = "com.google.firebase:firebase-auth-ktx" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 firebase-messaging = { module = "com.google.firebase:firebase-messaging-ktx" }
 
-glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
-glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
-
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 
 junit = { module = "junit:junit", version.ref = "junit" }
-
-kotlin-stdlib-jdk7 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", version.ref = "kotlin" }
 
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinX" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinX" }
@@ -114,14 +91,7 @@ ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 
-material = { module = "com.google.android.material:material", version.ref = "material" }
-
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServiceAuth" }
-
-progressbutton = { module = "com.github.razir.progressbutton:progressbutton", version.ref = "progressbutton" }
-
-rxAndroid = { module = "io.reactivex:rxandroid", version.ref = "rxAndroid" }
-rxBinding = { module = "com.jakewharton.rxbinding:rxbinding", version.ref = "rxBinding" }
 
 [plugins]
 android-gradle = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -137,8 +107,6 @@ kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref =
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-
-navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "safeargs" }
 
 [bundles]
 ## add bundled up libs here eg.

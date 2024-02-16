@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RouterViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
     private val getSignUpStatusUseCase: GetSignUpStatusUseCase
 ) : ViewModel() {
 

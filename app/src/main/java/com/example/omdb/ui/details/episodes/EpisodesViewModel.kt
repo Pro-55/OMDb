@@ -9,7 +9,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.omdb.domain.model.Resource
-import com.example.omdb.domain.model.Season
 import com.example.omdb.domain.state.EpisodesScreenState
 import com.example.omdb.domain.use_case.GetEpisodesUseCase
 import com.example.omdb.util.Constants
@@ -26,8 +25,6 @@ class EpisodesViewModel @Inject constructor(
 
     // Global
     private val TAG = EpisodesViewModel::class.java.simpleName
-    private val _season = MutableLiveData<Resource<Season>>() // *
-    val season: LiveData<Resource<Season>> = _season // *
     private var stateValue = EpisodesScreenState()
     private val _state = MutableLiveData(stateValue)
     val state: LiveData<EpisodesScreenState> = _state
@@ -37,25 +34,25 @@ class EpisodesViewModel @Inject constructor(
         private set
 
     init {
-        val _id = savedStateHandle.get<String?>("contentId")
+        val id = savedStateHandle.get<String?>("contentId")
         val season = savedStateHandle.get<Int?>("season")
 
-        if (_id.isNullOrEmpty() || season == null) {
+        if (id.isNullOrEmpty() || season == null) {
             error = Constants.ERROR_MESSAGE_INVALID_REQUEST
         } else {
             stateValue = stateValue.copy(
-                _id = _id,
+                _id = id,
                 season = season
             )
             _state.value = stateValue
             getEpisodes(
-                id = _id,
+                id = id,
                 season = season
             )
         }
     }
 
-    fun getEpisodes(
+    private fun getEpisodes(
         id: String,
         season: Int
     ) {
