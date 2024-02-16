@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.navigation.safeargs)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.hilt)
@@ -114,16 +113,10 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    // Kotlin
-    implementation(libs.kotlin.stdlib.jdk7) // *
-
     // Core
     implementation(libs.androidx.core)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation.compose)
-
-    // Material Design Components
-    implementation(libs.material) // *
 
     // Compose
     implementation(platform(libs.compose.bom))
@@ -136,31 +129,10 @@ dependencies {
 
     // Architecture Components Lifecycle Extensions
     implementation(libs.androidx.lifecycle.extensions)
-    implementation(libs.androidx.lifecycle.runtime) // *
     implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation(libs.androidx.lifecycle.viewmodel) // *
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.livedata)
     implementation(libs.androidx.lifecycle.common.java8)
-
-    // Fragment
-    implementation(libs.androidx.fragment) // *
-
-    // Navigation Component
-    implementation(libs.androidx.navigation.fragment) // *
-    implementation(libs.androidx.navigation.ui) // *
-
-    // Constraint Layout
-    implementation(libs.androidx.constraintlayout) // *
-
-    // RecyclerView
-    implementation(libs.androidx.recyclerview) // *
-
-    // RxAndroid implementation
-    implementation(libs.rxAndroid) // *
-
-    // RxTextViewChange
-    implementation(libs.rxBinding) // *
 
     // Kotlinx Serialization
     implementation(libs.kotlinx.serialization)
@@ -171,10 +143,6 @@ dependencies {
     implementation(libs.ktor.content.negotiation)
     implementation(libs.ktor.serialization)
     implementation(libs.ktor.logging)
-
-    // Glide
-    implementation(libs.glide) // *
-    ksp(libs.glide.compiler) // *
 
     // Coil
     implementation(libs.coil)
@@ -205,9 +173,6 @@ dependencies {
 
     // Facebook
     implementation(libs.facebook.android.sdk)
-
-    // ProgressButton
-    implementation(libs.progressbutton) // *
 
     // Test
     testImplementation(libs.junit)
