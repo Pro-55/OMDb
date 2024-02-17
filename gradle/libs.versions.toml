@@ -11,11 +11,10 @@ hotfix = "0"
 
 ## Gradle
 androidGradlePlugin = "8.2.2"
-composeCompiler = "1.5.8"
+composeCompiler = "1.5.9"
 firebaseCrashlyticsGradlePlugin = "2.9.9"
-googleServicesGradlePlugin = "4.4.0"
+googleServicesGradlePlugin = "4.4.1"
 hilt = "2.50"
-hiltNavigationCompose = "1.1.0"
 kotlin = "1.9.22"
 ksp = "1.9.22-1.0.17"
 
@@ -23,16 +22,16 @@ ksp = "1.9.22-1.0.17"
 androidXActivity = "1.8.2"
 androidXCore = "1.12.0"
 androidXLifecycle = "2.7.0"
-androidXLifecycleExtensions = "2.2.0"
-androidXNavigation = "2.7.6"
+androidXNavigation = "2.7.7"
 coil = "2.5.0"
-composeBom = "2024.01.00"
+composeBom = "2024.02.00"
 facebookAndroidSdk = "16.3.0"
-firebaseBom = "32.7.1"
-kotlinX = "1.7.3"
-kotlinXSerialization = "1.6.2"
-ktor = "2.3.7"
-playServiceAuth = "20.7.0"
+firebaseBom = "32.7.2"
+hiltNavigationCompose = "1.1.0"
+kotlinX = "1.8.0"
+kotlinXSerialization = "1.6.3"
+ktor = "2.3.8"
+playServiceAuth = "21.0.0"
 room = "2.6.1"
 
 espresso = "3.5.1"
@@ -45,7 +44,6 @@ androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidXCore
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidXNavigation" }
 
 androidx-lifecycle-common-java8 = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "androidXLifecycle" }
-androidx-lifecycle-extensions = { module = "androidx.lifecycle:lifecycle-extensions", version.ref = "androidXLifecycleExtensions" }
 androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidXLifecycle" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidXLifecycle" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidXLifecycle" }
