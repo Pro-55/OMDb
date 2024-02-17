@@ -22,9 +22,6 @@ android {
             arg("room.schemaLocation", "$projectDir/schemas")
         }
     }
-    dataBinding {
-        enable = true
-    }
     buildFeatures {
         buildConfig = true
         compose = true
@@ -128,7 +125,6 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
 
     // Architecture Components Lifecycle Extensions
-    implementation(libs.androidx.lifecycle.extensions)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.livedata)
