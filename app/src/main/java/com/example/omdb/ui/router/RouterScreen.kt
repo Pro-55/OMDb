@@ -2,8 +2,11 @@ package com.example.omdb.ui.router
 
 import android.app.Activity
 import android.widget.Toast
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 
@@ -28,4 +31,8 @@ fun RouterScreen(
         Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
         (context as? Activity)?.finish()
     }
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+    )
 }

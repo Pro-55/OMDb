@@ -24,7 +24,7 @@ import com.example.omdb.domain.model.DragOrientation
 import com.example.omdb.domain.state.FullPosterScreenState
 import com.example.omdb.theme.OMDbTheme
 import com.example.omdb.util.PhoneLightPreview
-import com.example.omdb.util.extensions.detectDragDismissGestures
+import com.example.omdb.util.gesture_detectors.detectDragDismissGesture
 import com.example.omdb.views.ProImage
 
 @Composable
@@ -45,7 +45,7 @@ fun FullPosterView(
                 .offset(x = xOffset, y = yOffset)
                 .fillMaxWidth()
                 .aspectRatio(ratio = ratio)
-                .detectDragDismissGestures(
+                .detectDragDismissGesture(
                     key1 = Unit,
                     localDensity = LocalDensity.current,
                     localConfiguration = LocalConfiguration.current,

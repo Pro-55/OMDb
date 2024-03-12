@@ -62,7 +62,11 @@ fun TeamDetailsView(
             TeamInfoView(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(all = 16.dp),
+                    .padding(
+                        start = 16.dp,
+                        top = 16.dp,
+                        end = 16.dp
+                    ),
                 label = stringResource(id = R.string.label_director),
                 info = team.director
             )
