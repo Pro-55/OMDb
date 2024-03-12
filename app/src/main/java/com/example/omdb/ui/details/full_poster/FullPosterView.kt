@@ -58,7 +58,7 @@ fun FullPosterView(
                 ),
             model = state.url,
             placeholder = painterResource(id = R.drawable.placeholder_poster),
-            contentDescription = stringResource(id = R.string.cd_poster),
+            contentDescription = stringResource(id = R.string.cd_big_poster),
             contentScale = ContentScale.Crop,
             onSuccess = {
                 val size = it.painter.intrinsicSize

@@ -1,5 +1,6 @@
 package com.example.omdb.ui.details.ratings
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -20,14 +21,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.omdb.R
 import com.example.omdb.domain.model.Rating
-import com.example.omdb.domain.state.RatingsScreenState
 import com.example.omdb.theme.OMDbTheme
 import com.example.omdb.util.PhoneLightPreview
 import com.example.omdb.views.ActionBar
 
 @Composable
 fun RatingsView(
-    state: RatingsScreenState,
+    ratings: List<Rating>?,
     onBack: () -> Unit
 ) {
     Column(
@@ -40,37 +40,54 @@ fun RatingsView(
             title = stringResource(id = R.string.label_ratings),
             onBack = onBack
         )
-        LazyColumn(contentPadding = PaddingValues(bottom = 16.dp)) {
-            items(items = state.ratings) { rating ->
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            start = 16.dp,
-                            top = 16.dp,
-                            end = 16.dp
-                        ),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = rating.value,
-                        maxLines = 1,
-                        style = MaterialTheme.typography.titleLarge.copy(
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center
-                        )
+        if (ratings.isNullOrEmpty()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(all = 16.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = stringResource(id = R.string.label_no_ratings),
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
                     )
-                    Spacer(
+                )
+            }
+        } else {
+            LazyColumn(contentPadding = PaddingValues(bottom = 16.dp)) {
+                items(items = ratings) { rating ->
+                    Column(
                         modifier = Modifier
-                            .height(height = 4.dp)
-                    )
-                    Text(
-                        text = rating.source,
-                        style = MaterialTheme.typography.bodyLarge.copy(
-                            fontWeight = FontWeight.Normal,
-                            textAlign = TextAlign.Center
+                            .fillMaxWidth()
+                            .padding(
+                                start = 16.dp,
+                                top = 16.dp,
+                                end = 16.dp
+                            ),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = rating.value,
+                            maxLines = 1,
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center
+                            )
                         )
-                    )
+                        Spacer(
+                            modifier = Modifier
+                                .height(height = 4.dp)
+                        )
+                        Text(
+                            text = rating.source,
+                            style = MaterialTheme.typography.bodyLarge.copy(
+                                fontWeight = FontWeight.Normal,
+                                textAlign = TextAlign.Center
+                            )
+                        )
+                    }
                 }
             }
         }
@@ -82,20 +99,18 @@ fun RatingsView(
 fun RatingsViewPreview() {
     OMDbTheme {
         RatingsView(
-            state = RatingsScreenState(
-                ratings = listOf(
-                    Rating(
-                        source = "Internet Movie Database",
-                        value = "8.2/10"
-                    ),
-                    Rating(
-                        source = "Rotten Tomatoes",
-                        value = "85%"
-                    ),
-                    Rating(
-                        source = "Metacritic",
-                        value = "70/100"
-                    )
+            ratings = listOf(
+                Rating(
+                    source = "Internet Movie Database",
+                    value = "8.2/10"
+                ),
+                Rating(
+                    source = "Rotten Tomatoes",
+                    value = "85%"
+                ),
+                Rating(
+                    source = "Metacritic",
+                    value = "70/100"
                 )
             ),
             onBack = {}
