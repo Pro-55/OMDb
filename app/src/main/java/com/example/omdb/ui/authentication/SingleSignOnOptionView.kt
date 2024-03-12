@@ -7,16 +7,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 @Composable
 fun SingleSignOnOptionView(
@@ -31,7 +29,7 @@ fun SingleSignOnOptionView(
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
         contentPadding = PaddingValues(all = 16.dp),
-        shape = RoundedCornerShape(size = 8.dp),
+        shape = MaterialTheme.shapes.small,
         enabled = !isLoading,
         onClick = onClick
     ) {
@@ -47,8 +45,7 @@ fun SingleSignOnOptionView(
         )
         Text(
             text = text,
-            style = TextStyle(
-                fontSize = 16.sp,
+            style = MaterialTheme.typography.labelLarge.copy(
                 fontWeight = FontWeight.Bold
             )
         )

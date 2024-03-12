@@ -1,6 +1,5 @@
 package com.example.omdb.ui.details
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,16 +15,15 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.omdb.R
 import com.example.omdb.domain.model.Content
 import com.example.omdb.domain.model.Rating
@@ -37,7 +35,6 @@ import com.example.omdb.theme.OMDbTheme
 import com.example.omdb.util.PhoneLightPreview
 import com.example.omdb.views.ActionBar
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun DetailsView(
     state: DetailsScreenState,
@@ -89,8 +86,7 @@ fun DetailsView(
                     .padding(horizontal = 16.dp),
                 text = stringResource(id = R.string.label_plot),
                 maxLines = 1,
-                style = TextStyle(
-                    fontSize = 20.sp,
+                style = MaterialTheme.typography.titleLarge.copy(
                     fontWeight = FontWeight.Bold
                 )
             )
@@ -104,8 +100,7 @@ fun DetailsView(
                         bottom = 8.dp
                     ),
                 text = safeContent.plot,
-                style = TextStyle(
-                    fontSize = 14.sp,
+                style = MaterialTheme.typography.bodyMedium.copy(
                     fontWeight = FontWeight.Normal
                 )
             )
@@ -136,8 +131,7 @@ fun DetailsView(
                         .padding(horizontal = 16.dp),
                     text = stringResource(id = R.string.label_seasons),
                     maxLines = 1,
-                    style = TextStyle(
-                        fontSize = 20.sp,
+                    style = MaterialTheme.typography.titleLarge.copy(
                         fontWeight = FontWeight.Bold
                     )
                 )
@@ -157,7 +151,10 @@ fun DetailsView(
                                 .padding(all = 0.dp),
                             shape = CircleShape,
                             label = {
-                                Text(text = "Season ${season + 1}")
+                                Text(
+                                    text = "Season ${season + 1}",
+                                    style = MaterialTheme.typography.labelSmall
+                                )
                             },
                             onClick = {
                                 onSeasonSelected(safeContent._id, season + 1)
