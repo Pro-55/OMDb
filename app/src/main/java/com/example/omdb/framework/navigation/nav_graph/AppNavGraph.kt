@@ -15,15 +15,24 @@ import com.example.omdb.ui.details.ratings.RatingsScreen
 import com.example.omdb.ui.details.team_details.TeamDetailsScreen
 import com.example.omdb.ui.home.HomeScreen
 import com.example.omdb.ui.search.SearchScreen
+import com.example.omdb.util.anim.slideInEnd
+import com.example.omdb.util.anim.slideInStart
+import com.example.omdb.util.anim.slideOutEnd
+import com.example.omdb.util.anim.slideOutStart
 
-fun NavGraphBuilder.appNavGraph(navController: NavController) {
+fun NavGraphBuilder.appNavGraph(
+    navController: NavController,
+    onBack: () -> Unit
+) {
     navigation(
         route = Route.App.name,
         startDestination = Screen.Home.route
     ) {
         composable(
             route = Screen.Home.route,
-            arguments = Screen.Home.arguments
+            arguments = Screen.Home.arguments,
+            exitTransition = { slideOutStart() },
+            popEnterTransition = { slideInStart() },
         ) {
             HomeScreen(
                 navigateHomeToSearchMovies = {
@@ -40,7 +49,11 @@ fun NavGraphBuilder.appNavGraph(navController: NavController) {
         }
         composable(
             route = Screen.Search.getPath(),
-            arguments = Screen.Search.arguments
+            arguments = Screen.Search.arguments,
+            enterTransition = { slideInEnd() },
+            exitTransition = { slideOutStart() },
+            popEnterTransition = { slideInStart() },
+            popExitTransition = { slideOutEnd() }
         ) {
             SearchScreen(
                 navigateSearchToDetails = {
@@ -52,12 +65,14 @@ fun NavGraphBuilder.appNavGraph(navController: NavController) {
         }
         composable(
             route = Screen.Details.getPath(),
-            arguments = Screen.Details.arguments
+            arguments = Screen.Details.arguments,
+            enterTransition = { slideInEnd() },
+            exitTransition = { slideOutStart() },
+            popEnterTransition = { slideInStart() },
+            popExitTransition = { slideOutEnd() }
         ) {
             DetailsScreen(
-                onBack = {
-                    navController.popBackStack()
-                },
+                onBack = onBack,
                 navigateDetailsToFullPoster = {
                     navController.navigate(
                         route = Screen.FullPoster.getPath(posterUrl = it ?: "")
@@ -85,42 +100,44 @@ fun NavGraphBuilder.appNavGraph(navController: NavController) {
         }
         composable(
             route = Screen.FullPoster.getPath(),
-            arguments = Screen.FullPoster.arguments
+            arguments = Screen.FullPoster.arguments,
+            enterTransition = { slideInEnd() },
+            exitTransition = { slideOutStart() },
+            popEnterTransition = { slideInStart() },
+            popExitTransition = { slideOutEnd() }
         ) {
-            FullPosterScreen(
-                onBack = {
-                    navController.popBackStack()
-                }
-            )
+            FullPosterScreen(onBack = onBack)
         }
         composable(
             route = Screen.Ratings.getPath(),
-            arguments = Screen.Ratings.arguments
+            arguments = Screen.Ratings.arguments,
+            enterTransition = { slideInEnd() },
+            exitTransition = { slideOutStart() },
+            popEnterTransition = { slideInStart() },
+            popExitTransition = { slideOutEnd() }
         ) {
-            RatingsScreen(
-                onBack = {
-                    navController.popBackStack()
-                }
-            )
+            RatingsScreen(onBack = onBack)
         }
         composable(
             route = Screen.TeamDetails.getPath(),
-            arguments = Screen.TeamDetails.arguments
+            arguments = Screen.TeamDetails.arguments,
+            enterTransition = { slideInEnd() },
+            exitTransition = { slideOutStart() },
+            popEnterTransition = { slideInStart() },
+            popExitTransition = { slideOutEnd() }
         ) {
-            TeamDetailsScreen(
-                onBack = {
-                    navController.popBackStack()
-                }
-            )
+            TeamDetailsScreen(onBack = onBack)
         }
         composable(
             route = Screen.Episodes.getPath(),
-            arguments = Screen.Episodes.arguments
+            arguments = Screen.Episodes.arguments,
+            enterTransition = { slideInEnd() },
+            exitTransition = { slideOutStart() },
+            popEnterTransition = { slideInStart() },
+            popExitTransition = { slideOutEnd() }
         ) {
             EpisodesScreen(
-                onBack = {
-                    navController.popBackStack()
-                },
+                onBack = onBack,
                 navigateEpisodesToDetails = {
                     navController.navigate(
                         route = Screen.Details.getPath(

@@ -7,6 +7,10 @@ import androidx.navigation.compose.navigation
 import com.example.omdb.framework.navigation.Route
 import com.example.omdb.framework.navigation.Screen
 import com.example.omdb.ui.authentication.SignUpScreen
+import com.example.omdb.util.anim.slideInBottom
+import com.example.omdb.util.anim.slideInTop
+import com.example.omdb.util.anim.slideOutBottom
+import com.example.omdb.util.anim.slideOutTop
 import com.example.omdb.util.extensions.navigateWithPopUpTo
 
 fun NavGraphBuilder.authNavGraph(navController: NavController) {
@@ -16,7 +20,11 @@ fun NavGraphBuilder.authNavGraph(navController: NavController) {
     ) {
         composable(
             route = Screen.SignUp.route,
-            arguments = Screen.SignUp.arguments
+            arguments = Screen.SignUp.arguments,
+            enterTransition = { slideInBottom() },
+            exitTransition = { slideOutTop() },
+            popEnterTransition = { slideInTop() },
+            popExitTransition = { slideOutBottom() }
         ) {
             SignUpScreen(
                 navigateSignUpToHome = {

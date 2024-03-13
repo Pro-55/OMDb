@@ -12,21 +12,18 @@ import com.example.omdb.domain.model.TeamDetails as Team
 
 sealed class Screen(
     val route: String,
-    val arguments: List<NamedNavArgument>
+    val arguments: List<NamedNavArgument> = emptyList()
 ) {
     data object Router : Screen(
-        route = "screen_router",
-        arguments = emptyList()
+        route = "screen_router"
     )
 
     data object SignUp : Screen(
-        route = "screen_sign_up",
-        arguments = emptyList()
+        route = "screen_sign_up"
     )
 
     data object Home : Screen(
-        route = "screen_home",
-        arguments = emptyList()
+        route = "screen_home"
     )
 
     data object Search : Screen(

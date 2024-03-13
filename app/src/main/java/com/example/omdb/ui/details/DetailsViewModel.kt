@@ -1,5 +1,7 @@
 package com.example.omdb.ui.details
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,10 +10,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.omdb.domain.model.Content
 import com.example.omdb.domain.model.Resource
 import com.example.omdb.domain.model.ShortContent
 import com.example.omdb.domain.state.DetailsScreenState
 import com.example.omdb.domain.use_case.GetDetailsUseCase
+import com.example.omdb.framework.navigation.DeepLinks
 import com.example.omdb.util.Constants
 import com.example.omdb.util.extensions.toObject
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -77,5 +81,20 @@ class DetailsViewModel @Inject constructor(
                 }
             }
             .launchIn(viewModelScope)
+    }
+
+    fun share(
+        context: Context,
+        content: Content
+    ) {
+        val url = DeepLinks.getDetailsDeepLink(contentId = content._id)
+        val sendIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TITLE, content.title)
+            putExtra(Intent.EXTRA_TEXT, url)
+            type = "text/*"
+        }
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        context.startActivity(shareIntent)
     }
 }

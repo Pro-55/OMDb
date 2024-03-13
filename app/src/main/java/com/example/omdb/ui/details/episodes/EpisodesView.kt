@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -19,10 +20,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.omdb.R
 import com.example.omdb.domain.model.Episode
 import com.example.omdb.domain.state.EpisodesScreenState
@@ -65,8 +64,7 @@ fun EpisodesView(
                         Text(
                             text = episode.title,
                             maxLines = 1,
-                            style = TextStyle(
-                                fontSize = 20.sp,
+                            style = MaterialTheme.typography.titleLarge.copy(
                                 fontWeight = FontWeight.Normal
                             )
                         )
@@ -86,8 +84,7 @@ fun EpisodesView(
                                 .append(episode.released)
                                 .toString(),
                             maxLines = 1,
-                            style = TextStyle(
-                                fontSize = 14.sp,
+                            style = MaterialTheme.typography.bodyMedium.copy(
                                 fontWeight = FontWeight.Light
                             )
                         )

@@ -3,8 +3,6 @@ package com.example.omdb.ui.search
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -12,23 +10,21 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.omdb.R
 import com.example.omdb.domain.model.SearchResult
 import com.example.omdb.domain.model.ShortContent
-import com.example.omdb.util.extensions.detectHoldGestures
-import com.example.omdb.views.ProImage
+import com.example.omdb.util.gesture_detectors.detectHoldGesture
+import com.example.omdb.views.PosterView
 
 @Composable
 fun ContentGrid(
@@ -43,12 +39,16 @@ fun ContentGrid(
 ) {
     val state = rememberLazyGridState()
     val interactionSource = remember { MutableInteractionSource() }
+    var tappedContent by remember { mutableStateOf<ShortContent?>(null) }
     val focusManager = LocalFocusManager.current
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Fixed(2),
         state = state,
-        contentPadding = PaddingValues(vertical = 8.dp)
+        contentPadding = PaddingValues(
+            horizontal = 4.dp,
+            vertical = 8.dp
+        )
     ) {
         item(span = { GridItemSpan(currentLineSpan = 2) }) {
             Spacer(
@@ -57,35 +57,40 @@ fun ContentGrid(
             )
         }
         items(items = result.search) { content ->
-            Surface(
+            PosterView(
                 modifier = Modifier
-                    .aspectRatio(ratio = 0.75F)
-                    .padding(all = 8.dp)
-                    .detectHoldGestures(
+                    .padding(all = 4.dp)
+                    .detectHoldGesture(
                         key1 = Unit,
                         interactionSource = interactionSource,
                         onClick = {
-                            focusManager.clearFocus(force = true)
+                            focusManager.clearFocus()
                             onContentClicked(content)
                         },
                         onHold = {
-                            focusManager.clearFocus(force = true)
+                            focusManager.clearFocus()
                             onHold(content)
                         },
-                        onRelease = onRelease
+                        onRelease = onRelease,
+                        onTapStateChange = { isTapped ->
+                            tappedContent = if (isTapped) content else null
+                        }
+                    )
+                    .scale(
+                        scale = if (content == tappedContent) {
+                            0.95F
+                        } else {
+                            1.0F
+                        }
                     ),
-                shape = RoundedCornerShape(size = 8.dp)
-            ) {
-                ProImage(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    model = content.poster,
-                    placeholder = painterResource(id = R.drawable.placeholder_poster),
-                    contentDescription = stringResource(id = R.string.cd_poster),
-                    contentScale = ContentScale.Crop
-                )
-            }
+                poster = content.poster
+            )
         }
+    }
+    LaunchedEffect(key1 = state.isScrollInProgress) {
+        if (!state.isScrollInProgress) return@LaunchedEffect
+        focusManager.clearFocus()
+        tappedContent = null
     }
     LaunchedEffect(key1 = state.canScrollForward) {
         if (!isLoading

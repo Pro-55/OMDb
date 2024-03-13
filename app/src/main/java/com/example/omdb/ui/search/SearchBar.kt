@@ -2,11 +2,11 @@ package com.example.omdb.ui.search
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Card
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -36,14 +36,14 @@ fun SearchBar(
 ) {
     val localDensity = LocalDensity.current
     val focusManager = LocalFocusManager.current
-    Card(
+    ElevatedCard(
         modifier = modifier
             .onGloballyPositioned {
                 onBottomMeasured(
                     with(localDensity) { it.size.height.toDp() + 16.dp }
                 )
             },
-        shape = RoundedCornerShape(size = 8.dp)
+        shape = MaterialTheme.shapes.small
     ) {
         TextField(
             modifier = Modifier
@@ -78,7 +78,7 @@ fun SearchBar(
             ),
             keyboardActions = KeyboardActions {
                 onSearch()
-                focusManager.clearFocus(force = true)
+                focusManager.clearFocus()
             },
             singleLine = true,
             colors = TextFieldDefaults.colors(
