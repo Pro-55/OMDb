@@ -21,6 +21,7 @@ class RouterViewModel @Inject constructor(
 
     // Global
     private val TAG = RouterViewModel::class.java.simpleName
+    val contentId = savedStateHandle.get<String?>("contentId")?.trim()
     var loginStatus by mutableStateOf<Boolean?>(null)
         private set
     var error by mutableStateOf<String?>(null)

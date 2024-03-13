@@ -14,12 +14,20 @@ import androidx.hilt.navigation.compose.hiltViewModel
 fun RouterScreen(
     viewModel: RouterViewModel = hiltViewModel(),
     navigateRouterToSignUp: () -> Unit,
-    navigateRouterToHome: () -> Unit
+    navigateRouterToHome: () -> Unit,
+    deepLinkToDetails: (String) -> Unit
 ) {
     LaunchedEffect(key1 = viewModel.loginStatus) {
         when (viewModel.loginStatus) {
             false -> navigateRouterToSignUp()
-            true -> navigateRouterToHome()
+            true -> {
+                val contentId = viewModel.contentId
+                if (!contentId.isNullOrEmpty()) {
+                    deepLinkToDetails(contentId)
+                } else {
+                    navigateRouterToHome()
+                }
+            }
             else -> Unit
         }
     }

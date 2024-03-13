@@ -20,7 +20,10 @@ import com.example.omdb.util.anim.slideInStart
 import com.example.omdb.util.anim.slideOutEnd
 import com.example.omdb.util.anim.slideOutStart
 
-fun NavGraphBuilder.appNavGraph(navController: NavController) {
+fun NavGraphBuilder.appNavGraph(
+    navController: NavController,
+    onBack: () -> Unit
+) {
     navigation(
         route = Route.App.name,
         startDestination = Screen.Home.route
@@ -69,9 +72,7 @@ fun NavGraphBuilder.appNavGraph(navController: NavController) {
             popExitTransition = { slideOutEnd() }
         ) {
             DetailsScreen(
-                onBack = {
-                    navController.popBackStack()
-                },
+                onBack = onBack,
                 navigateDetailsToFullPoster = {
                     navController.navigate(
                         route = Screen.FullPoster.getPath(posterUrl = it ?: "")
@@ -105,11 +106,7 @@ fun NavGraphBuilder.appNavGraph(navController: NavController) {
             popEnterTransition = { slideInStart() },
             popExitTransition = { slideOutEnd() }
         ) {
-            FullPosterScreen(
-                onBack = {
-                    navController.popBackStack()
-                }
-            )
+            FullPosterScreen(onBack = onBack)
         }
         composable(
             route = Screen.Ratings.getPath(),
@@ -119,11 +116,7 @@ fun NavGraphBuilder.appNavGraph(navController: NavController) {
             popEnterTransition = { slideInStart() },
             popExitTransition = { slideOutEnd() }
         ) {
-            RatingsScreen(
-                onBack = {
-                    navController.popBackStack()
-                }
-            )
+            RatingsScreen(onBack = onBack)
         }
         composable(
             route = Screen.TeamDetails.getPath(),
@@ -133,11 +126,7 @@ fun NavGraphBuilder.appNavGraph(navController: NavController) {
             popEnterTransition = { slideInStart() },
             popExitTransition = { slideOutEnd() }
         ) {
-            TeamDetailsScreen(
-                onBack = {
-                    navController.popBackStack()
-                }
-            )
+            TeamDetailsScreen(onBack = onBack)
         }
         composable(
             route = Screen.Episodes.getPath(),
@@ -148,9 +137,7 @@ fun NavGraphBuilder.appNavGraph(navController: NavController) {
             popExitTransition = { slideOutEnd() }
         ) {
             EpisodesScreen(
-                onBack = {
-                    navController.popBackStack()
-                },
+                onBack = onBack,
                 navigateEpisodesToDetails = {
                     navController.navigate(
                         route = Screen.Details.getPath(

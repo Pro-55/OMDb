@@ -1,5 +1,6 @@
 package com.example.omdb.ui.details
 
+import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -20,6 +21,7 @@ import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -39,12 +41,13 @@ import com.example.omdb.views.ActionBar
 fun DetailsView(
     state: DetailsScreenState,
     onBack: () -> Unit,
-    onShare: (Content) -> Unit,
+    onShare: (Context, Content) -> Unit,
     onPosterClicked: (String?) -> Unit,
     onRatingsClicked: (List<Rating>) -> Unit,
     onTeamClicked: (TeamDetails) -> Unit,
     onSeasonSelected: (String, Int) -> Unit
 ) {
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -63,7 +66,7 @@ fun DetailsView(
                                 ratio = 1.0F,
                                 matchHeightConstraintsFirst = true
                             )
-                            .clickable { onShare(safeContent) }
+                            .clickable { onShare(context, safeContent) }
                             .padding(all = 16.dp),
                         painter = painterResource(id = R.drawable.ic_share),
                         contentDescription = stringResource(id = R.string.cd_share_button)
@@ -216,7 +219,7 @@ fun DetailsViewPreview() {
                 )
             ),
             onBack = {},
-            onShare = {},
+            onShare = { _, _ -> },
             onPosterClicked = {},
             onRatingsClicked = {},
             onTeamClicked = {},

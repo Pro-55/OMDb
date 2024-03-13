@@ -1,5 +1,7 @@
 package com.example.omdb.ui
 
+import android.app.NotificationManager
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -31,6 +33,7 @@ import com.example.omdb.framework.navigation.nav_graph.authNavGraph
 import com.example.omdb.framework.navigation.nav_graph.routerNavGraph
 import com.example.omdb.theme.OMDbTheme
 import com.example.omdb.util.ConnectionLiveData
+import com.example.omdb.util.NotificationChannels
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,6 +42,7 @@ class MainActivity : ComponentActivity() {
     // Global
     private val TAG = MainActivity::class.java.simpleName
     private val connectionLiveData by lazy { ConnectionLiveData(this) }
+    private val manager by lazy { getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,11 +87,18 @@ class MainActivity : ComponentActivity() {
                         ) {
                             routerNavGraph(navController = navController)
                             authNavGraph(navController = navController)
-                            appNavGraph(navController = navController)
+                            appNavGraph(
+                                navController = navController,
+                                onBack = {
+                                    onBackPressedDispatcher.onBackPressed()
+                                }
+                            )
                         }
                     }
                 }
             }
         }
+
+        NotificationChannels.create(manager, resources)
     }
 }

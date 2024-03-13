@@ -20,14 +20,13 @@ fun DetailsScreen(
     navigateDetailsToRatings: (List<Rating>) -> Unit,
     navigateDetailsToTeamDetails: (TeamDetails) -> Unit,
     navigateDetailsToEpisodes: (String, Int) -> Unit
-
 ) {
     val state by viewModel.state.observeAsState(initial = DetailsScreenState())
     val context = LocalContext.current
     DetailsView(
         state = state,
         onBack = onBack,
-        onShare = {},
+        onShare = viewModel::share,
         onPosterClicked = navigateDetailsToFullPoster,
         onRatingsClicked = navigateDetailsToRatings,
         onTeamClicked = navigateDetailsToTeamDetails,

@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.example.omdb.framework.navigation.DeepLinks
 import com.example.omdb.framework.navigation.Route
 import com.example.omdb.framework.navigation.Screen
 import com.example.omdb.ui.router.RouterScreen
@@ -15,7 +16,8 @@ fun NavGraphBuilder.routerNavGraph(navController: NavController) {
         startDestination = Screen.Router.route
     ) {
         composable(
-            route = Screen.Router.route
+            route = Screen.Router.route,
+            deepLinks = DeepLinks.list
         ) {
             RouterScreen(
                 navigateRouterToSignUp = {
@@ -27,6 +29,12 @@ fun NavGraphBuilder.routerNavGraph(navController: NavController) {
                 navigateRouterToHome = {
                     navController.navigateWithPopUpTo(
                         route = Route.App.name,
+                        popUpTo = Route.Router.name
+                    )
+                },
+                deepLinkToDetails = {
+                    navController.navigateWithPopUpTo(
+                        route = Screen.Details.getPath(contentId = it),
                         popUpTo = Route.Router.name
                     )
                 }
