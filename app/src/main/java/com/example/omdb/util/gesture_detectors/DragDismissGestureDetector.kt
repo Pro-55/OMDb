@@ -5,14 +5,12 @@ import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import com.example.omdb.domain.model.DragOrientation
 
 @Stable
 fun Modifier.detectDragDismissGesture(
     key1: Any?,
-    localDensity: Density,
     localConfiguration: Configuration,
     orientation: DragOrientation,
     onDrag: (xOffset: Dp, yOffset: Dp) -> Unit,
@@ -94,11 +92,9 @@ fun Modifier.detectDragDismissGesture(
                 DragOrientation.VERTICAL -> dragAmount.copy(x = 0.0F)
                 DragOrientation.MIXED -> dragAmount
             }
-            with(localDensity) {
-                xOffset += newDragAmount.x.toDp()
-                yOffset += newDragAmount.y.toDp()
-                onDrag(xOffset, yOffset)
-            }
+            xOffset += newDragAmount.x.toDp()
+            yOffset += newDragAmount.y.toDp()
+            onDrag(xOffset, yOffset)
         }
     )
 }

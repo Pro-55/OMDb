@@ -60,10 +60,14 @@ fun ContentInfoView(
                         .append(stringResource(id = R.string.divider_bullet))
                         .append(" ")
                         .append(content.rated)
-                        .append(" ")
-                        .append(stringResource(id = R.string.divider_bullet))
-                        .append(" ")
-                        .append(content.runtime)
+                        .apply {
+                            if (content.isNotSeries()) {
+                                append(" ")
+                                    .append(stringResource(id = R.string.divider_bullet))
+                                    .append(" ")
+                                    .append(content.runtime)
+                            }
+                        }
                         .toString(),
                     maxLines = 2,
                     style = MaterialTheme.typography.bodyMedium.copy(

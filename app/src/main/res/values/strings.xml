@@ -18,7 +18,6 @@
     <string name="label_no_team_details">No Team Details</string>
     <string name="label_or">OR</string>
     <string name="label_no_network_connection">No Network Connection</string>
-    <string name="label_greeting">Hello there!</string>
 
     <string name="hint_first_name">First Name</string>
     <string name="hint_last_name">Last Name</string>
@@ -26,23 +25,9 @@
 
     <string name="btn_save">Save</string>
     <string name="btn_sign_up_with_google">Sign up with Google</string>
-    <string name="btn_sign_up_facebook">Sign up with Facebook</string>
     <string name="btn_sign_up_with_facebook">Sign up with Facebook</string>
-    <string name="btn_share">Share</string>
 
     <string name="divider_bullet">•</string>
-
-    <string name="shared_container_movies">shared_container_movies</string>
-    <string name="shared_icon_movies">shared_icon_movies</string>
-    <string name="shared_title_movies">shared_title_movies</string>
-
-    <string name="shared_container_series">shared_container_series</string>
-    <string name="shared_icon_series">shared_icon_series</string>
-    <string name="shared_title_series">shared_title_series</string>
-
-    <string name="shared_container_episodes">shared_container_episodes</string>
-    <string name="shared_icon_episodes">shared_icon_episodes</string>
-    <string name="shared_title_episodes">shared_title_episodes</string>
 
     <string name="cd_sign_up_with_google">Sign up with Google</string>
     <string name="cd_sign_up_with_facebook">Sign up with Facebook</string>
