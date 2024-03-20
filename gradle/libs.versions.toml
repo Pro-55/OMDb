@@ -5,7 +5,7 @@ minSdk = "21"
 targetSdk = "34"
 
 ## App Versions
-major = "1"
+major = "2"
 minor = "0"
 hotfix = "0"
 
