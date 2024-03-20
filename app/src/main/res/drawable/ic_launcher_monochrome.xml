@@ -1,8 +1,8 @@
 <inset xmlns:android="http://schemas.android.com/apk/res/android"
-    android:inset="@dimen/dimen_28dp">
+    android:inset="28dp">
     <vector
-        android:width="@dimen/dimen_44dp"
-        android:height="@dimen/dimen_44dp"
+        android:width="44dp"
+        android:height="44dp"
         android:viewportWidth="44"
         android:viewportHeight="44">
         <path

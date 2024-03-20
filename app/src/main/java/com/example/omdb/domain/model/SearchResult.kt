@@ -2,7 +2,8 @@ package com.example.omdb.domain.model
 
 data class SearchResult(
     val search: List<ShortContent> = listOf(),
-    val totalResults: String = "0"
+    val totalResults: String = "0",
+    val total: Int = 0
 )
 
 fun SearchResult.update(data: SearchResult?): SearchResult {
@@ -11,6 +12,9 @@ fun SearchResult.update(data: SearchResult?): SearchResult {
     val new = data.search
     list.addAll(new)
     list.distinctBy { it._id }
-    val total = data.totalResults
-    return copy(search = list, totalResults = total)
+    return copy(
+        search = list,
+        totalResults = data.totalResults,
+        total = data.total
+    )
 }

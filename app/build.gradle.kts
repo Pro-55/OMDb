@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.navigation.safeargs)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.hilt)
@@ -23,11 +22,12 @@ android {
             arg("room.schemaLocation", "$projectDir/schemas")
         }
     }
-    dataBinding {
-        enable = true
-    }
     buildFeatures {
         buildConfig = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
     signingConfigs {
         create("config") {
@@ -41,6 +41,10 @@ android {
         debug {
             applicationIdSuffix = ".debug"
             signingConfig = signingConfigs.getByName("config")
+            manifestPlaceholders.apply {
+                put("FBAppId", project.property("DEV_FB_APP_ID") as String)
+                put("FBClientToken", project.property("DEV_FB_CLIENT_TOKEN") as String)
+            }
             buildConfigField(
                 "String",
                 "BaseUrl",
@@ -66,6 +70,10 @@ android {
         }
         release {
             signingConfig = signingConfigs.getByName("config")
+            manifestPlaceholders.apply {
+                put("FBAppId", project.property("PROD_FB_APP_ID") as String)
+                put("FBClientToken", project.property("PROD_FB_CLIENT_TOKEN") as String)
+            }
             buildConfigField(
                 "String",
                 "BaseUrl",
@@ -102,38 +110,25 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    // Kotlin
-    implementation(libs.kotlin.stdlib.jdk7)
+    // Core
     implementation(libs.androidx.core)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.navigation.compose)
 
-    // Material Design Components
-    implementation(libs.material)
+    // Compose
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.ui)
+    implementation(libs.compose.foundation)
+    implementation(libs.compose.material3)
+    implementation(libs.compose.runtime.livedata)
+    implementation(libs.compose.ui.tooling)
+    implementation(libs.compose.ui.tooling.preview)
 
     // Architecture Components Lifecycle Extensions
-    implementation(libs.androidx.lifecycle.extensions)
-    implementation(libs.androidx.lifecycle.runtime)
-    implementation(libs.androidx.lifecycle.viewmodel)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.livedata)
     implementation(libs.androidx.lifecycle.common.java8)
-
-    // Fragment
-    implementation(libs.androidx.fragment)
-
-    // Navigation Component
-    implementation(libs.androidx.navigation.fragment)
-    implementation(libs.androidx.navigation.ui)
-
-    // Constraint Layout
-    implementation(libs.androidx.constraintlayout)
-
-    // RecyclerView
-    implementation(libs.androidx.recyclerview)
-
-    // RxAndroid implementation
-    implementation(libs.rxAndroid)
-
-    // RxTextViewChange
-    implementation(libs.rxBinding)
 
     // Kotlinx Serialization
     implementation(libs.kotlinx.serialization)
@@ -145,9 +140,8 @@ dependencies {
     implementation(libs.ktor.serialization)
     implementation(libs.ktor.logging)
 
-    // Glide
-    implementation(libs.glide)
-    ksp(libs.glide.compiler)
+    // Coil
+    implementation(libs.coil)
 
     // Room
     implementation(libs.androidx.room.runtime)
@@ -162,25 +156,19 @@ dependencies {
 
     // Hilt DI
     implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
     ksp(libs.hilt.compiler)
 
     // Firebase
     implementation(platform(libs.firebase.bom))
-    // Google Analytics
     implementation(libs.firebase.analytics)
-    // Crashlytics
     implementation(libs.firebase.crashlytics)
-    // Cloud Messaging
     implementation(libs.firebase.messaging)
-    // Authentication
     implementation(libs.firebase.auth)
     implementation(libs.play.services.auth)
 
     // Facebook
     implementation(libs.facebook.android.sdk)
-
-    // ProgressButton
-    implementation(libs.progressbutton)
 
     // Test
     testImplementation(libs.junit)

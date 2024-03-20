@@ -12,7 +12,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface MainRepository {
 
-    fun fetchFirebaseUser(credential: AuthCredential): Flow<Resource<FirebaseUser>>
+    fun getSignUpStatus(): Flow<Resource<Boolean>>
+
+    fun fetchFirebaseUser(credential: AuthCredential?): Flow<Resource<FirebaseUser>>
 
     fun signUp(
         firstName: String,
@@ -23,8 +25,10 @@ interface MainRepository {
 
     fun getCurrentUser(): Flow<Resource<User>>
 
+    suspend fun getGreeting(userName: String?): String
+
     fun searchContent(
-        searchString: String,
+        query: String,
         page: Int,
         type: Type
     ): Flow<Resource<SearchResult>>

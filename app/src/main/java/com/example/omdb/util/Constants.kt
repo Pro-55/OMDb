@@ -15,7 +15,7 @@ object Constants {
 
     const val NOTIFICATION_INTENT_FILTER = "FIREBASE_MESSAGING_EVENT"
 
-    const val REQUEST_GOOGLE_SIGN_IN = 0
+    const val PAGE_SIZE = 10
 
     private const val EMOJI_MONOCLE_FACE = "\uD83E\uDDD0"
     private const val EMOJI_TURTLE = "\uD83D\uDC22"
