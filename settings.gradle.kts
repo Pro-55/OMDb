@@ -13,5 +13,9 @@ dependencyResolutionManagement {
     }
 }
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 rootProject.name = "OMDb"
 include(":app")
+include(":analytics")
+include(":analytics_dummy")

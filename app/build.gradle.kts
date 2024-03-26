@@ -170,10 +170,15 @@ dependencies {
     // Facebook
     implementation(libs.facebook.android.sdk)
 
+    // Analytics
+    implementation(projects.analytics)
+
     // Test
     testImplementation(libs.junit)
+    testImplementation(projects.analyticsDummy)
     androidTestImplementation(libs.androidx.runner)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(projects.analyticsDummy)
 }
 
 fun getVersionCode(): Int {
