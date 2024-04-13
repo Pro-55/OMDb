@@ -110,11 +110,14 @@ class MainRepositoryImpl(
         emit(Resource.Success(user.parse()))
     }
 
-    override suspend fun getGreeting(userName: String?): String {
+    override suspend fun getGreeting(
+        userName: String?,
+        calendar: Calendar
+    ): String {
         val greetingBuilder = StringBuilder("Good ")
         val part: String
         val emoji: String
-        when (Calendar.getInstance().getPartOfDay()) {
+        when (calendar.getPartOfDay()) {
             DayPart.MORNING -> {
                 part = "Morning"
                 emoji = Constants.RISING_SUN_EMOJI
