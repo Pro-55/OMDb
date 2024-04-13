@@ -175,6 +175,8 @@ dependencies {
 
     // Test
     testImplementation(libs.junit)
+    testImplementation(libs.ktor.mock)
+    testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(projects.analyticsDummy)
     androidTestImplementation(libs.androidx.runner)
     androidTestImplementation(libs.androidx.espresso.core)
