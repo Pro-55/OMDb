@@ -144,7 +144,7 @@ fun SignUpViewPreview() {
             state = SignUpScreenState(
                 firstName = TextFieldState(text = "Pranit"),
                 lastName = TextFieldState(text = "Rane"),
-                email = TextFieldState(text = "pranitrane619@gmail.com")
+                email = TextFieldState(text = "abc@xyz.com")
             ),
             onFirstNameChange = {},
             onLastNameChange = {},
