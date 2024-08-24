@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.gradle)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.ksp)
@@ -26,8 +27,8 @@ android {
         buildConfig = true
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
+    composeCompiler {
+        enableStrongSkippingMode = true
     }
     signingConfigs {
         create("config") {
@@ -170,10 +171,17 @@ dependencies {
     // Facebook
     implementation(libs.facebook.android.sdk)
 
+    // Analytics
+    implementation(projects.analytics)
+
     // Test
     testImplementation(libs.junit)
+    testImplementation(libs.ktor.mock)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(projects.analyticsDummy)
     androidTestImplementation(libs.androidx.runner)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(projects.analyticsDummy)
 }
 
 fun getVersionCode(): Int {

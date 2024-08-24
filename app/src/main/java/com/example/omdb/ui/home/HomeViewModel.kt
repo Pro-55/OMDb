@@ -2,7 +2,6 @@ package com.example.omdb.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.omdb.domain.model.Resource
@@ -20,7 +19,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val getGreetingUseCase: GetGreetingUseCase
 ) : ViewModel() {

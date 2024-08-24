@@ -8,7 +8,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.omdb.data.firebase.sso.GoogleAuthHelper
@@ -27,7 +26,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val googleAuthHelper: GoogleAuthHelper,
     private val metaAuthHelper: MetaAuthHelper,
     private val fetchFirebaseUserUseCase: FetchFirebaseUserUseCase,

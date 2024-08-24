@@ -1,44 +1,45 @@
 [versions]
 ## SDK Versions
 compileSdk = "34"
-minSdk = "21"
+minSdk = "23"
 targetSdk = "34"
 
 ## App Versions
 major = "2"
-minor = "0"
+minor = "1"
 hotfix = "0"
 
 ## Gradle
-androidGradlePlugin = "8.3.1"
-composeCompiler = "1.5.10"
-firebaseCrashlyticsGradlePlugin = "2.9.9"
-googleServicesGradlePlugin = "4.4.1"
-hilt = "2.50"
-kotlin = "1.9.22"
-ksp = "1.9.22-1.0.17"
+androidGradlePlugin = "8.5.2"
+firebaseCrashlyticsGradlePlugin = "3.0.2"
+googleServicesGradlePlugin = "4.4.2"
+hilt = "2.51.1"
+kotlin = "2.0.0"
+ksp = "2.0.0-1.0.21"
 
 # Dependencies
-androidXActivity = "1.8.2"
-androidXCore = "1.12.0"
-androidXLifecycle = "2.7.0"
+androidXActivity = "1.9.1"
+androidXCore = "1.13.1"
+androidXLifecycle = "2.8.4"
 androidXNavigation = "2.7.7"
-coil = "2.5.0"
-composeBom = "2024.02.02"
-facebookAndroidSdk = "16.3.0"
-firebaseBom = "32.7.4"
+coil = "2.6.0"
+composeBom = "2024.08.00"
+facebookAndroidSdk = "17.0.0"
+firebaseBom = "33.1.2"
 hiltNavigationCompose = "1.2.0"
-kotlinX = "1.8.0"
+kotlinX = "1.8.1"
 kotlinXSerialization = "1.6.3"
-ktor = "2.3.8"
-playServiceAuth = "21.0.0"
+ktor = "2.3.11"
+playServiceAuth = "21.2.0"
 room = "2.6.1"
 
-espresso = "3.5.1"
+# Test Dependencies
+espresso = "3.6.1"
 junit = "4.13.2"
-runner = "1.5.2"
+runner = "1.6.2"
 
 [libraries]
+# Dependencies
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidXActivity" }
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidXCore" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidXNavigation" }
@@ -51,9 +52,6 @@ androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-
 androidx-room = { module = "androidx.room:room-ktx", version.ref = "room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
-
-androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
-androidx-runner = { module = "androidx.test:runner", version.ref = "runner" }
 
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 
@@ -77,22 +75,28 @@ hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt"
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 
-junit = { module = "junit:junit", version.ref = "junit" }
-
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinX" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinX" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinX" }
 kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinXSerialization" }
 
 ktor-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 ktor-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServiceAuth" }
 
+# Test Dependencies
+androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
+androidx-runner = { module = "androidx.test:runner", version.ref = "runner" }
+junit = { module = "junit:junit", version.ref = "junit" }
+
 [plugins]
 android-gradle = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsGradlePlugin" }
 
@@ -101,6 +105,7 @@ google-services = { id = "com.google.gms.google-services", version.ref = "google
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 

@@ -9,6 +9,7 @@ import com.example.omdb.domain.model.User
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
+import java.util.Calendar
 
 interface MainRepository {
 
@@ -25,7 +26,10 @@ interface MainRepository {
 
     fun getCurrentUser(): Flow<Resource<User>>
 
-    suspend fun getGreeting(userName: String?): String
+    suspend fun getGreeting(
+        userName: String?,
+        calendar: Calendar
+    ): String
 
     fun searchContent(
         query: String,

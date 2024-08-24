@@ -1,9 +1,9 @@
 package com.example.omdb.util.extensions
 
 import android.util.Log
+import com.example.analytics.Analytics
 import com.example.omdb.domain.model.Resource
 import com.example.omdb.util.Constants
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -26,8 +26,7 @@ fun <T> Flow<T>.asIoFlow(
         else doRetry
     }
     .catch {
-        it.printStackTrace()
-        FirebaseCrashlytics.getInstance().recordException(it)
+        Analytics.logException(e = it)
         when (it) {
             is IllegalArgumentException -> Log.d("IF", "TestLog: IllegalArgumentException")
             else -> Log.d("IF", "TestLog: Exception")
@@ -48,8 +47,7 @@ fun <T> Flow<Resource<T>>.asResourceFlow(
         else doRetry
     }
     .catch {
-        it.printStackTrace()
-        FirebaseCrashlytics.getInstance().recordException(it)
+        Analytics.logException(e = it)
         when (it) {
             is IllegalArgumentException -> {
                 Log.d("RF", "TestLog: IllegalArgumentException")
