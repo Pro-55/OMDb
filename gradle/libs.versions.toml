@@ -6,7 +6,7 @@ targetSdk = "34"
 
 ## App Versions
 major = "2"
-minor = "0"
+minor = "1"
 hotfix = "0"
 
 ## Gradle
