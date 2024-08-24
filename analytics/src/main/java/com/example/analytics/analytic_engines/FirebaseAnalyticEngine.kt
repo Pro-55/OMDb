@@ -7,17 +7,17 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 class FirebaseAnalyticEngine : AnalyticEngine {
 
-    private lateinit var instnce: FirebaseAnalytics
+    private lateinit var instance: FirebaseAnalytics
 
     override fun setUp(context: Context) {
-        instnce = FirebaseAnalytics.getInstance(context)
+        instance = FirebaseAnalytics.getInstance(context)
     }
 
     override fun logEvent(
         eventName: String,
         data: Bundle?
     ) {
-        instnce.logEvent(eventName, data)
+        instance.logEvent(eventName, data)
     }
 
     override fun logException(e: Throwable) {
